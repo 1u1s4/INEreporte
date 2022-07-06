@@ -12,4 +12,6 @@
 *.listing
 *.alg
 *.acr
-/LaTeX/ManualTecnico/_minted-main_template_doc/
+*.idx
+*.lof
+*.lof
