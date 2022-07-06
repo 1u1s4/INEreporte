@@ -1,6 +1,3 @@
-%\documentclass{article}
-%\usepackage[utf8]{inputenc}
-
 \documentclass[12pt]{article}
 \usepackage{graphicx} % This lets you include figures
 \usepackage[rightcaption]{sidecap}
@@ -17,7 +14,7 @@
 \title{Manual Técnico \\ Carta3}
 \author{Luis A. Alvarado}
 \date{\today}
-
+\usepackage{metalogo}
 \begin{document}
 \maketitle{}
 
@@ -27,12 +24,34 @@
 \newpage
 
 \section{Paquetes}
-\begin{itemize}
-	\item amsmath\cite{amsmath}: proporciona un conjunto de opciones para mostrar ecuaciones.
-	\item amsfonts\cite{amsfonts}: colección amplia de fuentes para usar en matemáticas.
-	\item amssymb\cite{amssymb}: este paquete proporciona toneladas de símbolos matemáticos, como flechas, operadores, caracteres especiales, figuras geométricas, etc.
-	%\item •\cite{•}:
-\end{itemize}
+\subsection{amsmath}
+Proporciona un conjunto de opciones para mostrar ecuaciones. \cite{amsmath}
+\subsection{amsfonts}
+Colección amplia de fuentes para usar en matemáticas. \cite{amsfonts}
+\subsection{amssymb}
+Ofrece toneladas de símbolos matemáticos, como flechas, operadores, caracteres especiales, figuras geométricas, etc. \cite{amssymb}
+\subsection{graphicx}
+Se basa en el paquete \textit{graphics} y proporciona una interfaz clave-valor para argumentos opcionales del comando \textit{\textbackslash includegraphics}. Esta interfaz proporciona funciones que van mucho más allá de lo que ofrece el paquete de \textit{graphics} por sí solo. \cite{graphicx}
+\subsection{pdfpages}
+Simplifica la inclusión de documentos PDF externos de varias páginas en documentos \LaTeX.\cite{pdfpages}
+\subsection{setspace}
+Agrega soporte para establecer el espacio entre líneas en un documento. Las opciones de paquete incluyen espacio simple, espacio medio y espacio doble. \cite{setspace}
+\subsection{xltxtra}
+Se utiliza para proporcionar una serie de funciones que son útiles para la composición tipográfica de documentos con \XeLaTeX. \cite{xltxtra}
+\subsection{enumitem}
+Permite el control sobre el diseño de los tres entornos de lista básicos: \textit{enumerate}, \textit{itemize} y \textit{description}.\cite{enumitem}
+\subsection{fixltx2e}
+Este paquete no hace más que emitir una advertencia en las versiones actuales de \LaTeX. En versiones anteriores, se usaba para distribuir correcciones de errores y mejoras en el kernel de \LaTeX. \cite{fixltx2e}
+\subsection{xifthen}
+Este paquete amplía el paquete \textit{ifthen} al implementar nuevos comandos para ir dentro del primer argumento de \textit{\textbackslash ifthenelse} para probar si una cadena es nula o no, si un comando está definido o es equivalente a otro. El paquete también permite el uso de expresiones complejas tal como las introdujo el paquete \textit{calc}, junto con la capacidad de definir nuevos comandos para manejar pruebas complejas.\cite{xifthen}
+\subsection{xargs}
+Agrega versiones extendidas de \textit{\textbackslash newcommand} y comandos \LaTeX relacionados, que permiten una definición fácil y robusta de macros con muchos argumentos opcionales, usando una sintaxis clara.\cite{xargs}
+\subsection{booktabs}
+Mejora la calidad de las tablas en LATEX, brindando comandos adicionales y optimización entre bastidores.\cite{booktabs}
+\subsection{multirow}
+Agrega mucha flexibilidad, incluida una opción para especificar una entrada en el ancho "natural" de su texto. Cree celdas tabulares que abarquen varias filas.\cite{multirow}
+
+\newpage
 \bibliographystyle{unsrt}
 \bibliography{bibliografia}
 \end{document}
