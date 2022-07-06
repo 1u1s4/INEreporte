@@ -1,6 +1,5 @@
 \documentclass[11pt,twoside]{book}
 %Versión 4.0
-
 % paquetes-----------------------------------------------------------------------------------------
 \usepackage[paperwidth=8.5in, paperheight=11in, left=1.25in, right=0.75in, top=0.950in, bottom=0.925in]{geometry}
 \usepackage{amsmath}
@@ -16,24 +15,42 @@
 \usepackage{xargs}
 \usepackage{booktabs}
 \usepackage{multirow}
-% Para pruebas
-\usepackage{lipsum}
-% Tikz
+\usepackage{lipsum} % para pruebas
+\usepackage{pdflscape}
+\usepackage{rotating}
+\usepackage{bigstrut}
+\usepackage{longtable}
+\usepackage{fancyhdr}
+\usepackage{url}
+% aqui sigue
+% Tabla de contenidos y vinculaciones
+\usepackage{tocloft}
+\usepackage[hidelinks, verbose]{hyperref}
+% Elementos geométricos de diseño del cuerpo (cajas de colores, etc.)
+\usepackage{colortbl}
+\usepackage{multicol}
+\setlength{\columnsep}{1.1cm}
+% Cambios de márgenes y según paridad de hojas
+\usepackage{changepage}
+\strictpagecheck
+% Paquete Tcolorbox
+\usepackage[skins, breakable, hooks]{tcolorbox}
+\usepackage[input-decimal-markers={.}, input-ignore={,}, group-separator={,}]{siunitx}
+% Para compilar en XeLaTeX con tildes
+\usepackage{polyglossia}
+\setmainlanguage{spanish}
 \usepackage{tikz}
 \usetikzlibrary{calc}
 \usetikzlibrary{positioning}
-% Columnas definibles en ancho
 \usepackage{array}
+% leer pag 4 https://mirrors.ucr.ac.cr/CTAN/macros/latex/required/tools/array.pdf
+% nuevos tipos de columnas
 \newcolumntype{x}[1]{%
 	>{\centering\arraybackslash}p{#1}}%
 \newcolumntype{g}[1]{%
 	>{\raggedleft\arraybackslash}p{#1}}%
 \newcolumntype{q}[1]{%
 	>{\raggedright\arraybackslash}p{#1}}%
-\usepackage[input-decimal-markers={.}, input-ignore={,}, group-separator={,}]{siunitx}
-% Para compilar en XeLaTeX con tildes
-\usepackage{polyglossia}
-\setmainlanguage{spanish}
 % Tipo de letra
 \usepackage{fontspec} % en teoria esto se carga en xltxtra
 \setmainfont[
@@ -46,26 +63,6 @@ BoldItalicFont = OpenSans-CondLightItalic.ttf ]{OpenSans-CondLight.ttf}
 \newfontfamily\Italic{Open Sans Condensed Light Italic}
 \newfontfamily\Logos{Latin Modern Roman}
 \newfontfamily\Cinzel{Cinzel}
-% Tabla de contenidos y vinculaciones
-\usepackage{tocloft}
-\usepackage[hidelinks, verbose]{hyperref}
-\usepackage{url}
-% Elementos geométricos de diseño del cuerpo (cajas de colores, etc.)
-\usepackage{colortbl}
-\usepackage{multicol}
-\setlength{\columnsep}{1.1cm}
-% Cambios de márgenes y según paridad de hojas
-\usepackage{changepage}
-\strictpagecheck
-% Paquete Tcolorbox
-\usepackage[skins, breakable, hooks]{tcolorbox}
-% tablas
-\usepackage{pdflscape}
-\usepackage{rotating}
-\usepackage{bigstrut}
-\usepackage{longtable}
-% encabezado y pie de página
-\usepackage{fancyhdr}
 % FIN-paquetes-------------------------------------------------------------------------------------
 
 % Estilo de página en blanco en el índice

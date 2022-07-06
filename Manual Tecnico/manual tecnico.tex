@@ -10,11 +10,12 @@
 \usepackage{cite}
 \makeindex
 \usepackage{hyperref}
+\usepackage{hologo}
+
 
 \title{Manual Técnico \\ Carta3}
 \author{Luis A. Alvarado}
 \date{\today}
-\usepackage{metalogo}
 \begin{document}
 \maketitle{}
 
@@ -37,21 +38,46 @@ Simplifica la inclusión de documentos PDF externos de varias páginas en docume
 \subsection{setspace}
 Agrega soporte para establecer el espacio entre líneas en un documento. Las opciones de paquete incluyen espacio simple, espacio medio y espacio doble. \cite{setspace}
 \subsection{xltxtra}
-Se utiliza para proporcionar una serie de funciones que son útiles para la composición tipográfica de documentos con \XeLaTeX. \cite{xltxtra}
+Se utiliza para proporcionar una serie de funciones que son útiles para la composición tipográfica de documentos con \hologo{XeLaTeX}. \cite{xltxtra}
 \subsection{enumitem}
 Permite el control sobre el diseño de los tres entornos de lista básicos: \textit{enumerate}, \textit{itemize} y \textit{description}.\cite{enumitem}
 \subsection{fixltx2e}
-Este paquete no hace más que emitir una advertencia en las versiones actuales de \LaTeX. En versiones anteriores, se usaba para distribuir correcciones de errores y mejoras en el kernel de \LaTeX. \cite{fixltx2e}
+Este paquete no hace más que emitir una advertencia en las versiones actuales de \LaTeX. En versiones anteriores, se usaba para distribuir correcciones de errores y mejoras en el kernel de \hologo{LaTeX}. \cite{fixltx2e}
 \subsection{xifthen}
 Este paquete amplía el paquete \textit{ifthen} al implementar nuevos comandos para ir dentro del primer argumento de \textit{\textbackslash ifthenelse} para probar si una cadena es nula o no, si un comando está definido o es equivalente a otro. El paquete también permite el uso de expresiones complejas tal como las introdujo el paquete \textit{calc}, junto con la capacidad de definir nuevos comandos para manejar pruebas complejas.\cite{xifthen}
 \subsection{xargs}
-Agrega versiones extendidas de \textit{\textbackslash newcommand} y comandos \LaTeX relacionados, que permiten una definición fácil y robusta de macros con muchos argumentos opcionales, usando una sintaxis clara.\cite{xargs}
+Agrega versiones extendidas de \textit{\textbackslash newcommand} y comandos \hologo{LaTeX} relacionados, que permiten una definición fácil y robusta de macros con muchos argumentos opcionales, usando una sintaxis clara.\cite{xargs}
 \subsection{booktabs}
-Mejora la calidad de las tablas en LATEX, brindando comandos adicionales y optimización entre bastidores.\cite{booktabs}
+Mejora la calidad de las tablas en \hologo{LaTeX}, brindando comandos adicionales y optimización entre bastidores.\cite{booktabs}
 \subsection{multirow}
 Agrega mucha flexibilidad, incluida una opción para especificar una entrada en el ancho "natural" de su texto. Cree celdas tabulares que abarquen varias filas.\cite{multirow}
+\subsection{pdflscape}
+El paquete agrega compatibilidad con PDF al entorno horizontal del paquete \textit{lscape}, configurando el atributo PDF \textit{/Rotate}.\cite{pdflscape}
+\subsection{rotating}
+Un paquete construido sobre el paquete de \hologo{LaTeX} \textit{graphics} estándar para realizar todos los diferentes tipos de rotación que uno pueda desear, incluyendo figuras y tablas completas con sus leyendas.\cite{rotating}
+\subsection{bigstrut}
+\textit{\textbackslash bigstrut} produce un strut que es \textit{\textbackslash bigstrutjot} más alto, más bajo o ambos, que el strut de matriz/tabla estándar. Úselo en las entradas de la tabla que están adyacentes a una línea \textit{\textbackslash h}, para dejar un poco de espacio adicional.\cite{bigstrut}
+\subsection{longtable}
+Permite escribir tablas que continúan en la página siguiente.\cite{longtable}
+\subsection{fancyhdr}
+Proporciona amplias funciones, tanto para construir encabezados y pies de página, como para controlar su uso.\cite{fancyhdr}
+\subsection{url}
+El comando \textit{\textbackslash url} es una forma de comando textual que permite saltos de línea en ciertos caracteres o combinaciones de caracteres, acepta la reconfiguración y, por lo general, se puede usar en el argumento de otro comando. El comando está diseñado para direcciones de correo electrónico, enlaces de hipertexto, directorios/rutas, etc., que normalmente no tienen espacios, por lo que al por defecto, el paquete ignora los espacios en su argumento.\cite{url}
+% aqui sigue
+\subsection{tikz}
+PGF es un paquete de macros para crear gráficos. Es independiente de la plataforma y el formato y funciona junto con los controladores back-end de \hologo{TeX} más importantes, incluidos \hologo{pdfTeX} y dvips. Viene con una capa de sintaxis fácil de usar llamada TikZ.\cite{tikz}
+\subsubsection{TikZ Library calc}
+Permite cálculos de coordenadas avanzados.\cite{calc}
+\subsubsection{TikZ Library positioning}
+Permite colocar nodos en una dirección y distancia específicas de otros nodos.\cite{positioning}
+\subsection{array}
+Una implementación extendida de los entornos \textit{array} y \textit{tabular}, que amplía las opciones para los formatos de columna y proporciona especificaciones de formato "programable".\cite{array}
+
 
 \newpage
 \bibliographystyle{unsrt}
 \bibliography{bibliografia}
 \end{document}
+
+\subsection{•}
+\cite{•}
