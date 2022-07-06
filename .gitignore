@@ -1,0 +1,15 @@
+*.aux
+*.log
+*.out
+*.blg
+*.gls
+*.glo
+*.toc
+*.bbl
+*.ist
+*.glg
+*.acn
+*.listing
+*.alg
+*.acr
+/LaTeX/ManualTecnico/_minted-main_template_doc/
