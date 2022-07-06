@@ -2,7 +2,6 @@
 %Versión 4.0
 
 % paquetes-----------------------------------------------------------------------------------------
-% paquetes estándar
 \usepackage[paperwidth=8.5in, paperheight=11in, left=1.25in, right=0.75in, top=0.950in, bottom=0.925in]{geometry}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -13,11 +12,8 @@
 \usepackage{xltxtra}
 \usepackage{enumitem}
 \usepackage{fixltx2e}
-% otros paquetes
-% If Then Else, definiciones libres de comandos
 \usepackage{xifthen}
-\usepackage{xargs} %varios argumentos opcionales
-% Tablas de Excel convertidas a LaTeX, y otros aspectos de cuadros
+\usepackage{xargs}
 \usepackage{booktabs}
 \usepackage{multirow}
 % Para pruebas
@@ -39,7 +35,7 @@
 \usepackage{polyglossia}
 \setmainlanguage{spanish}
 % Tipo de letra
-\usepackage{fontspec}
+\usepackage{fontspec} % en teoria esto se carga en xltxtra
 \setmainfont[
 BoldFont = OpenSans-CondBold.ttf ,
 ItalicFont = OpenSans-CondLightItalic.ttf ,
