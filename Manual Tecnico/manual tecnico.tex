@@ -41,8 +41,6 @@ Agrega soporte para establecer el espacio entre líneas en un documento. Las opc
 Se utiliza para proporcionar una serie de funciones que son útiles para la composición tipográfica de documentos con \hologo{XeLaTeX}. \cite{xltxtra}
 \subsection{enumitem}
 Permite el control sobre el diseño de los tres entornos de lista básicos: \textit{enumerate}, \textit{itemize} y \textit{description}.\cite{enumitem}
-\subsection{fixltx2e}
-Este paquete no hace más que emitir una advertencia en las versiones actuales de \LaTeX. En versiones anteriores, se usaba para distribuir correcciones de errores y mejoras en el kernel de \hologo{LaTeX}. \cite{fixltx2e}
 \subsection{xifthen}
 Este paquete amplía el paquete \textit{ifthen} al implementar nuevos comandos para ir dentro del primer argumento de \textit{\textbackslash ifthenelse} para probar si una cadena es nula o no, si un comando está definido o es equivalente a otro. El paquete también permite el uso de expresiones complejas tal como las introdujo el paquete \textit{calc}, junto con la capacidad de definir nuevos comandos para manejar pruebas complejas.\cite{xifthen}
 \subsection{xargs}
@@ -72,6 +70,40 @@ Permite cálculos de coordenadas avanzados.\cite{calc}
 Permite colocar nodos en una dirección y distancia específicas de otros nodos.\cite{positioning}
 \subsection{array}
 Una implementación extendida de los entornos \textit{array} y \textit{tabular}, que amplía las opciones para los formatos de columna y proporciona especificaciones de formato "programable".\cite{array}
+\subsection{tocloft}
+Proporciona medios para controlar el diseño tipográfico de la Tabla de contenido, la Lista de figuras y la Lista de tablas.\cite{tocloft}
+\subsection{hyperref}
+Se usa para manejar comandos de referencias cruzadas en \hologo{LaTeX} para producir enlaces de hipertexto en el documento.\cite{hyperref}
+\subsubsection{hidelinks}
+Oculta los enlaces (quitar color y borde).\cite{hidelinks}
+\subsubsection{verbose}
+Se imprimen mensajes de diagnóstico adicionales en el archivo de registro.\cite{verbose}
+\subsection{colortbl}
+Permite colorear filas y columnas, e incluso celdas individuales.\cite{colortbl}
+\subsection{multicol}
+Define un entorno de varias columnas que compone el texto en varias columnas (hasta un máximo de 10) y (de forma predeterminada) equilibra el final de cada columna al final del entorno.\cite{multicol}
+\subsection{changepage}
+Proporciona comandos para cambiar el diseño de la página en medio de un documento y para verificar de manera sólida la composición tipográfica en páginas pares o impares.\cite{changepage}
+\subsection{tcolorbox}
+Proporciona un entorno para cuadros de texto coloreados y enmarcados con una línea de título.\cite{tcolorbox}
+\subsubsection{skins}
+Es una librería de tcolorbox que permite modificar el aspecto de la caja, como el color, degradado, estilo del titulo y muchas otras características. Para una mejor comprensión de esta librería ver la sección 10 de la cita.\cite{tcolorbox_lib}
+\subsubsection{breakable}
+Admite la ruptura automática de un tcolorbox. Para una mejor comprensión de esta librería ver la sección 19 de la cita. \cite{tcolorbox_lib}
+\subsubsection{hooks}
+Es un marcador de posición en algún código \hologo{LaTeX} donde se puede agregar código adicional. Para una mejor comprensión de esta librería ver la sección 23 de la cita. \cite{tcolorbox_lib}
+\subsection{siunitx}
+Tiene como objetivo proporcionar un método unificado para que los usuarios de \hologo{LaTeX} escriban números y unidades de forma correcta y sencilla.\cite{siunitx}
+\subsubsection{input-decimal-markers}
+Permite seleccionar el separador decimal entre coma (,) o punto (.).\cite{siunitx_param}
+\subsubsection{input-ignore}
+Ignora los tokens de esta lista.\cite{siunitx_param}
+\subsubsection{group-separator}
+Permite seleccionar el separador de unidades, decenas, centenas, etc.\cite{siunitx_param}
+\subsection{polyglossia}
+Este paquete proporciona un reemplazo completo de Babel, este paquete administra reglas tipográficas (y otras) determinadas culturalmente para una amplia gama de idiomas\cite{babel}, para usuarios de \hologo{LuaLaTeX} y \hologo{XeLaTeX}.\cite{polyglossia}
+\subsection{•}
+\cite{•}
 
 
 \newpage

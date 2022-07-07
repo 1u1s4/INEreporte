@@ -1,6 +1,7 @@
 \documentclass[11pt,twoside]{book}
 %Versión 4.0
 % paquetes-----------------------------------------------------------------------------------------
+\usepackage{lipsum} % para pruebas
 \usepackage[
 paperwidth = 8.5in,
 paperheight = 11in,
@@ -17,39 +18,34 @@ bottom = 0.925in
 \usepackage{setspace} 
 \usepackage{xltxtra}
 \usepackage{enumitem}
-\usepackage{fixltx2e}
 \usepackage{xifthen}
 \usepackage{xargs}
 \usepackage{booktabs}
 \usepackage{multirow}
-\usepackage{lipsum} % para pruebas
 \usepackage{pdflscape}
 \usepackage{rotating}
 \usepackage{bigstrut}
 \usepackage{longtable}
 \usepackage{fancyhdr}
 \usepackage{url}
-% aqui sigue
-% Tabla de contenidos y vinculaciones
 \usepackage{tocloft}
 \usepackage[hidelinks, verbose]{hyperref}
-% Elementos geométricos de diseño del cuerpo (cajas de colores, etc.)
 \usepackage{colortbl}
 \usepackage{multicol}
-\setlength{\columnsep}{1.1cm}
-% Cambios de márgenes y según paridad de hojas
 \usepackage{changepage}
-\strictpagecheck
-% Paquete Tcolorbox
 \usepackage[skins, breakable, hooks]{tcolorbox}
 \usepackage[input-decimal-markers={.}, input-ignore={,}, group-separator={,}]{siunitx}
-% Para compilar en XeLaTeX con tildes
 \usepackage{polyglossia}
-\setmainlanguage{spanish}
 \usepackage{tikz}
 \usetikzlibrary{calc}
 \usetikzlibrary{positioning}
 \usepackage{array}
+% \usepackage{fontspec} % se carga en xltxtra
+% \usepackage{fixltx2e} % fixltx2e is not required with releases after 2015. All fixes are now in the LaTeX kernel.
+% FIN-paquetes-------------------------------------------------------------------------------------
+\setlength{\columnsep}{1.1cm} % estaba luego de multicol
+\strictpagecheck % algo de changepage
+\setmainlanguage{spanish} % de polyglossia
 % leer pag 4 https://mirrors.ucr.ac.cr/CTAN/macros/latex/required/tools/array.pdf
 % nuevos tipos de columnas
 \newcolumntype{x}[1]{%
@@ -59,7 +55,6 @@ bottom = 0.925in
 \newcolumntype{q}[1]{%
 	>{\raggedright\arraybackslash}p{#1}}%
 % Tipo de letra
-% \usepackage{fontspec} % en teoria esto se carga en xltxtra
 \setmainfont[
 BoldFont = OpenSans-CondBold.ttf ,
 ItalicFont = OpenSans-CondLightItalic.ttf ,
@@ -70,8 +65,6 @@ BoldItalicFont = OpenSans-CondLightItalic.ttf ]{OpenSans-CondLight.ttf}
 \newfontfamily\Italic{Open Sans Condensed Light Italic}
 \newfontfamily\Logos{Latin Modern Roman}
 \newfontfamily\Cinzel{Cinzel}
-% FIN-paquetes-------------------------------------------------------------------------------------
-
 % Estilo de página en blanco en el índice
 \newcommand{\blank}{\addtocontents{toc}{\protect\thispagestyle{empty}}}
 
