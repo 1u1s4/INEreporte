@@ -17,3 +17,7 @@
 *.lof
 *.gz
 Plantilla/ResultadosEncovi/
+*.fls
+*.ind
+*.ilg
+*.fdb_latexmk
