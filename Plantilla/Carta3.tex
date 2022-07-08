@@ -48,17 +48,14 @@ bottom = 0.925in
 \setmainlanguage{spanish} % de polyglossia
 % leer pag 4 https://mirrors.ucr.ac.cr/CTAN/macros/latex/required/tools/array.pdf
 % nuevos tipos de columnas
-\newcolumntype{x}[1]{%
-	>{\centering\arraybackslash}p{#1}}%
-\newcolumntype{g}[1]{%
-	>{\raggedleft\arraybackslash}p{#1}}%
-\newcolumntype{q}[1]{%
-	>{\raggedright\arraybackslash}p{#1}}%
+\newcolumntype{x}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{g}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{q}[1]{>{\raggedright\arraybackslash}p{#1}}
 % Tipo de letra
 \setmainfont[
 BoldFont = OpenSans-CondBold.ttf ,
 ItalicFont = OpenSans-CondLightItalic.ttf ,
-BoldItalicFont = OpenSans-CondLightItalic.ttf ]{OpenSans-CondLight.ttf}
+BoldItalicFont = OpenSans-CondLightItalic.ttf]{OpenSans-CondLight.ttf}
 \newfontfamily\Bold{Open Sans Condensed Bold}
 \newfontfamily\Sans{Open Sans}
 \newfontfamily\SansBold{Open Sans Bold}
@@ -112,16 +109,17 @@ BoldItalicFont = OpenSans-CondLightItalic.ttf ]{OpenSans-CondLight.ttf}
 %Para que las páginas en blanco no estén numeradas
 \let\origdoublepage\cleardoublepage
 \newcommand{\clearemptydoublepage}{
-	\clearpage
-	{\pagestyle{empty}\origdoublepage}}
+\clearpage
+{\pagestyle{empty}\origdoublepage}
+}
 \let\cleardoublepage\clearemptydoublepage
 
 %%%%%%%% Llamadas y notas al pie
 \makeatletter
-\newcommand{\markerspace}{\@ifnextchar.%
-{$\!$}{\@ifnextchar,%
-    {$\!$}{\@ifnextchar;%
-        {$\!$}{\@ifnextchar:%
+\newcommand{\markerspace}{\@ifnextchar.
+{$\!$}{\@ifnextchar,
+    {$\!$}{\@ifnextchar;
+        {$\!$}{\@ifnextchar:
             {$\!$}{$\ $}
         }
     }
@@ -143,24 +141,24 @@ BoldItalicFont = OpenSans-CondLightItalic.ttf ]{OpenSans-CondLight.ttf}
 }
 
 \newcommand{\notita}[2][\thenumtextollamada]{
-	\stepcounter{numtextollamada}
-	\stepcounter{numllamada}
-	$\hspace{0.2ex}$
-	\footnote[#1]{#2}
+\stepcounter{numtextollamada}
+\stepcounter{numllamada}
+$\hspace{0.2ex}$
+\footnote[#1]{#2}
 }
 
-\newcommand{\textollamada}[2][\thenumtextollamada]{%
-\ifthenelse{\equal{#1}{*}}{
-	\begingroup
-	\renewcommand\thefootnote\thempfootnote\footnotetext[0]{#2\\[-1.7ex]}
-	\endgroup
-	}{
-	\stepcounter{numtextollamada}
-	\begingroup
-	\renewcommand\thefootnote\thempfootnote\footnotetext[#1]{#2}
-	\endgroup
-	}
-}
+\newcommand{\textollamada}[2][\thenumtextollamada]{
+\ifthenelse{\equal{#1}{*}}
+{
+\begingroup
+\renewcommand\thefootnote\thempfootnote\footnotetext[0]{#2\\[-1.7ex]}
+\endgroup
+}{
+\stepcounter{numtextollamada}
+\begingroup
+\renewcommand\thefootnote\thempfootnote\footnotetext[#1]{#2}
+\endgroup
+}}
 
 %redefinición de footnote
 \newlength{\footnoterulewidth}
@@ -1003,29 +1001,25 @@ $\ $\\[22.65\cuadri]
 \newcommand{\rayitatoc}{\addtocontents{toc}{\protect\addvspace{0.2\baselineskip}{\color{color2}\hrule height 0.9pt} \addvspace{0.6\baselineskip} \color{black}} }
 
 % El macro definitivo
-
 \newcommand{\partes}{}
-
 \newcommand{\INEchaptercarta}[3][]{%
-	\cleardoublepage\stepcounter{chapter}\addtocontents{toc}{\protect\addvspace{0.6\baselineskip}\color{color1}}%
-	\phantomsection
-	\ifthenelse{\isempty{#1}}{%
-		\addcontentsline{toc}{chapter}{\numberline{\thechapter}#2}%
-		\renewcommand{\capituloencabezado}{#2}%
-	}{
-	\addcontentsline{toc}{chapter}{\numberline{\thechapter}#1}%
-	\renewcommand{\capituloencabezado}{#1}%
+\cleardoublepage\stepcounter{chapter}\addtocontents{toc}{\protect\addvspace{0.6\baselineskip}\color{color1}}%
+\phantomsection
+\ifthenelse{\isempty{#1}}{
+	\addcontentsline{toc}{chapter}{\numberline{\thechapter}#2}
+	\renewcommand{\capituloencabezado}{#2}
+}{
+	\addcontentsline{toc}{chapter}{\numberline{\thechapter}#1}
+	\renewcommand{\capituloencabezado}{#1}
 }
-\thispagestyle{empty}%
-
-\ifthenelse{\equal{\partes}{}}{\rayitatoc}{} %
+\thispagestyle{empty}
+\ifthenelse{\equal{\partes}{}}{\rayitatoc}{}
 \addtocontents{toc}{\color{black}\addvspace{0.2\baselineskip}}
-\ifthenelse{\equal{\unexpanded{#3}}{}}{%
+\ifthenelse{\equal{\unexpanded{#3}}{}}{
 	\capitulosindescripcion{#2}
-}{%
-\capitulocondescripcion{#2}{#3}
+}{
+	\capitulocondescripcion{#2}{#3}
 }
-
 \cleardoublepage
 \setcounter{section}{0}
 \setcounter{updown}{0}
