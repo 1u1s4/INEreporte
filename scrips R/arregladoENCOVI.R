@@ -1,11 +1,13 @@
+library(funcionesINE)
 anual(rgb(0,0,1), rgb(0.6156862745098039,0.7333333333333333,1))
-
-ENC1<- cargaMasiva("C:/Users/INE/Desktop/arregladaENCOVI_2014/CSV/1")
+CSVrute <- "C:/Users/laalvarado/Documents/GitHub/INE_LaTeX/Plantilla/ResultadosEncovi/CSV/1"
+TEXrute <- "C:/Users/laalvarado/Documents"
+ENC1<- cargaMasiva(CSVrute)
 
 
 #g1<- graficaDobleLinea(ENC1$"1.1",ruta = "C:/Users/INE/Desktop/arregladaENCOVI_2014/1_01.tex")
-g1<- graficaLinea(ENC1$"1.1",rotar = "h")##cAMBIAR
-exportarLatex("C:/Users/INE/Desktop/arregladaENCOVI_2014/1_01.tex",g1)
+g1<- graficaLinea(ENC1$"1_01",rotar = "h")##cAMBIAR
+exportarLatex(paste(TEXrute, "/1_01.tex"), g1)
 
 g2<- graficaLinea(ENC1$"1.2",rotar = "h")
 exportarLatex("C:/Users/INE/Desktop/arregladaENCOVI_2014/1_02.tex",g2)
@@ -82,7 +84,7 @@ ENC3<- cargaMasiva("C:/Users/INE/Desktop/arregladaENCOVI_2014/CSV/3")
 
 
 
-### esta va en forma de pirámide
+### esta va en forma de pir?mide
 # g1<- graficaCol(ENC3$"3.1")
 # g1 <- etiquetasHorizontales(g1)
 # exportarLatex("C:/Users/INE/Desktop/arregladaENCOVI_2014/3_01.tex",g1)
