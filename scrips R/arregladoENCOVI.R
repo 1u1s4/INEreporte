@@ -7,7 +7,7 @@ ENC1<- cargaMasiva(CSVrute)
 
 #g1<- graficaDobleLinea(ENC1$"1.1",ruta = "C:/Users/INE/Desktop/arregladaENCOVI_2014/1_01.tex")
 g1<- graficaLinea(ENC1$"1_01",rotar = "h")##cAMBIAR
-exportarLatex(paste(TEXrute, "/1_01.tex"), g1)
+exportarLatex(paste(TEXrute, "/1_01.tex", sep = ""), g1)
 
 g2<- graficaLinea(ENC1$"1.2",rotar = "h")
 exportarLatex("C:/Users/INE/Desktop/arregladaENCOVI_2014/1_02.tex",g2)
