@@ -21,3 +21,5 @@ Plantilla/ResultadosEncovi/
 *.ind
 *.ilg
 *.fdb_latexmk
+.Rproj.user
+.Rhistory
