@@ -1,38 +1,37 @@
 library(funcionesINE)
-anual(rgb(0,0,1), rgb(0.6156862745098039,0.7333333333333333,1))
-CSVrute <- "C:/Users/laalvarado/Documents/GitHub/INE_LaTeX/Plantilla/ResultadosEncovi/CSV/1"
-TEXrute <- "C:/Users/laalvarado/Documents"
-ENC1<- cargaMasiva(CSVrute)
+anual(rgb(0, 0, 1), rgb(0.6156862745098039, 0.7333333333333333, 1))
+csv_rute <- "C:/Users/laalvarado/Documents/GitHub/INE_LaTeX/Plantilla/ResultadosEncovi/CSV/1"
+tex_rute <- "C:/Users/laalvarado/Documents"
+ENC1 <- cargaMasiva(csv_rute)
 
 
-#g1<- graficaDobleLinea(ENC1$"1.1",ruta = "C:/Users/INE/Desktop/arregladaENCOVI_2014/1_01.tex")
-g1<- graficaLinea(ENC1$"1_01",rotar = "h")##cAMBIAR
-exportarLatex(paste(TEXrute, "/1_01.tex", sep = ""), g1)
+g1 <- graficaLinea(ENC1$"1_01", rotar = "h")##cAMBIAR
+exportarLatex(paste(tex_rute, "/1_01.tex", sep = ""), g1)
 
-g2<- graficaLinea(ENC1$"1.2",rotar = "h")
-exportarLatex("C:/Users/INE/Desktop/arregladaENCOVI_2014/1_02.tex",g2)
+g2 <- graficaLinea(ENC1$"1.2",rotar = "h")
+exportarLatex("C:/Users/INE/Desktop/arregladaENCOVI_2014/1_02.tex", g2)
 
-g4<- graficaColCategorias(ENC1$"1.3",etiquetasCategorias = "A",
+g4 <- graficaColCategorias(ENC1$"1.3", etiquetasCategorias = "A",
                           ruta = "C:/Users/INE/Desktop/arregladaENCOVI_2014/1_03.tex",etiquetas = "h")
 
-g5<- graficaColCategorias(ENC1$"1.4",etiquetasCategorias = "A",
+g5 <- graficaColCategorias(ENC1$"1.4", etiquetasCategorias = "A",
                           ruta = "C:/Users/INE/Desktop/arregladaENCOVI_2014/1_04.tex",etiquetas = "h")
 
 ##g5 mapa
 
 
-g11<- graficaLinea(ENC1$"1.6",rotar = "h")
-exportarLatex("C:/Users/INE/Desktop/arregladaENCOVI_2014/1_06.tex",g11)
+g11 <- graficaLinea(ENC1$"1.6",rotar = "h")
+exportarLatex("C:/Users/INE/Desktop/arregladaENCOVI_2014/1_06.tex", g11)
 
 
-g3<- graficaLinea(ENC1$"1.7",rotar = "h")
-exportarLatex("C:/Users/INE/Desktop/arregladaENCOVI_2014/1_07.tex",g3)
+g3 <- graficaLinea(ENC1$"1.7",rotar = "h")
+exportarLatex("C:/Users/INE/Desktop/arregladaENCOVI_2014/1_07.tex", g3)
 
 
-g6<- graficaColCategorias(ENC1$"1.8",etiquetasCategorias = "A",
+g6 <- graficaColCategorias(ENC1$"1.8",etiquetasCategorias = "A",
                           ruta = "C:/Users/INE/Desktop/arregladaENCOVI_2014/1_08.tex",etiquetas = "h")
 
-g7<- graficaColCategorias(ENC1$"1.9",etiquetasCategorias = "A",
+g7 <- graficaColCategorias(ENC1$"1.9",etiquetasCategorias = "A",
       ruta = "C:/Users/INE/Desktop/arregladaENCOVI_2014/1_09.tex",etiquetas = "h")
 
 ##g10 mapa
