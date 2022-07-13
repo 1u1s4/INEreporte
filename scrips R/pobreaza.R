@@ -2,15 +2,17 @@ library(funcionesINE)
 library(xlsx)
 library(rJava)
 library(xlsxjars)
+rutaRaiz <- 'C:/Users/laalvarado/Documents/pruebas/'
+rutaSalidaCSV <- paste(rutaRaiz, "CSV/1", sep="")
+rutaSalidaTex <- paste(rutaRaiz, "graficas/", sep="")
+rutaCocinado <- paste(rutaRaiz, "Libros/pobrezaCocinado.xlsx", sep="")
+rutaSalidaCocinado <- paste(rutaRaiz, "CSVENCOVI/", sep="")
+rutaLibro <- paste(rutaRaiz, "Libros/pobrezaCSV.xlsx", sep="")
 
-rutaSalidaCSV <- 'C:/Users/laalvarado/OneDrive - ine.gob.gt/Documents/pruebas/CSV/1'
-rutaSalidaTex <- 'C:/Users/laalvarado/OneDrive - ine.gob.gt/Documents/pruebas/graficas/'
+pobreza <- leerLibroNormal(rutaCocinado)
+escribirCSV(pobreza, ruta=rutaSalidaCocinado)
 
-
-pobreza <- leerLibroNormal('C:/Users/laalvarado/OneDrive - ine.gob.gt/Documents/GitHub/INE_LaTeX/Plantilla/ResultadosEncovi/Libros/pobrezaCocinado.xlsx')
-escribirCSV(pobreza, ruta='C:/Users/laalvarado/OneDrive - ine.gob.gt/Documents/pruebas/CSVENCOVI/')
-
-pobrezaCSV <- leerLibro(ruta = 'C:/Users/laalvarado/OneDrive - ine.gob.gt/Documents/GitHub/INE_LaTeX/Plantilla/ResultadosEncovi/Libros/pobrezaCSV.xlsx')
+pobrezaCSV <- leerLibro(ruta=rutaLibro)
 escribirCSV(lista=pobrezaCSV, ruta=rutaSalidaCSV)
 
 anual()
