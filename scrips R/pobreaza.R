@@ -31,7 +31,7 @@ exportarLatex(rutaTex("1_02.tex"), g2)
 
 g3 <- graficaColCategorias(ENC1$"1_03", ancho=0.6, etiquetasCategorias="A", ruta=rutaTex("1_03.tex"), etiquetas="h")
 
-g4 <- graficaColCategorias(ENC1$"1_04", ancho=0.6, etiquetasCategorias="A",ruta=rutaTex("1_04.tex"), etiquetas="h")
+g4 <- graficaColCategorias(ENC1$"1_04", ancho=0.6, etiquetasCategorias="A", ruta=rutaTex("1_04.tex"), etiquetas="h")
 
 g8 <- graficaLinea(ENC1$"1_08",rotar = "h", inicio=0, final=7000)
 exportarLatex(rutaTex("1_08.tex"), g8)
