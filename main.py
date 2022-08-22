@@ -1,5 +1,6 @@
-from datosipc import datosIPC
 from reporteine import ReporteINE
+
+from C.Users.laalvarado.Documents.GitHub.INE_IPC.datosipc import datosIPC
 
 if __name__ == "__main__":
     datos = datosIPC()
