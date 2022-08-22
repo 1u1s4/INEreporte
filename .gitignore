@@ -23,6 +23,5 @@ Plantilla/ResultadosEncovi/
 *.fdb_latexmk
 .Rproj.user
 .Rhistory
-main.py
 Utilidades
 __pycache__
