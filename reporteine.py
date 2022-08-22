@@ -1,11 +1,10 @@
 import os
 os.environ["R_HOME"] = r"C:\Program Files\R\R-4.2.1" # change as needed
 import rpy2.robjects.packages as rpackages
-import rpy2.robjects as robjects
 from xlsxchef import xlsxChef
 import pathlib
 from datetime import datetime
-import glob
+
 """
 data := {
     'nombre':str,
