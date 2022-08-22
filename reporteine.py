@@ -4,13 +4,15 @@ import rpy2.robjects.packages as rpackages
 from xlsxchef import xlsxChef
 import pathlib
 from datetime import datetime
+import WS_orga_INE
+
 
 """
 data := {
     'nombre':str,
     'fecha_inicial': str,
     'fecha_final': str,
-    'presentacion': str,w
+    'presentacion': str,
     'capitulos':[
         {
             'titulo': str,
@@ -233,7 +235,29 @@ class ReporteINE:
                         f.write("{\\includegraphics[width=52\\cuadri]{" + f"graficas/{i}_{j_str}.pdf" + "}\n")
                     f.write("{\\input{" + path + "/fuente.tex" + "}}\n")
 
-
+    def crear_reporte(self):
+        nombre = self.__data["nombre"].replace(" ", "_")
+        with open(nombre, "w") as f:
+            f.write("\\input{Carta3.tex}\n")
+            f.write("\\renewcommand{\\partes}{No por favor}\n")
+            f.write("\\renewcommand{\\titulodoc}{ " + self.__data["nombre"] + "}\n")
+            f.write("\\begin{document}\n")
+            f.write("\\includepdf{portada.pdf}\n")
+            f.write("\\newpage\n")
+            WS_orga_INE.junta_directiva()
+            f.write("\\input{participantes.tex}\n")
+            f.write("\\tableofcontents\n")
+            f.write("\\pagestyle{estandar}\n")
+            f.write("\\setcounter{page}{0}\n")
+            for capitulo in self.__data["capitulos"]:
+                titulo = capitulo["titulo"]
+                file_name = titulo.replace(" ", "_") + ".tex"
+                resumen = self.formato_LaTeX(capitulo["resumen"])
+                f.write("\\INEchaptercarta{" + titulo + "}{" + resumen + "}\n")
+                f.write("\\input{" + file_name + "}")
+            f.write("\\includepdf{contraportada.pdf}\n")
+            f.write("\\end{document}")
+            
 
     def formato_LaTeX(self, cadena: str) -> str:
         cadena = cadena.replace("%", "{\%}")
