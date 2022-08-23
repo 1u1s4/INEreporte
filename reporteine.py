@@ -213,7 +213,7 @@ class ReporteINE:
                     with open(os.path.join(path, dato + ".tex"), "w", encoding="utf-8") as f:
                         f.write(self.formato_LaTeX(sub_capitulo[dato]))
     
-    def hacer_capitulo(self):
+    def hacer_capitulos(self):
         i = 0
         for capitulo in self.__data['capitulos']:
             i += 1
@@ -244,7 +244,7 @@ class ReporteINE:
             f.write("\\begin{document}\n")
             f.write("\\includepdf{portada.pdf}\n")
             f.write("\\newpage\n")
-            WS_orga_INE.junta_directiva()
+            WS_orga_INE.junta_directiva(ruta=self.__path)
             f.write("\\input{participantes.tex}\n")
             f.write("\\tableofcontents\n")
             f.write("\\pagestyle{estandar}\n")

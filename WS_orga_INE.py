@@ -1,8 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
+import os
 
 
-def junta_directiva():
+def junta_directiva(ruta: str):
     URL = "https://www.ine.gob.gt/ine/institucion/organizacion/"
     headers = {'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"}
     r = requests.get(url=URL, headers=headers)
@@ -21,7 +22,7 @@ def junta_directiva():
             sub_apartados_replace = [i.replace("Subgerencia Técnica\n", "").replace("Subgerencia Administrativa Financiera\n", "") for i in sub_apartados]
             junta_directiva["GERENCIA"] = dict(zip(("GERENTE", "SUBGERENTE TECNICO", "SUBGERENTE ADMINISTRATIVO FINANCIERO"), sub_apartados_replace))
 
-    with open("organizacion.txt", mode='w', encoding='utf-8') as file:
+    with open(os.path.join(ruta, "organizacion.txt"), mode='w', encoding='utf-8') as file:
         file.write("{\\Bold \\LARGE AUTORIDADES}\\\\[1cm]\n")
         file.write("{\\Bold \\large \\color{color1!89!black} JUNTA  DIRECTIVA} \\\\[0.4cm]\n")
         for ministerio, titular_suplente in junta_directiva["JUNTA DIRECTIVA"].items():
