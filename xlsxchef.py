@@ -1,6 +1,5 @@
 # xlsx_chef.py
 import xlsxwriter
-from datosipc import datosIPC
 
 class xlsxChef:
     def __init__(self, tipo: str, path: str, nombre: str = 'XLSXprueba', NoCapitulo: int = 0) -> None:
