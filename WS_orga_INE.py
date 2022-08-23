@@ -22,7 +22,7 @@ def junta_directiva(ruta: str):
             sub_apartados_replace = [i.replace("Subgerencia Técnica\n", "").replace("Subgerencia Administrativa Financiera\n", "") for i in sub_apartados]
             junta_directiva["GERENCIA"] = dict(zip(("GERENTE", "SUBGERENTE TECNICO", "SUBGERENTE ADMINISTRATIVO FINANCIERO"), sub_apartados_replace))
 
-    with open(os.path.join(ruta, "organizacion.txt"), mode='w', encoding='utf-8') as file:
+    with open(os.path.join(ruta, "organizacion.tex"), mode='w', encoding='utf-8') as file:
         file.write("{\\Bold \\LARGE AUTORIDADES}\\\\[1cm]\n")
         file.write("{\\Bold \\large \\color{color1!89!black} JUNTA  DIRECTIVA} \\\\[0.4cm]\n")
         for ministerio, titular_suplente in junta_directiva["JUNTA DIRECTIVA"].items():

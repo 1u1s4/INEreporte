@@ -1,8 +1,9 @@
 from reporteine import ReporteINE
-
-from C.Users.laalvarado.Documents.GitHub.INE_IPC.datosipc import datosIPC
+from time import time
+from datosipc import datosIPC
 
 if __name__ == "__main__":
+    t = time()
     datos = datosIPC()
     reporte = ReporteINE(
         nombre="Prueba_IPC"
@@ -61,6 +62,9 @@ if __name__ == "__main__":
     )
     reporte.escribir_libros()
     reporte.generar_csv()
-    #reporte.hacer_graficas()
+    reporte.hacer_graficas()
     reporte.hacer_descripciones()
-    reporte.hacer_capitulo()
+    reporte.hacer_capitulos()
+    reporte.crear_reporte()
+    tf = time()
+    print(f"{tf-t:.2f}")

@@ -5,7 +5,7 @@ from xlsxchef import xlsxChef
 import pathlib
 from datetime import datetime
 import WS_orga_INE
-
+import shutil
 
 """
 data := {
@@ -68,6 +68,31 @@ class ReporteINE:
         os.mkdir(os.path.join(self.__path, "csv_cocinado"))
         os.mkdir(os.path.join(self.__path, "graficas"))
         os.mkdir(os.path.join(self.__path, "descripciones"))
+        # copiar archivos plantilla
+        FUENTES = (
+            "OpenSans-CondLight.ttf",
+            "OpenSans-CondBold.ttf",
+            "OpenSans-CondLightItalic.ttf")
+        for fuente in FUENTES:
+            shutil.copyfile(
+                f"Fuentes/{fuente}",
+                os.path.join(self.__path, fuente))
+        ARCHIVOS = (
+            "Carta3.tex",
+            "participantes.tex",
+            "presentacion.tex",
+            "contraportada.pdf",
+            "fondo-capitulo.pdf",
+            "fondo-capitulo-no-descripcion.pdf",
+            "parte.pdf",
+            "portada.pdf",
+            "topeven3.pdf",
+            "topodd3.pdf")
+        for archivo in ARCHIVOS:
+            shutil.copyfile(
+                f"Plantilla/{archivo}",
+                os.path.join(self.__path, archivo))
+
         # cargar modulo de R
         devtools = rpackages.importr('devtools')
         devtools.install_github("1u1s4/funcionesINE")
@@ -218,34 +243,80 @@ class ReporteINE:
         for capitulo in self.__data['capitulos']:
             i += 1
             j = 0
+            file_name = capitulo["titulo"].replace(" ", "_")
+            path = os.path.join(self.__path, file_name + ".tex")
             sub_capitulos = capitulo["sub_capitulos"]
-            for sub_capitulo in sub_capitulos:
-                j += 1
-                j_str = str(j).rjust(2, "0")
-                path = f"descripcion/{i}_{j_str}"
-                file_name = capitulo["titulo"].replace(" ", "_")
-                with open(os.path.join(self.__path, file_name + ".tex"), "w") as f:
-                    f.write("\\cajita{\\input{" + path + "/titulo.tex" + "}}\n")
-                    f.write("{\\input{" + path + "/descripcion.tex" + "}}\n")
-                    f.write("{\\input{" + path + "/titulo_grafico.tex" + "}}\n")
-                    f.write("{\\input{" + path + "/descripcion_grafico.tex" + "}}\n")
+            with open(path, "w", encoding='utf-8') as f:
+                for sub_capitulo in sub_capitulos:
+                    j += 1
+                    j_str = str(j).rjust(2, "0")
+                    carpeta = f"descripciones/{i}_{j_str}"
+                    titulo =  sub_capitulo["titulo"]
+                    f.write("\\cajita{%\n" + titulo + "}%\n")
+                    f.write("{%\n\\input{" + carpeta + "/descripcion.tex" + "}}%\n")
+                    f.write("{%\n\\input{" + carpeta + "/titulo_grafico.tex" + "}}%\n")
+                    f.write("{%\n\\input{" + carpeta + "/descripcion_grafico.tex" + "}}%\n")
                     if sub_capitulo["tipo_grafico"] in ("lineal"):
-                        f.write("{\\begin{tikzpicture}[x=1pt,y=1pt]\\input{" + f"graficas/{i}_{j_str}.tex" + "}\\end{tikzpicture}}\n")
+                        f.write("{%\n\\begin{tikzpicture}[x=1pt,y=1pt]\\input{" + f"graficas/{i}_{j_str}.tex" + "}\\end{tikzpicture}}%\n")
                     elif sub_capitulo["tipo_grafico"] in ("mapa"):
-                        f.write("{\\includegraphics[width=52\\cuadri]{" + f"graficas/{i}_{j_str}.pdf" + "}\n")
-                    f.write("{\\input{" + path + "/fuente.tex" + "}}\n")
+                        f.write("{%\n\\includegraphics[width=52\\cuadri]{" + f"graficas/{i}_{j_str}.pdf" + "}%\n")
+                    f.write("{%\n\\input{" + carpeta + "/fuente.tex" + "}}%\n\n")
 
     def crear_reporte(self):
         nombre = self.__data["nombre"].replace(" ", "_")
-        with open(nombre, "w") as f:
+        path = os.path.join(self.__path, f"{nombre}.tex")
+        with open(path, "w", encoding='utf-8') as f:
             f.write("\\input{Carta3.tex}\n")
             f.write("\\renewcommand{\\partes}{No por favor}\n")
-            f.write("\\renewcommand{\\titulodoc}{ " + self.__data["nombre"] + "}\n")
+            f.write("\\renewcommand{\\titulodoc}{" + self.__data["nombre"] + "}\n")
+            f.write("\\newcommand{\\ra}[1]{\\renewcommand{\\arraystretch}{#1}}\n")
             f.write("\\begin{document}\n")
             f.write("\\includepdf{portada.pdf}\n")
             f.write("\\newpage\n")
             WS_orga_INE.junta_directiva(ruta=self.__path)
-            f.write("\\input{participantes.tex}\n")
+            # preambulo
+            f.write("\\pagestyle{soloarriba}\n")
+            f.write("\\clearpage\n")
+            f.write("$\\ $\n")
+            f.write("\\vspace{14.5cm}\n")
+            f.write("\\noindent\\begin{tabular}{p{0.9cm}p{6.8cm}}\n")
+            hoy = datetime.strftime(datetime.today(), "%Y")
+            f.write(f"& {hoy}.$\,$ Guatemala, Centro América\\\\\n")
+            f.write("&\\Bold Instituto Nacional de Estadística\\\\[-0.4cm]\n")
+            f.write("&\\color{blue!50!black}\\url{www.ine.gob.gt}\\\\[0.9cm]\n")
+            f.write("\\end{tabular}\\\\\n")
+            f.write("\\noindent\\begin{tabular}{p{0.9cm}p{6.8cm}}\n")
+            f.write("& Está permitida la reproducción parcial o total de los contenidos de este documento con la mención de la fuente. \\\\[0.5cm]\n")
+            f.write("& Este documento fue elaborado empleando {\\Sans R}, Inkscape y {\\Logos \\XeLaTeX}.\\\\\n")
+            f.write("\\end{tabular}\n")
+            f.write("\\clearpage\n")
+            f.write("\\clearpage\n")
+            f.write("\\newpage $\\ $\n")
+            f.write("$\\ $\n")
+            f.write("\\vspace{0.0cm}\n")
+            f.write("\\begin{center}\n")
+            f.write("\\input{organizacion.tex}\n") # organigrama del INE
+            f.write("\\end{center}\n")
+            f.write("\\clearpage\n")
+            f.write("$\\ $\n")
+            f.write("\\vspace{0.0cm}\n")
+            f.write("\\begin{center}\n")
+            f.write("\\input{participantes.tex}\n") # participantes
+            f.write("\\end{center}\n")
+            f.write("\\vfill\n")
+            f.write("\\hrule\n")
+            f.write("\\cleardoublepage\n")
+            f.write("$\\ $\\\\[2cm]\n")
+            f.write("\\noindent {\\Bold \\huge Presentación}\n")
+            f.write("\\\\\\\\\n")
+            f.write("\\input{presentacion.tex}\n") # participantes
+            f.write("\\begin{center}\n")
+            f.write("\\textbf{Hugo Allan Garcia}\\\\\n")
+            f.write("Gerente Tecnico\\\\\n")
+            f.write("Instituto Nacional de Estadística\n")
+            f.write("\\end{center}\n")
+            f.write("\\cleardoublepage\n")
+            # fin-preambulo
             f.write("\\tableofcontents\n")
             f.write("\\pagestyle{estandar}\n")
             f.write("\\setcounter{page}{0}\n")
@@ -254,12 +325,17 @@ class ReporteINE:
                 file_name = titulo.replace(" ", "_") + ".tex"
                 resumen = self.formato_LaTeX(capitulo["resumen"])
                 f.write("\\INEchaptercarta{" + titulo + "}{" + resumen + "}\n")
-                f.write("\\input{" + file_name + "}")
+                f.write("\\input{" + file_name + "}\n")
             f.write("\\includepdf{contraportada.pdf}\n")
-            f.write("\\end{document}")
+            f.write("\\end{document}\n")
+            f.write("\\clearpage\n")
+            f.write("$\ $\n")
+            f.write("\\vspace{1cm}\n")
+            f.write("\\end{document}\n")
             
 
     def formato_LaTeX(self, cadena: str) -> str:
-        cadena = cadena.replace("%", "{\%}")
-        cadena = cadena.replace("_", "{\_}")
+        CARACTERES_ESPECIALES = ('{', '}', '#', '$', '%', '&', '~', '_', '^')
+        for caracter in CARACTERES_ESPECIALES:
+           cadena = cadena.replace(caracter, "{\\" + caracter + "}")
         return cadena
