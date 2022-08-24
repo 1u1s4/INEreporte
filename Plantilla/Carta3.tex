@@ -52,10 +52,13 @@ bottom = 0.925in
 \newcolumntype{g}[1]{>{\raggedleft\arraybackslash}p{#1}}
 \newcolumntype{q}[1]{>{\raggedright\arraybackslash}p{#1}}
 % Tipo de letra
+\usepackage[abspath]{currfile}
 \setmainfont[
-BoldFont = OpenSans-CondBold.ttf ,
-ItalicFont = OpenSans-CondLightItalic.ttf ,
-BoldItalicFont = OpenSans-CondLightItalic.ttf]{OpenSans-CondLight.ttf}
+	Path=\currfileabsdir,
+	BoldFont = fuentes/OpenSans-CondBold.ttf ,
+	ItalicFont = fuentes/OpenSans-CondLightItalic.ttf ,
+	BoldItalicFont = fuentes/OpenSans-CondLightItalic.ttf
+]{OpenSans-CondLight.ttf}
 \newfontfamily\Bold{Open Sans Condensed Bold}
 \newfontfamily\Sans{Open Sans}
 \newfontfamily\SansBold{Open Sans Bold}
