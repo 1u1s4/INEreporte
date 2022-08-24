@@ -70,6 +70,14 @@ class ReporteINE:
         os.mkdir(os.path.join(self.__path, "descripciones"))
         os.mkdir(os.path.join(self.__path, "plantilla"))
         # copiar archivos plantilla
+        FUENTES = (
+            "OpenSans-CondLight.ttf",
+            "OpenSans-CondBold.ttf",
+            "OpenSans-CondLightItalic.ttf")
+        for fuente in FUENTES:
+            shutil.copyfile(
+                f"Fuentes/{fuente}",
+                os.path.join(self.__path, f"plantilla/{fuente}"))
         ARCHIVOS = (
             "Carta3.tex",
             "participantes.tex",
@@ -80,10 +88,7 @@ class ReporteINE:
             "parte.pdf",
             "portada.pdf",
             "topeven3.pdf",
-            "topodd3.pdf",
-            "OpenSans-CondLight.ttf",
-            "OpenSans-CondBold.ttf",
-            "OpenSans-CondLightItalic.ttf")
+            "topodd3.pdf")
         for archivo in ARCHIVOS:
             shutil.copyfile(
                 f"Plantilla/{archivo}",
