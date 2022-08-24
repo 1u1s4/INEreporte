@@ -67,4 +67,4 @@ if __name__ == "__main__":
     reporte.hacer_capitulos()
     reporte.crear_reporte()
     tf = time()
-    print(f"{tf-t:.2f}")
+    print(f"[{tf-t:.2f} s]")
