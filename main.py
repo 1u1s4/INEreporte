@@ -1,3 +1,4 @@
+from xml.etree.ElementPath import prepare_self
 from reporteine import ReporteINE
 from time import time
 from datosipc import datosIPC
@@ -9,7 +10,7 @@ if __name__ == "__main__":
         nombre="Prueba_IPC"
     )
     reporte.agregar_capitulo(
-        titulo="Variables externas"
+        titulo="Variables que condicionan los precios internos"
     )
     subcap_data = datos.indice_precio_alimentos()
     reporte.agregar_subcapitulo(
@@ -31,40 +32,57 @@ if __name__ == "__main__":
         descripcion=subcap_data[1],
         fuente="FRED",
         tipo_grafico="lineal",
-        data=subcap_data[0]
+        data=subcap_data[0],
+        precision=2
     )
     subcap_data = datos.cambio_quetzal()
     reporte.agregar_subcapitulo(
         indice_capitulo=0,
-        titulo="Precio del pretróleo",
-        titulo_grafico="Precio promedio mensual del barril del petróleo",
-        descripcion_grafico="Indicador internacional, serie histórica, en dólares por barril",
+        titulo="Cambio del quetzal",
+        titulo_grafico="Tipo de cambio nominal promedio",
+        descripcion_grafico="República de Guatemala, serie histórica, en quetzales por dólar estadounidense",
+        descripcion=subcap_data[1],
+        fuente="Banco de Guatemala",
+        tipo_grafico="lineal",
+        data=subcap_data[0],
+        precision=2
+    )
+    subcap_data = datos.tasa_interes()
+    reporte.agregar_subcapitulo(
+        indice_capitulo=0,
+        titulo="Tasa de interés",
+        titulo_grafico="Tasas de interés activa bancaria",
+        descripcion_grafico="República de Guatemala, serie histórica, en porcentaje",
+        descripcion=subcap_data[1],
+        fuente="Banco de Guatemala",
+        tipo_grafico="lineal",
+        data=subcap_data[0],
+        precision=2
+    )
+    subcap_data = datos.ipc_usa()
+    reporte.agregar_subcapitulo(
+        indice_capitulo=0,
+        titulo="Índice de precios al consumidor de EE.UU.",
+        titulo_grafico="Variación interanual del IPC de Estados Unidos de América",
+        descripcion_grafico="Estados Unidos de América, serie histórica, en porcentaje",
         descripcion=subcap_data[1],
         fuente="FRED",
         tipo_grafico="lineal",
         data=subcap_data[0],
         precision=2
-    )
-    reporte.agregar_capitulo(
-        titulo="Variables externas 2"
     )
     subcap_data = datos.ipc_mex()
     reporte.agregar_subcapitulo(
-        indice_capitulo=1,
-        titulo="Precio del pretróleo",
-        titulo_grafico="Precio promedio mensual del barril del petróleo",
-        descripcion_grafico="Indicador internacional, serie histórica, en dólares por barril",
+        indice_capitulo=0,
+        titulo="Índice de precios al consumidor de México",
+        titulo_grafico="Variación interanual del IPC de México",
+        descripcion_grafico="Estados Unidos Mexicanos, serie histórica, en porcentaje",
         descripcion=subcap_data[1],
         fuente="FRED",
         tipo_grafico="lineal",
         data=subcap_data[0],
         precision=2
     )
-    reporte.escribir_libros()
-    reporte.generar_csv()
-    reporte.hacer_graficas()
-    reporte.hacer_descripciones()
-    reporte.hacer_capitulos()
     reporte.crear_reporte()
     reporte.compilar_reporte()
     tf = time()
