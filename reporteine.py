@@ -68,6 +68,7 @@ class ReporteINE:
         os.mkdir(os.path.join(self.__path, "csv_cocinado"))
         os.mkdir(os.path.join(self.__path, "graficas"))
         os.mkdir(os.path.join(self.__path, "descripciones"))
+        os.mkdir(os.path.join(self.__path, "fuentes"))
         # copiar archivos plantilla
         FUENTES = (
             "OpenSans-CondLight.ttf",
@@ -76,7 +77,7 @@ class ReporteINE:
         for fuente in FUENTES:
             shutil.copyfile(
                 f"Fuentes/{fuente}",
-                os.path.join(self.__path, fuente))
+                os.path.join(self.__path, f"fuentes/{fuente}"))
         ARCHIVOS = (
             "Carta3.tex",
             "participantes.tex",
@@ -268,7 +269,7 @@ class ReporteINE:
         with open(path, "w", encoding='utf-8') as f:
             f.write("\\input{Carta3.tex}\n")
             f.write("\\renewcommand{\\partes}{No por favor}\n")
-            f.write("\\renewcommand{\\titulodoc}{" + self.__data["nombre"] + "}\n")
+            f.write("\\renewcommand{\\titulodoc}{" + self.formato_LaTeX(self.__data["nombre"]) + "}\n")
             f.write("\\newcommand{\\ra}[1]{\\renewcommand{\\arraystretch}{#1}}\n")
             f.write("\\begin{document}\n")
             f.write("\\includepdf{portada.pdf}\n")
@@ -309,12 +310,7 @@ class ReporteINE:
             f.write("$\\ $\\\\[2cm]\n")
             f.write("\\noindent {\\Bold \\huge Presentación}\n")
             f.write("\\\\\\\\\n")
-            f.write("\\input{presentacion.tex}\n") # participantes
-            f.write("\\begin{center}\n")
-            f.write("\\textbf{Hugo Allan Garcia}\\\\\n")
-            f.write("Gerente Tecnico\\\\\n")
-            f.write("Instituto Nacional de Estadística\n")
-            f.write("\\end{center}\n")
+            f.write("\\input{presentacion.tex}\n")
             f.write("\\cleardoublepage\n")
             # fin-preambulo
             f.write("\\tableofcontents\n")
