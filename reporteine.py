@@ -68,16 +68,8 @@ class ReporteINE:
         os.mkdir(os.path.join(self.__path, "csv_cocinado"))
         os.mkdir(os.path.join(self.__path, "graficas"))
         os.mkdir(os.path.join(self.__path, "descripciones"))
-        os.mkdir(os.path.join(self.__path, "fuentes"))
+        os.mkdir(os.path.join(self.__path, "plantilla"))
         # copiar archivos plantilla
-        FUENTES = (
-            "OpenSans-CondLight.ttf",
-            "OpenSans-CondBold.ttf",
-            "OpenSans-CondLightItalic.ttf")
-        for fuente in FUENTES:
-            shutil.copyfile(
-                f"Fuentes/{fuente}",
-                os.path.join(self.__path, f"fuentes/{fuente}"))
         ARCHIVOS = (
             "Carta3.tex",
             "participantes.tex",
@@ -88,11 +80,14 @@ class ReporteINE:
             "parte.pdf",
             "portada.pdf",
             "topeven3.pdf",
-            "topodd3.pdf")
+            "topodd3.pdf",
+            "OpenSans-CondLight.ttf",
+            "OpenSans-CondBold.ttf",
+            "OpenSans-CondLightItalic.ttf")
         for archivo in ARCHIVOS:
             shutil.copyfile(
                 f"Plantilla/{archivo}",
-                os.path.join(self.__path, archivo))
+                os.path.join(self.__path, f"plantilla/{archivo}"))
 
         # cargar modulo de R
         devtools = rpackages.importr('devtools')
@@ -267,7 +262,7 @@ class ReporteINE:
         nombre = self.__data["nombre"].replace(" ", "_")
         path = os.path.join(self.__path, f"{nombre}.tex")
         with open(path, "w", encoding='utf-8') as f:
-            f.write("\\input{Carta3.tex}\n")
+            f.write("\\input{plantilla/Carta3.tex}\n")
             f.write("\\renewcommand{\\partes}{No por favor}\n")
             f.write("\\renewcommand{\\titulodoc}{" + self.formato_LaTeX(self.__data["nombre"]) + "}\n")
             f.write("\\newcommand{\\ra}[1]{\\renewcommand{\\arraystretch}{#1}}\n")
