@@ -6,6 +6,8 @@ import pathlib
 from datetime import datetime
 import WS_orga_INE
 import shutil
+import subprocess
+
 
 """
 data := {
@@ -69,6 +71,7 @@ class ReporteINE:
         os.mkdir(os.path.join(self.__path, "graficas"))
         os.mkdir(os.path.join(self.__path, "descripciones"))
         os.mkdir(os.path.join(self.__path, "plantilla"))
+        os.mkdir(os.path.join(self.__path, "tex"))
         # copiar archivos plantilla
         FUENTES = (
             "OpenSans-CondLight.ttf",
@@ -80,8 +83,6 @@ class ReporteINE:
                 os.path.join(self.__path, f"plantilla/{fuente}"))
         ARCHIVOS = (
             "Carta3.tex",
-            "participantes.tex",
-            "presentacion.tex",
             "contraportada.pdf",
             "fondo-capitulo.pdf",
             "fondo-capitulo-no-descripcion.pdf",
@@ -93,7 +94,14 @@ class ReporteINE:
             shutil.copyfile(
                 f"Plantilla/{archivo}",
                 os.path.join(self.__path, f"plantilla/{archivo}"))
-
+        TEXS = (
+            "participantes.tex",
+            "presentacion.tex",
+        )
+        for tex in TEXS:
+            shutil.copyfile(
+                f"Plantilla/{tex}",
+                os.path.join(self.__path, f"tex/{tex}"))
         # cargar modulo de R
         devtools = rpackages.importr('devtools')
         devtools.install_github("1u1s4/funcionesINE")
@@ -245,7 +253,7 @@ class ReporteINE:
             i += 1
             j = 0
             file_name = capitulo["titulo"].replace(" ", "_")
-            path = os.path.join(self.__path, file_name + ".tex")
+            path = os.path.join(self.__path, f"tex/{file_name}.tex")
             sub_capitulos = capitulo["sub_capitulos"]
             with open(path, "w", encoding='utf-8') as f:
                 for sub_capitulo in sub_capitulos:
@@ -272,9 +280,9 @@ class ReporteINE:
             f.write("\\renewcommand{\\titulodoc}{" + self.formato_LaTeX(self.__data["nombre"]) + "}\n")
             f.write("\\newcommand{\\ra}[1]{\\renewcommand{\\arraystretch}{#1}}\n")
             f.write("\\begin{document}\n")
-            f.write("\\includepdf{portada.pdf}\n")
+            f.write("\\includepdf{plantilla/portada.pdf}\n")
             f.write("\\newpage\n")
-            WS_orga_INE.junta_directiva(ruta=self.__path)
+            WS_orga_INE.junta_directiva(ruta=os.path.join(self.__path, "tex"))
             # preambulo
             f.write("\\pagestyle{soloarriba}\n")
             f.write("\\clearpage\n")
@@ -296,13 +304,13 @@ class ReporteINE:
             f.write("$\\ $\n")
             f.write("\\vspace{0.0cm}\n")
             f.write("\\begin{center}\n")
-            f.write("\\input{organizacion.tex}\n") # organigrama del INE
+            f.write("\\input{tex/organizacion.tex}\n") # organigrama del INE
             f.write("\\end{center}\n")
             f.write("\\clearpage\n")
             f.write("$\\ $\n")
             f.write("\\vspace{0.0cm}\n")
             f.write("\\begin{center}\n")
-            f.write("\\input{participantes.tex}\n") # participantes
+            f.write("\\input{tex/participantes.tex}\n") # participantes
             f.write("\\end{center}\n")
             f.write("\\vfill\n")
             f.write("\\hrule\n")
@@ -310,7 +318,7 @@ class ReporteINE:
             f.write("$\\ $\\\\[2cm]\n")
             f.write("\\noindent {\\Bold \\huge Presentación}\n")
             f.write("\\\\\\\\\n")
-            f.write("\\input{presentacion.tex}\n")
+            f.write("\\input{tex/presentacion.tex}\n")
             f.write("\\cleardoublepage\n")
             # fin-preambulo
             f.write("\\tableofcontents\n")
@@ -321,14 +329,19 @@ class ReporteINE:
                 file_name = titulo.replace(" ", "_") + ".tex"
                 resumen = self.formato_LaTeX(capitulo["resumen"])
                 f.write("\\INEchaptercarta{" + titulo + "}{" + resumen + "}\n")
-                f.write("\\input{" + file_name + "}\n")
-            f.write("\\includepdf{contraportada.pdf}\n")
+                f.write("\\input{tex/" + file_name + "}\n")
+            f.write("\\includepdf{plantilla/contraportada.pdf}\n")
             f.write("\\end{document}\n")
             f.write("\\clearpage\n")
             f.write("$\ $\n")
             f.write("\\vspace{1cm}\n")
             f.write("\\end{document}\n")
             
+    def compilar_reporte(self):
+        nombre = self.__data["nombre"].replace(" ", "_")
+        path = os.path.join(self.__path, f"{nombre}.tex")
+        subprocess.Popen(["xelatex", "-synctex=1", "-interaction=nonstopmode", path])
+
 
     def formato_LaTeX(self, cadena: str) -> str:
         CARACTERES_ESPECIALES = ('{', '}', '#', '$', '%', '&', '~', '_', '^')
