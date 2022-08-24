@@ -271,7 +271,7 @@ class ReporteINE:
                         f.write("{%\n\\includegraphics[width=52\\cuadri]{" + f"graficas/{i}_{j_str}.pdf" + "}%\n")
                     f.write("{%\n\\input{" + carpeta + "/fuente.tex" + "}}%\n\n")
 
-    def crear_reporte(self):
+    def hacer_cuerpo(self):
         nombre = self.__data["nombre"].replace(" ", "_")
         path = os.path.join(self.__path, f"{nombre}.tex")
         with open(path, "w", encoding='utf-8') as f:
@@ -340,8 +340,15 @@ class ReporteINE:
     def compilar_reporte(self):
         nombre = self.__data["nombre"].replace(" ", "_")
         path = os.path.join(self.__path, f"{nombre}.tex")
-        subprocess.Popen(["xelatex", "-synctex=1", "-interaction=nonstopmode", path])
+        subprocess.call(["xelatex", "-synctex=1", "-interaction=nonstopmode", path])
 
+    def crear_reporte(self):
+        self.escribir_libros()
+        self.generar_csv()
+        self.hacer_graficas()
+        self.hacer_descripciones()
+        self.hacer_capitulos()
+        self.hacer_cuerpo()
 
     def formato_LaTeX(self, cadena: str) -> str:
         CARACTERES_ESPECIALES = ('{', '}', '#', '$', '%', '&', '~', '_', '^')
