@@ -1,4 +1,5 @@
 import os
+from xml.etree.ElementPath import prepare_self
 os.environ["R_HOME"] = r"C:\Program Files\R\R-4.2.1" # change as needed
 import rpy2.robjects.packages as rpackages
 from xlsxchef import xlsxChef
@@ -213,9 +214,9 @@ class ReporteINE:
             sub_capitulos = capitulo["sub_capitulos"]
             for sub_capitulo in sub_capitulos:
                 indice = sub_capitulos.index(sub_capitulo)
+                indice_natural = str(indice + 1).rjust(2, "0")
+                referencia = f"{i}_{indice_natural}"
                 if sub_capitulo["tipo_grafico"] == "lineal":
-                    indice_natural = str(indice + 1).rjust(2, "0")
-                    referencia = f"{i}_{indice_natural}"
                     self.__funcionesINE.cuatroEtiquetas()
                     self.__funcionesINE.exportarLatex(
                         ruta_tex + f"/{referencia}.tex",
@@ -224,6 +225,12 @@ class ReporteINE:
                             precision=sub_capitulo["precision"]
                         )
                     )
+                elif sub_capitulo["tipo_grafico"] == "tabla":
+                    self.tabla_LaTeX(
+                        sub_capitulo["data"],
+                        os.path.join(self.__path, "graficas"),
+                        referencia,
+                        sub_capitulo["precision"])
     
     def hacer_descripciones(self) -> None:
         i = 0
@@ -269,6 +276,8 @@ class ReporteINE:
                         f.write("{%\n\\begin{tikzpicture}[x=1pt,y=1pt]\\input{" + f"graficas/{i}_{j_str}.tex" + "}\\end{tikzpicture}}%\n")
                     elif sub_capitulo["tipo_grafico"] in ("mapa"):
                         f.write("{%\n\\includegraphics[width=52\\cuadri]{" + f"graficas/{i}_{j_str}.pdf" + "}%\n")
+                    elif sub_capitulo["tipo_grafico"] in ("tabla"):
+                        f.write("{%\n\\input{" + f"graficas/{i}_{j_str}.tex" + "}}%\n")
                     f.write("{%\n\\input{" + carpeta + "/fuente.tex" + "}}%\n\n")
 
     def hacer_cuerpo(self):
@@ -355,3 +364,47 @@ class ReporteINE:
         for caracter in CARACTERES_ESPECIALES:
            cadena = cadena.replace(caracter, "{\\" + caracter + "}")
         return cadena
+
+    def tabla_LaTeX(self, datos, ruta_salida, nombre, precision: int = 2):
+        with open(os.path.join(ruta_salida, f"{nombre}.tex"), "w", encoding="utf-8") as f:
+            f.write("\\setlength{\\arrayrulewidth}{1.5pt}\n")
+            f.write("\\definecolor{Fcolor}{HTML}{e5e5fa}\n")
+            f.write("\\definecolor{Lcolor}{HTML}{4d80ff}\n")
+            alinacion = len(datos[0])*"c"
+            f.write("\\begin{tabular}{" + alinacion + "}\n")
+            f.write("\\arrayrulecolor{Lcolor} \hline\n")
+            f.write("\\rowcolor{Fcolor} ")
+            i = 0
+            for encabezado in datos[0]:
+                i += 1
+                f.write("\\textbf{" + encabezado + "}")
+                if i != len(datos[0]):
+                    f.write(" & ")
+                else:
+                    f.write("\\\\\n")
+            f.write("\\hline\n")
+            f.write("\\rowcolor{white} ")
+            for i in range(1, len(datos)):
+                j = 0
+                for celda in datos[i]:
+                    j += 1
+                    if type(celda) is str:
+                        f.write(f"{celda}")
+                    else:
+                        if precision == 1:
+                            f.write(f"{float(celda):.1f}")
+                        elif precision == 2:
+                            f.write(f"{float(celda):.2f}")
+                        elif precision == 3:
+                            f.write(f"{float(celda):.3f}")
+                        elif precision == 4:
+                            f.write(f"{float(celda):.4f}")
+                        else:
+                            f.write(f"{float(celda):.4f}")
+                    if j != len(datos[i]):
+                        f.write(" & ")
+                    else:
+                        f.write("\\\\\n")
+            f.write("\\hline\n")
+            f.write("\\end{tabular}\n")
+            
