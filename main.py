@@ -71,6 +71,7 @@ if __name__ == "__main__":
         data=subcap_data[0],
         precision=2
     )
+
     subcap_data = datos.ipc_mex()
     reporte.agregar_subcapitulo(
         indice_capitulo=0,
@@ -83,7 +84,19 @@ if __name__ == "__main__":
         data=subcap_data[0],
         precision=2
     )
+    subcap_data = datos.inflacion()
+    reporte.agregar_subcapitulo(
+        indice_capitulo=0,
+        titulo="Inflación en América Central",
+        titulo_grafico="Tasa de variación interanual del IPC de los países Centroamericanos",
+        descripcion_grafico="Centro América, meses seleccionados, en porcentaje",
+        descripcion=subcap_data[1],
+        fuente="INE",
+        tipo_grafico="tabla",
+        data=subcap_data[0],
+        precision=2
+    )
     reporte.crear_reporte()
-    reporte.compilar_reporte()
+    #reporte.compilar_reporte()
     tf = time()
     print(f"[{tf-t:.2f} s]")
