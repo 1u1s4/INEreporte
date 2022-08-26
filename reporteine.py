@@ -394,7 +394,7 @@ class ReporteINE:
             # si es tabla de inflacion lleva esa cosa sobre los meses de "Inflacion interanual a"
             if tabla_inflacion:
                 f.write("\\rowcolor{Fcolor} & \\multicolumn{2}{c}{\\textbf{Inflacion interanual a}}\\\\\n")
-                f.write("\\cmidrule[0.5pt]{2-3}\n")
+                f.write("\\cmidrule[0.9pt]{2-3}\n")
             f.write("\\rowcolor{Fcolor} ")
             i = 0
             for encabezado in datos[0]:
