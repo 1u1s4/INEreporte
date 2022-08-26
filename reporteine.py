@@ -230,11 +230,15 @@ class ReporteINE:
                         )
                     )
                 elif sub_capitulo["tipo_grafico"] == "tabla":
+                    t_inflacion = False
+                    if "Inflación" in sub_capitulo["titulo"]:
+                         t_inflacion = True
                     self.tabla_LaTeX(
                         sub_capitulo["data"],
                         os.path.join(self.__path, "graficas"),
                         referencia,
-                        sub_capitulo["precision"])
+                        sub_capitulo["precision"],
+                        t_inflacion)
     
     def hacer_descripciones(self) -> None:
         i = 0
@@ -369,14 +373,28 @@ class ReporteINE:
            cadena = cadena.replace(caracter, "{\\" + caracter + "}")
         return cadena
 
-    def tabla_LaTeX(self, datos, ruta_salida, nombre, precision: int = 2):
+    def tabla_LaTeX(
+        self,
+        datos,
+        ruta_salida,
+        nombre,
+        precision: int = 2,
+        tabla_inflacion: bool = False):
         with open(os.path.join(ruta_salida, f"{nombre}.tex"), "w", encoding="utf-8") as f:
             f.write("\\setlength{\\arrayrulewidth}{1.5pt}\n")
             f.write("\\definecolor{Fcolor}{HTML}{e5e5fa}\n")
             f.write("\\definecolor{Lcolor}{HTML}{4d80ff}\n")
+            # si es tabla de inflacion lleva esa cosa sobre los meses de "Inflacion interanual a"
+            if tabla_inflacion:
+                f.write("\\setlength{\\aboverulesep}{-1pt}\n")
+                f.write("\\setlength{\\belowrulesep}{0pt}\n")
             alinacion = len(datos[0])*"c"
             f.write("\\begin{tabular}{" + alinacion + "}\n")
             f.write("\\arrayrulecolor{Lcolor} \hline\n")
+            # si es tabla de inflacion lleva esa cosa sobre los meses de "Inflacion interanual a"
+            if tabla_inflacion:
+                f.write("\\rowcolor{Fcolor} & \\multicolumn{2}{c}{\\textbf{Inflacion interanual a}}\\\\\n")
+                f.write("\\cmidrule[0.5pt]{2-3}\n")
             f.write("\\rowcolor{Fcolor} ")
             i = 0
             for encabezado in datos[0]:
