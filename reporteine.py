@@ -349,10 +349,6 @@ class ReporteINE:
                 f.write("\\input{tex/" + file_name + "}\n")
             f.write("\\includepdf{plantilla/contraportada.pdf}\n")
             f.write("\\end{document}\n")
-            f.write("\\clearpage\n")
-            f.write("$\ $\n")
-            f.write("\\vspace{1cm}\n")
-            f.write("\\end{document}\n")
             
     def compilar_reporte(self):
         nombre = self.__data["nombre"].replace(" ", "_")
