@@ -66,13 +66,17 @@ class ReporteINE:
         self.__path = os.path.join(parent_dir, marca_temporal)
         # arbol de carpetas
         os.mkdir(self.__path)
-        os.mkdir(os.path.join(self.__path, "libros"))
-        os.mkdir(os.path.join(self.__path, "csv"))
-        os.mkdir(os.path.join(self.__path, "csv_cocinado"))
-        os.mkdir(os.path.join(self.__path, "graficas"))
-        os.mkdir(os.path.join(self.__path, "descripciones"))
-        os.mkdir(os.path.join(self.__path, "plantilla"))
-        os.mkdir(os.path.join(self.__path, "tex"))
+        DIRECTORIOS = (
+            "libros",
+            "csv",
+            "csv_cocinado",
+            "graficas",
+            "descripciones",
+            "plantilla",
+            "tex"
+        )
+        for dir in DIRECTORIOS:
+            os.mkdir(os.path.join(self.__path, dir))
         # copiar archivos plantilla
         FUENTES = (
             "OpenSans-CondLight.ttf",
