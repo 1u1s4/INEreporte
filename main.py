@@ -87,9 +87,9 @@ if __name__ == "__main__":
     subcap_data = datos.inflacion()
     reporte.agregar_subcapitulo(
         indice_capitulo=0,
-        titulo="Inflación en América Central",
-        titulo_grafico="Tasa de variación interanual del IPC de los países Centroamericanos",
-        descripcion_grafico="Centro América, meses seleccionados, en porcentaje",
+        titulo="Inflación en Centro América, República Dominicana y México",
+        titulo_grafico="Tasa de variación interanual del IPC de los países Centroamericanos, República Dominicana y México",
+        descripcion_grafico="Centro América, República Dominicana y México, meses seleccionados, en porcentaje",
         descripcion=subcap_data[1],
         fuente="INE",
         tipo_grafico="tabla",
