@@ -21,7 +21,8 @@ if __name__ == "__main__":
         descripcion=subcap_data[1],
         fuente="FAO",
         tipo_grafico="lineal",
-        data=subcap_data[0]
+        data=subcap_data[0],
+        opciones_grafico=dict(Q4Etiquetas=True)
     )
     subcap_data = datos.petroleo()
     reporte.agregar_subcapitulo(
@@ -33,7 +34,7 @@ if __name__ == "__main__":
         fuente="FRED",
         tipo_grafico="lineal",
         data=subcap_data[0],
-        precision=2
+        opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
     subcap_data = datos.cambio_quetzal()
     reporte.agregar_subcapitulo(
@@ -45,7 +46,7 @@ if __name__ == "__main__":
         fuente="Banco de Guatemala",
         tipo_grafico="lineal",
         data=subcap_data[0],
-        precision=2
+        opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
     subcap_data = datos.tasa_interes()
     reporte.agregar_subcapitulo(
@@ -57,7 +58,7 @@ if __name__ == "__main__":
         fuente="Banco de Guatemala",
         tipo_grafico="lineal",
         data=subcap_data[0],
-        precision=2
+        opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
     subcap_data = datos.ipc_usa()
     reporte.agregar_subcapitulo(
@@ -69,7 +70,7 @@ if __name__ == "__main__":
         fuente="FRED",
         tipo_grafico="lineal",
         data=subcap_data[0],
-        precision=2
+        opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
 
     subcap_data = datos.ipc_mex()
@@ -82,7 +83,7 @@ if __name__ == "__main__":
         fuente="FRED",
         tipo_grafico="lineal",
         data=subcap_data[0],
-        precision=2
+        opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
     subcap_data = datos.inflacion()
     reporte.agregar_subcapitulo(
@@ -94,7 +95,7 @@ if __name__ == "__main__":
         fuente="INE",
         tipo_grafico="tabla",
         data=subcap_data[0],
-        precision=2
+        opciones_grafico={"precision":2}
     )
     reporte.crear_reporte()
     #reporte.compilar_reporte()
