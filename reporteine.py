@@ -25,8 +25,8 @@ data := {
                     'descripcion': str,
                     'fuente': str,
                     'tipo_grafico': str,
-                    'precision': int = 1,
-                    'data: list[tuple[str, int]]
+                    'data: list[tuple[str, int]],
+                    'opciones_grafica':dict
                 }
             ]
         }
@@ -124,7 +124,7 @@ class ReporteINE:
         fuente: str,
         tipo_grafico: str,
         data: tuple,
-        opciones_grafico: tuple
+        opciones_grafico: dict
         ) -> None:
         sub_cap = {}
         sub_cap["titulo"] = titulo
