@@ -1,14 +1,11 @@
 import os
-from xml.etree.ElementPath import prepare_self
-os.environ["R_HOME"] = r"C:\Program Files\R\R-4.2.1" # change as needed
-import rpy2.robjects.packages as rpackages
-from xlsxchef import xlsxChef
-import pathlib
-from datetime import datetime
-import WS_orga_INE
 import shutil
+import pathlib
 import subprocess
-
+import WS_orga_INE
+from xlsxchef import xlsxChef
+from datetime import datetime
+from funcionesINE import FuncionesINE
 
 """
 data := {
@@ -107,14 +104,8 @@ class ReporteINE:
             shutil.copyfile(
                 f"Plantilla/{tex}",
                 os.path.join(self.__path, f"tex/{tex}"))
-        # cargar modulo de R
-        devtools = rpackages.importr('devtools')
-        devtools.install_github("1u1s4/funcionesINE")
-        self.__funcionesINE = rpackages.importr('funcionesINE')
-
-    @property
-    def data(self):
-        return self.__data
+        # cargar modulo de R 
+        self.f_INE = FuncionesINE()
 
     def agregar_capitulo(self, titulo: str, resumen: str = "") -> None:
         capitulo_nuevo = {}
@@ -133,7 +124,7 @@ class ReporteINE:
         fuente: str,
         tipo_grafico: str,
         data: tuple,
-        precision: int = 1
+        opciones_grafico: tuple
         ) -> None:
         sub_cap = {}
         sub_cap["titulo"] = titulo
@@ -142,7 +133,7 @@ class ReporteINE:
         sub_cap["descripcion"] = descripcion
         sub_cap["fuente"] = fuente
         sub_cap["tipo_grafico"] = tipo_grafico
-        sub_cap["precision"] = precision
+        sub_cap["opciones_grafico"] = opciones_grafico
         sub_cap["data"] = data
         self.__data.get('capitulos')[indice_capitulo]['sub_capitulos'].append(sub_cap)
     
@@ -198,47 +189,43 @@ class ReporteINE:
             libro_csv = f"{nombre}_csv.xlsx"
             csv_path = os.path.join(self.__path, "csv")
             os.mkdir(os.path.join(csv_path, str(i)))
-            self.__funcionesINE.escribirCSV(
-                self.__funcionesINE.leerLibroNormal(f'{ruta}/libros/{libro_cocinado}'),
-                ruta=f"{ruta}/csv_cocinado"
-                )
-            self.__funcionesINE.escribirCSV(
-                lista=self.__funcionesINE.leerLibro(ruta=f'{ruta}/libros/{libro_csv}'),
-                ruta=f"{ruta}/csv/{i}"
-                )
+            self.f_INE.escribirCSVcocinado(
+                ruta_libro=f'{ruta}/libros/{libro_cocinado}',
+                ruta_salida=f"{ruta}/csv_cocinado"
+            )
+            self.f_INE.escribirCSV(
+                ruta_libro=f'{ruta}/libros/{libro_csv}',
+                ruta_salida=f"{ruta}/csv/{i}")
     
     def hacer_graficas(self):
-        self.__funcionesINE.anual()
         ruta_tex = self.__path.replace("\\", "/") + "/graficas"
         i = 0
         for capitulo in self.__data['capitulos']:
             i += 1
             csv_path = os.path.join(self.__path, f"csv\\{i}").replace("\\", "/")
-            datos = self.__funcionesINE.cargaMasiva(csv_path, codificacion='utf-8')
+            self.f_INE.cargaMasiva(csv_path)
             sub_capitulos = capitulo["sub_capitulos"]
             for sub_capitulo in sub_capitulos:
                 indice = sub_capitulos.index(sub_capitulo)
                 indice_natural = str(indice + 1).rjust(2, "0")
                 referencia = f"{i}_{indice_natural}"
                 if sub_capitulo["tipo_grafico"] == "lineal":
-                    self.__funcionesINE.cuatroEtiquetas()
-                    self.__funcionesINE.exportarLatex(
-                        ruta_tex + f"/{referencia}.tex",
-                        self.__funcionesINE.graficaLinea(#
-                            datos[indice],
-                            precision=sub_capitulo["precision"]
-                        )
+                    self.f_INE.graficaLinea(
+                        data_index=indice,
+                        ruta_salida=ruta_tex,
+                        nombre=referencia,
+                        **sub_capitulo["opciones_grafico"]
                     )
                 elif sub_capitulo["tipo_grafico"] == "tabla":
                     t_inflacion = False
                     if "Inflación" in sub_capitulo["titulo"]:
                          t_inflacion = True
                     self.tabla_LaTeX(
-                        sub_capitulo["data"],
-                        os.path.join(self.__path, "graficas"),
-                        referencia,
-                        sub_capitulo["precision"],
-                        t_inflacion)
+                        datos=sub_capitulo["data"],
+                        ruta_salida=os.path.join(self.__path, "graficas"),
+                        nombre=referencia,
+                        tabla_inflacion=t_inflacion,
+                        **sub_capitulo["opciones_grafico"])
     
     def hacer_descripciones(self) -> None:
         i = 0
