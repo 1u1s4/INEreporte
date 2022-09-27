@@ -25,7 +25,6 @@ Plantilla/ResultadosEncovi/
 .Rhistory
 Utilidades
 __pycache__
-INEIPC
 IPC C.A. REP. DOMINICANA Y MÉXICO.xlsx
 funcionesjo.py
 descriptoripc.py
@@ -35,3 +34,4 @@ FFPI.xls
 Temp
 tasa_interes.xls
 prueba.py
+sqline.py
