@@ -182,7 +182,83 @@ if __name__ == "__main__":
             data=datos,
             opciones_grafico={"precision":2, "Q4Etiquetas":True}
         )
-
+# capitulos 5 a 12
+    region = {
+        1: 'I',
+        2: 'II',
+        3: 'III',
+        4: 'VI',
+        5: 'V',
+        6: 'VI',
+        7: 'VII',
+        8: 'VIII'
+    }
+    indice_inicial = 3
+    for i in range(1, 9):
+        indice = indice_inicial + i - 1
+        reporte.agregar_capitulo(
+            titulo=f"Resultados del IPC para la region {region[i]}"
+        )
+        subcap_data = datos.serie_IPC(i)
+        reporte.agregar_subcapitulo(
+            indice_capitulo=indice,
+            titulo="Evolución del IPC",
+            titulo_grafico="IPC, base diciembre del 2010",
+            descripcion_grafico="República de Guatemala, Serie histórica 1 año, adimensional",
+            descripcion=subcap_data[1],
+            fuente="INE",
+            tipo_grafico="lineal",
+            data=subcap_data[0],
+            opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        )
+        subcap_data = datos.serie_inflacion(i, 'interanual')
+        reporte.agregar_subcapitulo(
+            indice_capitulo=indice,
+            titulo="Evolución del cambio anual del IPC",
+            titulo_grafico="Variación interanual del IPC",
+            descripcion_grafico="República de Guatemala, serie histórica, en porcentaje",
+            descripcion=subcap_data[1],
+            fuente="INE",
+            tipo_grafico="lineal",
+            data=subcap_data[0],
+            opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        )
+        subcap_data = datos.serie_inflacion(i, 'acumulada')
+        reporte.agregar_subcapitulo(
+            indice_capitulo=indice,
+            titulo="Evolución del cambio acumulado del IPC",
+            titulo_grafico="Variación acumulada del IPC",
+            descripcion_grafico="República de Guatemala, serie histórica, en porcentaje",
+            descripcion=subcap_data[1],
+            fuente="INE",
+            tipo_grafico="lineal",
+            data=subcap_data[0],
+            opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        )
+        subcap_data = datos.serie_inflacion(i, 'intermensual')
+        reporte.agregar_subcapitulo(
+            indice_capitulo=indice,
+            titulo="Evolución del cambio mensual del IPC",
+            titulo_grafico="Variación intermensual del IPC",
+            descripcion_grafico="República de Guatemala, serie histórica, en porcentaje",
+            descripcion=subcap_data[1],
+            fuente="INE",
+            tipo_grafico="lineal",
+            data=subcap_data[0],
+            opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        )
+        subcap_data = datos.serie_poder_adquisitivo(i)
+        reporte.agregar_subcapitulo(
+            indice_capitulo=indice,
+            titulo="Valor del dinero",
+            titulo_grafico="Poder adquisitivo del quetzal",
+            descripcion_grafico="República de Guatemala, serie histórica mensual, en porcentaje",
+            descripcion=subcap_data[1],
+            fuente="INE",
+            tipo_grafico="lineal",
+            data=subcap_data[0],
+            opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        )
     reporte.crear_reporte()
     #reporte.compilar_reporte()
     tf = time()
