@@ -107,7 +107,12 @@ class ReporteINE:
         # cargar modulo de R 
         self.f_INE = FuncionesINE()
         # hacer junta directiva
-        WS_orga_INE.junta_directiva(ruta=os.path.join(self.__path, "tex"))
+        if WS_orga_INE.conexionQ():
+            WS_orga_INE.junta_directiva(ruta=os.path.join(self.__path, "tex"))
+        else:
+            shutil.copyfile(
+                "Plantilla/organizacion.tex",
+                os.path.join(self.__path, "tex/organizacion.tex")) 
 
     def agregar_capitulo(self, titulo: str, resumen: str = "") -> None:
         capitulo_nuevo = {}
@@ -413,4 +418,3 @@ class ReporteINE:
                         f.write("\\\\\n")
             f.write("\\hline\n")
             f.write("\\end{tabular}\n")
-            
