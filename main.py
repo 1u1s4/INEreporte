@@ -169,7 +169,7 @@ if __name__ == "__main__":
     datos_gba = datos.series_Gba(0)
     for Gba in datos_gba:
         nombre = Gba[0]
-        datos = Gba[1]
+        datosGba = Gba[1]
         desc = Gba[2]
         reporte.agregar_subcapitulo(
             indice_capitulo=2,
@@ -179,7 +179,7 @@ if __name__ == "__main__":
             descripcion=desc,
             fuente="INE",
             tipo_grafico="lineal",
-            data=datos,
+            data=datosGba,
             opciones_grafico={"precision":2, "Q4Etiquetas":True}
         )
 # capitulos 5 a 12
@@ -194,12 +194,12 @@ if __name__ == "__main__":
         8: 'VIII'
     }
     indice_inicial = 3
-    for i in range(1, 9):
-        indice = indice_inicial + i - 1
+    for i in range(8):
+        indice = indice_inicial + i
         reporte.agregar_capitulo(
-            titulo=f"Resultados del IPC para la region {region[i]}"
+            titulo=f"Resultados del IPC para la region {region[i+1]}"
         )
-        subcap_data = datos.serie_IPC(i)
+        subcap_data = datos.serie_IPC(i+1)
         reporte.agregar_subcapitulo(
             indice_capitulo=indice,
             titulo="Evolución del IPC",
@@ -211,7 +211,7 @@ if __name__ == "__main__":
             data=subcap_data[0],
             opciones_grafico={"precision":2, "Q4Etiquetas":True}
         )
-        subcap_data = datos.serie_inflacion(i, 'interanual')
+        subcap_data = datos.serie_inflacion(i+1, 'interanual')
         reporte.agregar_subcapitulo(
             indice_capitulo=indice,
             titulo="Evolución del cambio anual del IPC",
@@ -223,7 +223,7 @@ if __name__ == "__main__":
             data=subcap_data[0],
             opciones_grafico={"precision":2, "Q4Etiquetas":True}
         )
-        subcap_data = datos.serie_inflacion(i, 'acumulada')
+        subcap_data = datos.serie_inflacion(i+1, 'acumulada')
         reporte.agregar_subcapitulo(
             indice_capitulo=indice,
             titulo="Evolución del cambio acumulado del IPC",
@@ -235,7 +235,7 @@ if __name__ == "__main__":
             data=subcap_data[0],
             opciones_grafico={"precision":2, "Q4Etiquetas":True}
         )
-        subcap_data = datos.serie_inflacion(i, 'intermensual')
+        subcap_data = datos.serie_inflacion(i+1, 'intermensual')
         reporte.agregar_subcapitulo(
             indice_capitulo=indice,
             titulo="Evolución del cambio mensual del IPC",
@@ -247,7 +247,7 @@ if __name__ == "__main__":
             data=subcap_data[0],
             opciones_grafico={"precision":2, "Q4Etiquetas":True}
         )
-        subcap_data = datos.serie_poder_adquisitivo(i)
+        subcap_data = datos.serie_poder_adquisitivo(i+1)
         reporte.agregar_subcapitulo(
             indice_capitulo=indice,
             titulo="Valor del dinero",
