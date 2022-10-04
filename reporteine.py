@@ -57,6 +57,7 @@ class ReporteINE:
         self.__data['fecha_inicio'] = fecha_inicial
         self.__data['fecha_final'] = fecha_final
         self.__data['capitulos'] = []
+        self._indice = -1
         # hacer directorio para guardar documentos
         marca_temporal = datetime.strftime(datetime.today(), "%d-%m-%Y_%H_%M_%S")
         parent_dir = pathlib.Path().resolve()
@@ -120,10 +121,10 @@ class ReporteINE:
         capitulo_nuevo["resumen"] = resumen
         capitulo_nuevo["sub_capitulos"] = []
         self.__data.get('capitulos').append(capitulo_nuevo)
+        self._indice += 1
 
     def agregar_subcapitulo(
         self,
-        indice_capitulo: str,
         titulo: str,
         titulo_grafico: str,
         descripcion_grafico: str,
@@ -142,7 +143,7 @@ class ReporteINE:
         sub_cap["tipo_grafico"] = tipo_grafico
         sub_cap["opciones_grafico"] = opciones_grafico
         sub_cap["data"] = data
-        self.__data.get('capitulos')[indice_capitulo]['sub_capitulos'].append(sub_cap)
+        self.__data.get('capitulos')[self._indice]['sub_capitulos'].append(sub_cap)
     
     def escribir_libros(self) -> None:
         i = 0
