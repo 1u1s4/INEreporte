@@ -164,7 +164,8 @@ class ReporteINE:
             )
             sub_capitulos = capitulo["sub_capitulos"]
             for sub_capitulo in sub_capitulos:
-                if sub_capitulo["tipo_grafico"] == "lineal":
+                tipo_grafico = sub_capitulo["tipo_grafico"]
+                if tipo_grafico in ("lineal", "barra"):
                     encabezados = True 
                     if len(sub_capitulo["data"][0]) > 2:
                         encabezados = False
@@ -217,14 +218,22 @@ class ReporteINE:
                 indice = sub_capitulos.index(sub_capitulo)
                 indice_natural = str(indice + 1).rjust(2, "0")
                 referencia = f"{i}_{indice_natural}"
-                if sub_capitulo["tipo_grafico"] == "lineal":
+                tipo_grafico = sub_capitulo["tipo_grafico"]
+                if tipo_grafico == "lineal":
                     self.f_INE.graficaLinea(
                         data_index=indice,
                         ruta_salida=ruta_tex,
                         nombre=referencia,
                         **sub_capitulo["opciones_grafico"]
                     )
-                elif sub_capitulo["tipo_grafico"] == "tabla":
+                elif tipo_grafico == "barra":
+                    self.f_INE.graficaBar(
+                        data_index=indice,
+                        ruta_salida=ruta_tex,
+                        nombre=referencia,
+                        **sub_capitulo["opciones_grafico"]
+                    )
+                elif tipo_grafico == "tabla":
                     t_inflacion = False
                     if "Inflación" in sub_capitulo["titulo"]:
                          t_inflacion = True
@@ -275,7 +284,7 @@ class ReporteINE:
                     f.write("{%\n\\input{" + carpeta + "/descripcion.tex" + "}}%\n")
                     f.write("{%\n\\input{" + carpeta + "/titulo_grafico.tex" + "}}%\n")
                     f.write("{%\n\\input{" + carpeta + "/descripcion_grafico.tex" + "}}%\n")
-                    if sub_capitulo["tipo_grafico"] in ("lineal"):
+                    if sub_capitulo["tipo_grafico"] in ("lineal", "barra"):
                         f.write("{%\n\\begin{tikzpicture}[x=1pt,y=1pt]\\input{" + f"graficas/{i}_{j_str}.tex" + "}\\end{tikzpicture}}%\n")
                     elif sub_capitulo["tipo_grafico"] in ("mapa"):
                         f.write("{%\n\\includegraphics[width=52\\cuadri]{" + f"graficas/{i}_{j_str}.pdf" + "}%\n")
