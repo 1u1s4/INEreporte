@@ -180,6 +180,17 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
+    subcap_data = datos.incidencias_divisiones()
+    reporte.agregar_subcapitulo(
+        titulo="Incidencias mensuales por división de gasto básico",
+        titulo_grafico="Incidencias mensuales",
+        descripcion_grafico="República de Guatemala, Incidencias mensuales, porcentaje",
+        descripcion=subcap_data[1],
+        fuente="INE",
+        tipo_grafico="barra",
+        data=subcap_data[0],
+        opciones_grafico={"precision":2}
+    )
     subcap_data = datos.serie_poder_adquisitivo(0)
     reporte.agregar_subcapitulo(
         titulo="Valor del dinero",
@@ -221,25 +232,76 @@ if __name__ == "__main__":
         7: 'VII',
         8: 'VIII'
     }
-    for i in range(8):
+    for RegCod in range(1, 9):
         reporte.agregar_capitulo(
-            titulo=f"Resultados del IPC para la region {region[i+1]}"
+            titulo=f"Resultados del IPC para la region {region[RegCod]}"
         )
-        datos_gba = datos.series_Gba(i + 1)
-        for Gba in datos_gba:
-            nombre = Gba[0]
-            datosGba = Gba[1]
-            desc = Gba[2]
-            reporte.agregar_subcapitulo(
-                titulo=f"Evolución del IPC del gasto basico {nombre}",
-                titulo_grafico="IPC, base diciembre del 2010",
-                descripcion_grafico="República de Guatemala, Serie histórica 1 año, adimensional",
-                descripcion=desc,
-                fuente="INE",
-                tipo_grafico="lineal",
-                data=datosGba,
-                opciones_grafico={"precision":2, "Q4Etiquetas":True}
-            )
+        subcap_data = datos.serie_IPC(RegCod)
+        reporte.agregar_subcapitulo(
+            titulo="Evolución del IPC",
+            titulo_grafico="IPC, base diciembre del 2010",
+            descripcion_grafico=f"Region {region[RegCod]}, Serie histórica 1 año, adimensional",
+            descripcion=subcap_data[1],
+            fuente="INE",
+            tipo_grafico="lineal",
+            data=subcap_data[0],
+            opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        )
+        subcap_data = datos.serie_inflacion(RegCod, 'interanual')
+        reporte.agregar_subcapitulo(
+            titulo="Evolución del cambio anual del IPC",
+            titulo_grafico="Variación interanual del IPC",
+            descripcion_grafico=f"Region {region[RegCod]}, serie histórica, en porcentaje",
+            descripcion=subcap_data[1],
+            fuente="INE",
+            tipo_grafico="lineal",
+            data=subcap_data[0],
+            opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        )
+        subcap_data = datos.serie_inflacion(RegCod, 'acumulada')
+        reporte.agregar_subcapitulo(
+            titulo="Evolución del cambio acumulado del IPC",
+            titulo_grafico="Variación acumulada del IPC",
+            descripcion_grafico=f"Region {region[RegCod]}, serie histórica, en porcentaje",
+            descripcion=subcap_data[1],
+            fuente="INE",
+            tipo_grafico="lineal",
+            data=subcap_data[0],
+            opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        )
+        subcap_data = datos.serie_inflacion(RegCod, 'intermensual')
+        reporte.agregar_subcapitulo(
+            titulo="Evolución del cambio mensual del IPC",
+            titulo_grafico="Variación intermensual del IPC",
+            descripcion_grafico=f"Region {region[RegCod]}, serie histórica, en porcentaje",
+            descripcion=subcap_data[1],
+            fuente="INE",
+            tipo_grafico="lineal",
+            data=subcap_data[0],
+            opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        )
+        subcap_data = datos.incidencias_divisiones(RegCod)
+        reporte.agregar_subcapitulo(
+            titulo="Incidencias mensuales por división de gasto básico",
+            titulo_grafico="Incidencias mensuales",
+            descripcion_grafico=f"Region {region[RegCod]}, Incidencias mensuales, porcentaje",
+            descripcion=subcap_data[1],
+            fuente="INE",
+            tipo_grafico="barra",
+            data=subcap_data[0],
+            opciones_grafico={"precision":2}
+        )
+        subcap_data = datos.serie_poder_adquisitivo(RegCod)
+        reporte.agregar_subcapitulo(
+            titulo="Valor del dinero",
+            titulo_grafico="Poder adquisitivo del quetzal",
+            descripcion_grafico=f"Region {region[RegCod]}, serie histórica mensual, en porcentaje",
+            descripcion=subcap_data[1],
+            fuente="INE",
+            tipo_grafico="lineal",
+            data=subcap_data[0],
+            opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        )
     print(f"[{time()-t:.2f} s]")
     reporte.crear_reporte()
     #reporte.compilar_reporte()
