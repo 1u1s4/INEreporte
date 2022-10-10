@@ -180,7 +180,7 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
-    subcap_data = datos.incidencias_divisiones()
+    subcap_data = datos.incidencias_divisiones(0)
     reporte.agregar_subcapitulo(
         titulo="Incidencias mensuales por división de gasto básico",
         titulo_grafico="Incidencias mensuales",
