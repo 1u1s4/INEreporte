@@ -202,26 +202,7 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
-#capitulo 4
-    reporte.agregar_capitulo(
-        titulo="Serie histórica de índices a nivel nacional de todos los gastos básicos"
-    )
-    datos_gba = datos.series_Gba(0)
-    for Gba in datos_gba:
-        nombre = Gba[0]
-        datosGba = Gba[1]
-        desc = Gba[2]
-        reporte.agregar_subcapitulo(
-            titulo=f"Evolución del IPC del gasto basico {nombre}",
-            titulo_grafico="IPC, base diciembre del 2010",
-            descripcion_grafico="República de Guatemala, Serie histórica 1 año, adimensional",
-            descripcion=desc,
-            fuente="INE",
-            tipo_grafico="lineal",
-            data=datosGba,
-            opciones_grafico={"precision":2, "Q4Etiquetas":True}
-        )
-# capitulos 5 a 12
+# capitulos regionales
     region = {
         1: 'I',
         2: 'II',
@@ -300,6 +281,25 @@ if __name__ == "__main__":
             fuente="INE",
             tipo_grafico="lineal",
             data=subcap_data[0],
+            opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        )
+#capitulo 4
+    reporte.agregar_capitulo(
+        titulo="Anexos"
+    )
+    datos_gba = datos.series_Gba(0)
+    for Gba in datos_gba:
+        nombre = Gba[0]
+        datosGba = Gba[1]
+        desc = Gba[2]
+        reporte.agregar_subcapitulo(
+            titulo=f"Evolución del IPC del gasto basico {nombre}",
+            titulo_grafico="IPC, base diciembre del 2010",
+            descripcion_grafico="República de Guatemala, Serie histórica 1 año, adimensional",
+            descripcion=desc,
+            fuente="INE",
+            tipo_grafico="lineal",
+            data=datosGba,
             opciones_grafico={"precision":2, "Q4Etiquetas":True}
         )
     print(f"[{time()-t:.2f} s]")
