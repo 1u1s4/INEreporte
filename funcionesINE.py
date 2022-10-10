@@ -46,9 +46,9 @@ class FuncionesINE:
         if Q4Etiquetas:
             self.__funcionesINE.cuatroEtiquetas()
         if rotar:
-            rotar = robjects.r("T")
+            rotar = robjects.r("TRUE")
         else:
-            rotar = robjects.r("F")
+            rotar = robjects.r("FALSE")
         if final is None:
             final = robjects.r("NA")
         self.__funcionesINE.exportarLatex(
@@ -64,3 +64,35 @@ class FuncionesINE:
             )
         )
 
+    def graficaBar(
+        self,
+        data_index: int,
+        ruta_salida: str,
+        nombre: str,
+        precision: int = 2,
+        ancho: float = 0.6,
+        ordenar: bool = True,
+        escala = 'normal') -> None:
+        if self.Qanual:
+            self.__funcionesINE.anual(
+                robjects.r("rgb(0,0,1)"),
+                robjects.r("rgb(0.6156862745098039,0.7333333333333333,1)")
+            )
+        if ordenar:
+            ordenar = robjects.r("TRUE")
+        else:
+            ordenar = robjects.r("FALSE")
+        g = self.__funcionesINE.graficaBar(
+                    self.__datos[data_index],
+                    ancho=ancho,
+                    ordenar=ordenar,
+                    escala=escala
+                )
+        g =  self.__funcionesINE.etiquetasBarras(
+                g,
+                precision=precision
+            )
+        self.__funcionesINE.exportarLatex(
+            ruta_salida + f"/{nombre}.tex",
+            g
+        )
