@@ -302,8 +302,8 @@ if __name__ == "__main__":
             data=datosGba,
             opciones_grafico={"precision":2, "Q4Etiquetas":True}
         )
-    print(f"[{time()-t:.2f} s]")
+    print(f"Generacion de datos [{time()-t:.2f} s]")
     reporte.crear_reporte()
     #reporte.compilar_reporte()
     tf = time()
-    print(f"[{tf-t:.2f} s]")
+    print(f"[{(tf-t)//60:.2f} min]")
