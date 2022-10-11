@@ -109,7 +109,12 @@ class ReporteINE:
         self.f_INE = FuncionesINE()
         # hacer junta directiva
         if WS_orga_INE.conexionQ():
-            WS_orga_INE.junta_directiva(ruta=os.path.join(self.__path, "tex"))
+            try:
+                WS_orga_INE.junta_directiva(ruta=os.path.join(self.__path, "tex"))
+            except:
+                shutil.copyfile(
+                    "Plantilla/organizacion.tex",
+                    os.path.join(self.__path, "tex/organizacion.tex")) 
         else:
             shutil.copyfile(
                 "Plantilla/organizacion.tex",
