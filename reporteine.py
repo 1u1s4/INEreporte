@@ -120,6 +120,14 @@ class ReporteINE:
                 "Plantilla/organizacion.tex",
                 os.path.join(self.__path, "tex/organizacion.tex")) 
 
+    def aproximador(self, datos, precision: int = 2):
+        datos_aprox = []
+        for dato in datos:
+            x = dato[0]
+            y = round(dato[1], precision)
+            datos_aprox.append((x, y))
+        return datos_aprox
+
     def agregar_capitulo(self, titulo: str, resumen: str = "") -> None:
         capitulo_nuevo = {}
         capitulo_nuevo["titulo"] = titulo
@@ -175,8 +183,13 @@ class ReporteINE:
                     if len(sub_capitulo["data"][0]) > 2:
                         encabezados = False
                     k = sub_capitulos.index(sub_capitulo) + 1
+                    try:
+                        prec = sub_capitulo["opciones_grafico"]["precision"]
+                    except KeyError:
+                        prec = 2
                     csv_chef.escribir_hoja(
-                        datos=sub_capitulo["data"],
+                        # realizar aproximacion de datos
+                        datos=self.aproximador(sub_capitulo["data"], prec),
                         ordinal=k,
                         encabezadosXY=encabezados
                     )
