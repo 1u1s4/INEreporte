@@ -4,7 +4,9 @@ from datosipc import datosIPC
 
 if __name__ == "__main__":
     t = time()
-    datos = datosIPC(8, 2022)
+    mes = 8
+    anio = 2022
+    datos = datosIPC(anio, mes)
     reporte = ReporteINE(
         nombre="Prueba_IPC"
     )
@@ -45,11 +47,21 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico=dict(Q4Etiquetas=True)
     )
+    subcap_data = datos.desagregacion_fuentes(mes)
+    reporte.agregar_subcapitulo(
+        titulo="Desagregación de fuentes",
+        titulo_grafico="Desagregación porcentual de fuentes por tipo, 1 año",
+        descripcion_grafico="Desagregación por tipo, porcentaje",
+        descripcion=subcap_data[1],
+        fuente="INE",
+        tipo_grafico="barra",
+        data=subcap_data[0],
+        opciones_grafico={"precision":2}
+    )
 # capitulo 2
     reporte.agregar_capitulo(
         titulo="Variables exógenas"
     )
-    '''
     subcap_data = datos.indice_precio_alimentos()
     reporte.agregar_subcapitulo(
         indice_capitulo=0,
@@ -75,7 +87,6 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
-    '''
     subcap_data = datos.cambio_quetzal()
     reporte.agregar_subcapitulo(
         titulo="Cambio del quetzal",
