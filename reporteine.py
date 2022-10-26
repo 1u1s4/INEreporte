@@ -13,6 +13,7 @@ data := {
     'fecha_inicial': str,
     'fecha_final': str,
     'presentacion': str,
+    'plantillas': list[files]
     'capitulos':[
         {
             'titulo': str,
@@ -51,7 +52,7 @@ class ReporteINE:
     hacer_graficas()
         
     """
-    def __init__(self, nombre: str, fecha_inicial: str = "", fecha_final: str = "") -> None:
+    def __init__(self,nombre: str, fecha_inicial: str = "", fecha_final: str = "") -> None:
         self.__data = {}
         self.__data['nombre'] = nombre
         self.__data['fecha_inicio'] = fecha_inicial
@@ -100,6 +101,8 @@ class ReporteINE:
         TEXS = (
             "participantes.tex",
             "presentacion.tex",
+            "glosario.tex",
+            "formulas.tex"
         )
         for tex in TEXS:
             shutil.copyfile(
@@ -368,6 +371,12 @@ class ReporteINE:
                 resumen = self.formato_LaTeX(capitulo["resumen"])
                 f.write("\\INEchaptercarta{" + titulo + "}{" + resumen + "}\n")
                 f.write("\\input{tex/" + file_name + "}\n")
+            # hacer apendice
+            f.write("\\appendix\n")
+            f.write("\\INEchaptercarta{Glosario}{}\n")
+            f.write("\\input{tex/glosario.tex}\n")
+            f.write("\\INEchaptercarta{Principales fórmulas de cálculo}{}\n")
+            f.write("\\input{tex/formulas.tex}\n")
             f.write("\\includepdf{plantilla/contraportada.pdf}\n")
             f.write("\\end{document}\n")
             
