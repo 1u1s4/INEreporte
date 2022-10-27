@@ -4,7 +4,7 @@ from datosipc import datosIPC
 
 if __name__ == "__main__":
     t = time()
-    mes = 8
+    mes = 9
     anio = 2022
     datos = datosIPC(anio, mes)
     reporte = ReporteINE(
@@ -64,7 +64,6 @@ if __name__ == "__main__":
     )
     subcap_data = datos.indice_precio_alimentos()
     reporte.agregar_subcapitulo(
-        indice_capitulo=0,
         titulo="Precio internacional de los alimentos",
         titulo_grafico="Índice de precios de los alimentos de la FAO",
         descripcion_grafico="Indicador internacional, serie histórica, adimensional",
@@ -77,7 +76,6 @@ if __name__ == "__main__":
     
     subcap_data = datos.petroleo()
     reporte.agregar_subcapitulo(
-        indice_capitulo=0,
         titulo="Precio del pretróleo",
         titulo_grafico="Precio promedio mensual del barril del petróleo",
         descripcion_grafico="Indicador internacional, serie histórica, en dólares por barril",
