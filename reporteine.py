@@ -1,3 +1,4 @@
+from io import TextIOWrapper
 import os
 import shutil
 import pathlib
@@ -18,6 +19,7 @@ data := {
         {
             'titulo': str,
             'resumen': str,
+            'anexo': bool,
             'sub_capitulos':[
                 {
                     'titulo': str,
@@ -26,7 +28,7 @@ data := {
                     'descripcion': str,
                     'fuente': str,
                     'tipo_grafico': str,
-                    'data: list[tuple[str, int]],
+                    'data': list[tuple[str, int]],
                     'opciones_grafica':dict
                 }
             ]
@@ -131,10 +133,11 @@ class ReporteINE:
             datos_aprox.append((x, y))
         return datos_aprox
 
-    def agregar_capitulo(self, titulo: str, resumen: str = "") -> None:
+    def agregar_capitulo(self, titulo: str, resumen: str = "", anexo: bool=False) -> None:
         capitulo_nuevo = {}
         capitulo_nuevo["titulo"] = titulo
         capitulo_nuevo["resumen"] = resumen
+        capitulo_nuevo["anexo"] = anexo
         capitulo_nuevo["sub_capitulos"] = []
         self.__data.get('capitulos').append(capitulo_nuevo)
         self._indice += 1
@@ -313,6 +316,13 @@ class ReporteINE:
                         f.write("{%\n\\input{" + f"graficas/{i}_{j_str}.tex" + "}}%\n")
                     f.write("{%\n\\input{" + carpeta + "/fuente.tex" + "}}%\n\n")
 
+    def escribir_capitulo(self, capitulo, f: TextIOWrapper):
+        titulo = capitulo["titulo"]
+        file_name = titulo.replace(" ", "_") + ".tex"
+        resumen = self.formato_LaTeX(capitulo["resumen"])
+        f.write("\\INEchaptercarta{" + titulo + "}{" + resumen + "}\n")
+        f.write("\\input{tex/" + file_name + "}\n")
+
     def hacer_cuerpo(self):
         nombre = self.__data["nombre"].replace(" ", "_")
         path = os.path.join(self.__path, f"{nombre}.tex")
@@ -366,17 +376,17 @@ class ReporteINE:
             f.write("\\pagestyle{estandar}\n")
             f.write("\\setcounter{page}{0}\n")
             for capitulo in self.__data["capitulos"]:
-                titulo = capitulo["titulo"]
-                file_name = titulo.replace(" ", "_") + ".tex"
-                resumen = self.formato_LaTeX(capitulo["resumen"])
-                f.write("\\INEchaptercarta{" + titulo + "}{" + resumen + "}\n")
-                f.write("\\input{tex/" + file_name + "}\n")
+                if not capitulo['anexo']:
+                    self.escribir_capitulo(capitulo, f)
             # hacer apendice
             f.write("\\appendix\n")
             f.write("\\INEchaptercarta{Glosario}{}\n")
             f.write("\\input{tex/glosario.tex}\n")
             f.write("\\INEchaptercarta{Principales fórmulas de cálculo}{}\n")
             f.write("\\input{tex/formulas.tex}\n")
+            for capitulo in self.__data["capitulos"]:
+                if capitulo['anexo']:
+                    self.escribir_capitulo(capitulo, f)
             f.write("\\includepdf{plantilla/contraportada.pdf}\n")
             f.write("\\end{document}\n")
             
