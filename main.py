@@ -74,7 +74,7 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico=dict(Q4Etiquetas=True)
     )
-    
+    """
     subcap_data = datos.petroleo()
     reporte.agregar_subcapitulo(
         titulo="Precio del pretróleo",
@@ -86,6 +86,7 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
+    """
     subcap_data = datos.cambio_quetzal()
     reporte.agregar_subcapitulo(
         titulo="Cambio del quetzal",
@@ -131,7 +132,7 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
-    subcap_data = datos.inflacion()
+    subcap_data = datos.inflacion_CA_RD_MEX()
     reporte.agregar_subcapitulo(
         titulo="Inflación en Centro América, República Dominicana y México",
         titulo_grafico="Tasa de variación interanual del IPC de los países Centroamericanos, República Dominicana y México",
