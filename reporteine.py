@@ -102,7 +102,6 @@ class ReporteINE:
                 os.path.join(self.__path, f"plantilla/{archivo}"))
         TEXS = (
             "participantes.tex",
-            "presentacion.tex",
             "glosario.tex",
             "formulas.tex"
         )
@@ -124,6 +123,12 @@ class ReporteINE:
             shutil.copyfile(
                 "Plantilla/organizacion.tex",
                 os.path.join(self.__path, "tex/organizacion.tex")) 
+
+    def presentacion(self, texto):
+        ruta = os.path.join(self.__path, f"tex/presentacion.tex")
+        with open(ruta, 'w', encoding='utf-8') as f:
+            f.write(texto)
+            f.close
 
     def aproximador(self, datos, precision: int = 2):
         datos_aprox = []
