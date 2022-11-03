@@ -474,4 +474,3 @@ class ReporteINE:
             f.write("\\hline\n")
             f.write("\\end{tabular}\n")
             f.close()
-            print('a')
