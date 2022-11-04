@@ -40,3 +40,4 @@ setup.py
 Dictionary
 .vscode
 *.xlsx
+.DS_Store
