@@ -7,9 +7,7 @@ if __name__ == "__main__":
     mes = 9
     anio = 2022
     datos = datosIPC(anio, mes)
-    reporte = ReporteINE(
-        nombre="Prueba_IPC"
-    )
+    reporte = ReporteINE("Prueba_IPC", anio, mes)
 # capitulo 1
     reporte.presentacion(datos.introduccion())
     reporte.agregar_capitulo(
