@@ -7,12 +7,13 @@ import WS_orga_INE
 from xlsxchef import xlsxChef
 from datetime import datetime
 from funcionesINE import FuncionesINE
+from funcionesjo import mes_by_ordinal
 
 """
 data := {
     'nombre':str,
-    'fecha_inicial': str,
-    'fecha_final': str,
+    'mes':int,
+    'anio':int,
     'presentacion': str,
     'plantillas': list[files]
     'capitulos':[
@@ -54,13 +55,13 @@ class ReporteINE:
     hacer_graficas()
         
     """
-    def __init__(self,nombre: str, fecha_inicial: str = "", fecha_final: str = "") -> None:
+    def __init__(self,nombre: str, anio: int, mes: int) -> None:
         self.__data = {}
         self.__data['nombre'] = nombre
-        self.__data['fecha_inicio'] = fecha_inicial
-        self.__data['fecha_final'] = fecha_final
         self.__data['capitulos'] = []
         self._indice = -1
+        self.anio = anio
+        self.mes = mes
         # hacer directorio para guardar documentos
         marca_temporal = datetime.strftime(datetime.today(), "%d-%m-%Y_%H_%M_%S")
         parent_dir = pathlib.Path().resolve()
@@ -327,6 +328,26 @@ class ReporteINE:
         f.write("\\INEchaptercarta{" + titulo + "}{" + resumen + "}\n")
         f.write("\\input{tex/" + file_name + "}\n")
 
+    def hacer_portada(self):
+        path = os.path.join(self.__path, f"tex/portada.tex")
+        mes_1 = mes_by_ordinal(self.mes)
+        anio_1 = self.anio
+        if self.mes == 1:
+            anio_2 = anio_1 - 1
+            mes_2 = mes_by_ordinal(12)
+        else:
+            mes_2 = mes_by_ordinal(self.mes - 1)
+            anio_2 = anio_1
+        with open(path, 'W', encoding='utf-8') as f:
+            f.write("\\includepdf[pagecommand={\n")
+            f.write("\\begin{tikzpicture}[remember picture, overlay]\n")
+            f.write("\\node[nome] at ([yshift=4cm] current page) {\\color{white}{\\mgrande República de Guatemala:}};\n")
+            f.write("\\node[nome] at ([yshift=2.3cm] current page) {\\color{white}{\\mgrande Índice de Precios al Consumidor}};\n")
+            f.write("\\node[nome] at ([yshift=0.6cm] current page) {\\color{white}{\\mgrande "+ f"{mes_1} {anio_1}" + "}};\n")
+            f.write("\\node at ([yshift=-12cm] current page) {\\color{white}{\\LARGE Guatemala, " + f"{mes_2.lower()} de {anio_2}" + "}};\n")
+            f.write("\\end{tikzpicture}}\n")
+            f.write("]{plantilla/portada.pdf}\n")
+
     def hacer_cuerpo(self):
         nombre = self.__data["nombre"].replace(" ", "_")
         path = os.path.join(self.__path, f"{nombre}.tex")
@@ -335,8 +356,12 @@ class ReporteINE:
             f.write("\\renewcommand{\\partes}{No por favor}\n")
             f.write("\\renewcommand{\\titulodoc}{" + self.formato_LaTeX(self.__data["nombre"]) + "}\n")
             f.write("\\newcommand{\\ra}[1]{\\renewcommand{\\arraystretch}{#1}}\n")
+            f.write("\\usepackage{xcolor}\n")
+            f.write("\\newcommand{\\mgrande}{\\fontsize{40}{48} \\selectfont}\n")
+            f.write("\\tikzstyle{nome}=[anchor=center, minimum height=2cm, minimum width=9cm, text width=15cm]\n")
             f.write("\\begin{document}\n")
-            f.write("\\includepdf{plantilla/portada.pdf}\n")
+            f.write("\\pagestyle{empty}\n")
+            f.write("\\input{tex/portada.tex}\n")
             f.write("\\newpage\n")
             # preambulo
             f.write("\\pagestyle{soloarriba}\n")
@@ -406,6 +431,7 @@ class ReporteINE:
         self.hacer_graficas()
         self.hacer_descripciones()
         self.hacer_capitulos()
+        self.hacer_portada()
         self.hacer_cuerpo()
 
     def formato_LaTeX(self, cadena: str) -> str:
