@@ -12,7 +12,7 @@ class FuncionesINE:
         self.Qanual = True
 
     def cargaMasiva(self, csv_path: str) -> None:
-        self.__datos = self.__funcionesINE.cargaMasiva(csv_path, codificacion='utf-8')
+        self.__datos = self.__funcionesINE.cargaMasiva(csv_path, codificacion='UTF8')
 
     def escribirCSV(self, ruta_libro: str, ruta_salida: str) -> None:
         self.__funcionesINE.escribirCSV(
@@ -54,7 +54,7 @@ class FuncionesINE:
         self.__funcionesINE.exportarLatex(
             ruta_salida + f"/{nombre}.tex",
             self.__funcionesINE.graficaLinea(
-                self.__datos[data_index],
+                self.__datos.rx(data_index)[0],
                 inicio=inicio,
                 ancho=ancho,
                 precision=precision,
@@ -83,7 +83,7 @@ class FuncionesINE:
         else:
             ordenar = robjects.r("FALSE")
         g = self.__funcionesINE.graficaBar(
-                    self.__datos[data_index],
+                    self.__datos.rx(data_index)[0],
                     ancho=ancho,
                     ordenar=ordenar,
                     escala=escala

@@ -237,27 +237,24 @@ class ReporteINE:
     
     def hacer_graficas(self):
         ruta_tex = self.__path.replace("\\", "/") + "/graficas"
-        i = 0
-        for capitulo in self.__data['capitulos']:
-            i += 1
-            csv_path = os.path.join(self.__path, f"csv\\{i}").replace("\\", "/")
+        for i, capitulo in enumerate(self.__data['capitulos']):
+            csv_path = os.path.join(self.__path, f"csv\\{i + 1}").replace("\\", "/")
             self.f_INE.cargaMasiva(csv_path)
             sub_capitulos = capitulo["sub_capitulos"]
-            for sub_capitulo in sub_capitulos:
-                indice = sub_capitulos.index(sub_capitulo)
+            for indice, sub_capitulo in enumerate(sub_capitulos):
                 indice_natural = str(indice + 1).rjust(2, "0")
-                referencia = f"{i}_{indice_natural}"
+                referencia = f"{i + 1}_{indice_natural}"
                 tipo_grafico = sub_capitulo["tipo_grafico"]
                 if tipo_grafico == "lineal":
                     self.f_INE.graficaLinea(
-                        data_index=indice,
+                        data_index=referencia,
                         ruta_salida=ruta_tex,
                         nombre=referencia,
                         **sub_capitulo["opciones_grafico"]
                     )
                 elif tipo_grafico == "barra":
                     self.f_INE.graficaBar(
-                        data_index=indice,
+                        data_index=referencia,
                         ruta_salida=ruta_tex,
                         nombre=referencia,
                         **sub_capitulo["opciones_grafico"]
