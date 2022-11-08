@@ -4,7 +4,7 @@ from datosipc import datosIPC
 
 if __name__ == "__main__":
     t = time()
-    mes = 9
+    mes = 10
     anio = 2022
     datos = datosIPC(anio, mes)
     reporte = ReporteINE("Prueba_IPC", anio, mes)
@@ -72,7 +72,6 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico=dict(Q4Etiquetas=True)
     )
-    """
     subcap_data = datos.petroleo()
     reporte.agregar_subcapitulo(
         titulo="Precio del pretróleo",
@@ -84,7 +83,6 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
-    """
     subcap_data = datos.cambio_quetzal()
     reporte.agregar_subcapitulo(
         titulo="Cambio del quetzal",
@@ -216,7 +214,7 @@ if __name__ == "__main__":
         1: 'I',
         2: 'II',
         3: 'III',
-        4: 'VI',
+        4: 'IV',
         5: 'V',
         6: 'VI',
         7: 'VII',
@@ -294,7 +292,8 @@ if __name__ == "__main__":
         )
 #capitulo 4
     reporte.agregar_capitulo(
-        titulo="Anexos"
+        titulo="Anexos",
+        anexo=True
     )
     datos_gba = datos.series_Gba(0)
     for Gba in datos_gba:
