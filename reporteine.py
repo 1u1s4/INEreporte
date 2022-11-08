@@ -171,8 +171,7 @@ class ReporteINE:
         self.__data.get('capitulos')[self._indice]['sub_capitulos'].append(sub_cap)
     
     def escribir_libros(self) -> None:
-        i = 0
-        for capitulo in self.__data['capitulos']:
+        for i, capitulo in enumerate(self.__data['capitulos']):
             i += 1
             nombre_doc = capitulo["titulo"]
             csv_chef = xlsxChef(
@@ -334,11 +333,11 @@ class ReporteINE:
         anio_1 = self.anio
         if self.mes == 1:
             anio_2 = anio_1 - 1
-            mes_2 = mes_by_ordinal(12)
+            mes_2 = mes_by_ordinal(12, abreviado=False)
         else:
-            mes_2 = mes_by_ordinal(self.mes - 1)
+            mes_2 = mes_by_ordinal(self.mes - 1, abreviado=False)
             anio_2 = anio_1
-        with open(path, 'W', encoding='utf-8') as f:
+        with open(path, 'w', encoding='utf-8') as f:
             f.write("\\includepdf[pagecommand={\n")
             f.write("\\begin{tikzpicture}[remember picture, overlay]\n")
             f.write("\\node[nome] at ([yshift=4cm] current page) {\\color{white}{\\mgrande República de Guatemala:}};\n")
