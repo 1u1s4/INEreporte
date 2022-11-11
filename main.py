@@ -22,7 +22,7 @@ if __name__ == "__main__":
         fuente="INE",
         tipo_grafico="lineal",
         data=subcap_data[0],
-        opciones_grafico=dict(Q4Etiquetas=True, inicio=2000, final = 9000)
+        opciones_grafico=dict(Q4Etiquetas=True)
     )
     subcap_data = datos.serie_precios(Qcobertura=True)
     reporte.agregar_subcapitulo(
@@ -46,10 +46,10 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico=dict(Q4Etiquetas=True)
     )
-    subcap_data = datos.desagregacion_fuentes(mes)
+    subcap_data = datos.desagregacion_fuentes()
     reporte.agregar_subcapitulo(
         titulo="Desagregación de fuentes",
-        titulo_grafico="Desagregación porcentual de fuentes por tipo, 1 año",
+        titulo_grafico="Desagregación porcentual de fuentes por tipo, 1 mes",
         descripcion_grafico="Desagregación por tipo, porcentaje",
         descripcion=subcap_data[1],
         fuente="INE",
