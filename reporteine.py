@@ -438,7 +438,7 @@ class ReporteINE:
         self.hacer_cuerpo()
 
     def formato_LaTeX(self, cadena: str) -> str:
-        CARACTERES_ESPECIALES = ('{', '}', '#', '$', '%', '&', '~', '_', '^')
+        CARACTERES_ESPECIALES = ('#', '$', '%', '&', '~', '_', '^')
         for caracter in CARACTERES_ESPECIALES:
            cadena = cadena.replace(caracter, "{\\" + caracter + "}")
         return cadena
