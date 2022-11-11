@@ -1,0 +1,26 @@
+
+\begin{tikzpicture}[diagrama]
+\node (start) [iniciofin] {INICIO};
+\node (A) [process, below of=start]{1 Consulta de asignaci\'on a supervisor};
+\node (B) [process, below of=A]{2 Asignaci\'on de regi\'on a supervisar};
+\node (C) [process, right of=A, xshift=1cm]{3 Gesti\'on de recursos};
+\node (D) [process, below of=C]{4 Aviso de regi\'on asignada};
+\node (E) [process, right of=C, xshift=1cm]{5 Supervisi\'on de regiones};
+\node (F) [process, below of=E]{6 Revisi\'on informes de inconsistencias};
+\node (G) [process, right of=E, xshift=1cm]{7 Elaboraci\'on de Reportes de Supervisor};
+\node (H) [process, below of=G]{8 Entrega de Reportes de Supervisor};
+\node (final) [iniciofin, below of=H] {FIN};
+% nodos auxiliares
+\node (B1) [right of=B, anchor=north, fill=white,inner sep=0pt, xshift=-1.4cm] {};
+\node (D1) [right of=D, anchor=north, fill=white,inner sep=0pt, xshift=-1.4cm] {};
+\node (F1) [right of=F, anchor=north, fill=white,inner sep=0pt, xshift=-1.4cm] {};
+\draw [arrow] (start) -- (A);
+\draw [arrow] (A) -- (B);
+\draw [arrow] (B) -- (B1) |- (C);
+\draw [arrow] (C) -- (D);
+\draw [arrow] (D) -- (D1) |- (E);
+\draw [arrow] (E) -- (F);
+\draw [arrow] (F) -- (F1) |- (G);
+\draw [arrow] (G) -- (H);
+\draw [arrow] (H) -- (final);
+\end{tikzpicture}
