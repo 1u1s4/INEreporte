@@ -1,0 +1,28 @@
+
+\begin{tikzpicture}[diagrama]
+\node (start) [iniciofin] {INICIO};
+\node (A) [process, below of=start]{1 Recepci\'on de boletas};
+\node (B) [process, below of=A]{2 Distribuci\'on de boletas};
+\node (C) [process, right of=start, xshift=1cm]{3 Asignaci\'on de veh\'iculos o dinero para bus};
+\node (D) [decision, below of=C]{¿Est\'a todo bien?};
+\node (E) [process, below of=D]{3.1 Se asigna veh\'iculo al Cotizador};
+\node (F) [process, right of=E]{3.2 Solicita opciones de traslado};
+\node (G) [process, right of=D]{4 Cotizaci\'on};
+\node (H) [process, right of=G]{5 Llenado de boletas};
+\node (I) [process, right of=H]{6 Regreso al INE};
+\node (J) [process, below of=I]{7 Descarga y envi\'o de boletas};
+\node (final) [iniciofin, below of=J] {FIN};
+% nodos auxiliares
+\node (B1) [right of=B, anchor=east, fill=white,inner sep=0pt, xshift=-1.4cm] {};
+\draw [arrow] (start) -- (A);
+\draw [arrow] (A) -- (B);
+\draw [arrow] (B) -- (B1) |- (C.west);
+\draw [arrow] (C) -- (D);
+\draw [arrow] (D) -- node [text width=1cm, midway, above, xshift=-0.1cm]{No} (E);
+\draw [arrow] (E) -- (F);
+\draw [arrow] (D) -- node [text width=1cm, midway, above, xshift=0.2cm]{Si} (G);
+\draw [arrow] (G) -- (H);
+\draw [arrow] (H) -- (I);
+\draw [arrow] (I) -- (J);
+\draw [arrow] (J) -- (final);
+\end{tikzpicture}
