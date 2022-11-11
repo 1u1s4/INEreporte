@@ -108,8 +108,7 @@ class ReporteINE:
             "dgrm_ipc_01.tex",
             "dgrm_ipc_02.tex",
             "dgrm_ipc_03.tex",
-            "dgrm_ipc_04.tex",
-            "estilo.tex"
+            "dgrm_ipc_04.tex"
         )
         for tex in TEXS:
             shutil.copyfile(
