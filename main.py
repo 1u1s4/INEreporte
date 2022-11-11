@@ -1,11 +1,14 @@
 from reporteine import ReporteINE
 from time import time
 from datosipc import datosIPC
+from funcionesjo import mes_by_ordinal
 
 if __name__ == "__main__":
     t = time()
     mes = 10
     anio = 2022
+    mes_ = mes_by_ordinal(mes, abreviado=False).capitalize()
+    fecha = f"{mes_} {anio}"
     datos = datosIPC(anio, mes)
     reporte = ReporteINE("Prueba_IPC", anio, mes)
 # capitulo 1
@@ -16,8 +19,8 @@ if __name__ == "__main__":
     subcap_data = datos.serie_fuentes()
     reporte.agregar_subcapitulo(
         titulo="Cobertura de fuentes",
-        titulo_grafico="Histórico de cobertura de fuentes, 1 año",
-        descripcion_grafico="Cantidad de fuentes consultadas",
+        titulo_grafico="Histórico de cobertura de fuentes",
+        descripcion_grafico="República de Guatemala, serie histórica, adimensional",
         descripcion=subcap_data[1],
         fuente="INE",
         tipo_grafico="lineal",
@@ -27,8 +30,8 @@ if __name__ == "__main__":
     subcap_data = datos.serie_precios(Qcobertura=True)
     reporte.agregar_subcapitulo(
         titulo="Cobertura de precios",
-        titulo_grafico="Histórico de cobertura de precios, 1 año",
-        descripcion_grafico="Cantidad de precios diligenciados",
+        titulo_grafico="Histórico de cobertura de precios",
+        descripcion_grafico="República de Guatemala, serie histórica, adimensional",
         descripcion=subcap_data[1],
         fuente="INE",
         tipo_grafico="lineal",
@@ -38,8 +41,8 @@ if __name__ == "__main__":
     subcap_data = datos.serie_precios(Qcobertura=False)
     reporte.agregar_subcapitulo(
         titulo="Imputación de precios",
-        titulo_grafico="Histórico de imputación de precios, 1 año",
-        descripcion_grafico="Cantidad de precios imputados",
+        titulo_grafico="Histórico de imputación de precios",
+        descripcion_grafico="República de Guatemala, serie histórica, adimensional",
         descripcion=subcap_data[1],
         fuente="INE",
         tipo_grafico="lineal",
@@ -49,8 +52,8 @@ if __name__ == "__main__":
     subcap_data = datos.desagregacion_fuentes()
     reporte.agregar_subcapitulo(
         titulo="Desagregación de fuentes",
-        titulo_grafico="Desagregación porcentual de fuentes por tipo, 1 mes",
-        descripcion_grafico="Desagregación por tipo, porcentaje",
+        titulo_grafico="Desagregación de fuentes por tipo",
+        descripcion_grafico=f"República de Guatemala, {fecha}, adimensional",
         descripcion=subcap_data[1],
         fuente="INE",
         tipo_grafico="barra",
@@ -147,7 +150,7 @@ if __name__ == "__main__":
     reporte.agregar_subcapitulo(
         titulo="Evolución del IPC",
         titulo_grafico="IPC, base diciembre del 2010",
-        descripcion_grafico="República de Guatemala, Serie histórica 1 año, adimensional",
+        descripcion_grafico="República de Guatemala, serie histórica, adimensional",
         descripcion=subcap_data[1],
         fuente="INE",
         tipo_grafico="lineal",
@@ -191,7 +194,29 @@ if __name__ == "__main__":
     reporte.agregar_subcapitulo(
         titulo="Incidencias mensuales por división de gasto básico",
         titulo_grafico="Incidencias mensuales",
-        descripcion_grafico="República de Guatemala, Incidencias mensuales, porcentaje",
+        descripcion_grafico=f"República de Guatemala, {fecha}, en porcentaje",
+        descripcion=subcap_data[1],
+        fuente="INE",
+        tipo_grafico="barra",
+        data=subcap_data[0],
+        opciones_grafico={"precision":2}
+    )
+    subcap_data = datos.incidencias_gba(0, True)
+    reporte.agregar_subcapitulo(
+        titulo="Bienes con mayor impacto en el cambio mensual",
+        titulo_grafico="Gastos básicos con mayor incidencia positiva",
+        descripcion_grafico=f"República de Guatemala, {fecha}, en porcentaje",
+        descripcion=subcap_data[1],
+        fuente="INE",
+        tipo_grafico="barra",
+        data=subcap_data[0],
+        opciones_grafico={"precision":2}
+    )
+    subcap_data = datos.incidencias_gba(0, False)
+    reporte.agregar_subcapitulo(
+        titulo="Bienes con mayor impacto en el cambio mensual",
+        titulo_grafico="Gastos básicos con mayor incidencia negativa",
+        descripcion_grafico=f"República de Guatemala, {fecha}, en porcentaje",
         descripcion=subcap_data[1],
         fuente="INE",
         tipo_grafico="barra",
@@ -202,7 +227,7 @@ if __name__ == "__main__":
     reporte.agregar_subcapitulo(
         titulo="Valor del dinero",
         titulo_grafico="Poder adquisitivo del quetzal",
-        descripcion_grafico="República de Guatemala, serie histórica mensual, en porcentaje",
+        descripcion_grafico="República de Guatemala, serie histórica, adimensional",
         descripcion=subcap_data[1],
         fuente="INE",
         tipo_grafico="lineal",
@@ -228,7 +253,7 @@ if __name__ == "__main__":
         reporte.agregar_subcapitulo(
             titulo="Evolución del IPC",
             titulo_grafico="IPC, base diciembre del 2010",
-            descripcion_grafico=f"Region {region[RegCod]}, Serie histórica 1 año, adimensional",
+            descripcion_grafico=f"Region {region[RegCod]}, serie histórica, adimensional",
             descripcion=subcap_data[1],
             fuente="INE",
             tipo_grafico="lineal",
@@ -272,7 +297,29 @@ if __name__ == "__main__":
         reporte.agregar_subcapitulo(
             titulo="Incidencias mensuales por división de gasto básico",
             titulo_grafico="Incidencias mensuales",
-            descripcion_grafico=f"Region {region[RegCod]}, Incidencias mensuales, porcentaje",
+            descripcion_grafico=f"Region {region[RegCod]}, {fecha}, en porcentaje",
+            descripcion=subcap_data[1],
+            fuente="INE",
+            tipo_grafico="barra",
+            data=subcap_data[0],
+            opciones_grafico={"precision":2}
+        )
+        subcap_data = datos.incidencias_gba(RegCod, True)
+        reporte.agregar_subcapitulo(
+            titulo="Bienes con mayor impacto en el cambio mensual",
+            titulo_grafico="Gastos básicos con mayor incidencia positiva",
+            descripcion_grafico=f"Region {region[RegCod]}, {fecha}, en porcentaje",
+            descripcion=subcap_data[1],
+            fuente="INE",
+            tipo_grafico="barra",
+            data=subcap_data[0],
+            opciones_grafico={"precision":2}
+        )
+        subcap_data = datos.incidencias_gba(RegCod, False)
+        reporte.agregar_subcapitulo(
+            titulo="Bienes con mayor impacto en el cambio mensual",
+            titulo_grafico="Gastos básicos con mayor incidencia negativa",
+            descripcion_grafico=f"Region {region[RegCod]}, {fecha}, en porcentaje",
             descripcion=subcap_data[1],
             fuente="INE",
             tipo_grafico="barra",
@@ -283,7 +330,7 @@ if __name__ == "__main__":
         reporte.agregar_subcapitulo(
             titulo="Valor del dinero",
             titulo_grafico="Poder adquisitivo del quetzal",
-            descripcion_grafico=f"Region {region[RegCod]}, serie histórica mensual, en porcentaje",
+            descripcion_grafico=f"Region {region[RegCod]}, serie histórica, adimensional",
             descripcion=subcap_data[1],
             fuente="INE",
             tipo_grafico="lineal",
@@ -303,7 +350,7 @@ if __name__ == "__main__":
         reporte.agregar_subcapitulo(
             titulo=f"Evolución del IPC del gasto basico {nombre}",
             titulo_grafico="IPC, base diciembre del 2010",
-            descripcion_grafico="República de Guatemala, Serie histórica 1 año, adimensional",
+            descripcion_grafico="República de Guatemala, serie histórica, adimensional",
             descripcion=desc,
             fuente="INE",
             tipo_grafico="lineal",
