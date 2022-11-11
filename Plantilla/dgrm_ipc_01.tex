@@ -1,0 +1,35 @@
+\begin{tikzpicture}[diagrama]
+\node (start) [iniciofin] {INICIO};
+\node (cua1) [process, below of=start] {1 Pre-diligenciamiento de boletas};
+\node (cua2) [process, right of=cua1] {2 Asignación de boletas};
+\node (cua3) [process, right of=cua2, yshift=4cm] {3 Pre-crítica};
+\node (cua4) [process, below of=cua3] {4 Asignación de boletas y generación de listado};
+\node (cua5) [process, below of=cua4] {5 Generación de archivos txt};
+\node (cua6) [process, right of=cua4] {6 Impresi\'on de boletas y cotizaci\'on};
+\node (cua7) [process, right of=cua3, xshift=4cm] {7 Cr\'itica de boletas cotizadas};
+\node (cua8) [process, below of=cua7] {8 Verificaci\'on de art\'iculos};
+\node (cua9) [process, below of=cua8] {9 Elaboraci\'on de listado de supervisi\'on};
+\node (cua10) [process, below of=cua1, yshift=-3cm] {10 Distribuci\'on de trabajo a supervisores};
+\node (cua11) [process, right of=cua10] {11 Supervisi\'on de boletas};
+\node (cua12) [process, right of=cua11] {12 Carga y envi\'o de informaci\'on};
+\node (final) [iniciofin, below of=cua12] {FIN};
+% nodos auxiliares
+\node (cua31) [left of=cua3, anchor=west, aux] {};
+\node (cua51) [right of=cua5, anchor=east, fill=white,inner sep=0pt] {};
+\node (cua61) [above of=cua6, anchor=north, fill=white,inner sep=0pt] {};
+\node (cua91) [below of=cua9, anchor=south, fill=white,inner sep=0pt, yshift=3cm] {};
+\node (cua101) [above of=cua10, anchor=north, fill=white,inner sep=0pt, yshift=-2.4cm] {};
+\draw [arrow] (start) -- (cua1);
+\draw [arrow] (cua1) -- (cua2);
+\draw [arrow] (cua2) -- (cua31) -- (cua3);
+\draw [arrow] (cua3) -- (cua4);
+\draw [arrow] (cua4) -- (cua5);
+\draw [arrow] (cua5) -- (cua51) -- (cua6);
+\draw [arrow] (cua6) -- (cua61) -- (cua7);
+\draw [arrow] (cua7) -- (cua8);
+\draw [arrow] (cua8) -- (cua9);
+\draw [arrow] (cua9.south) |- (cua91) |- (cua101) --(cua10.north);
+\draw [arrow] (cua10) -- (cua11);
+\draw [arrow] (cua11) -- (cua12);
+\draw [arrow] (cua12) -- (final);
+\end{tikzpicture}
