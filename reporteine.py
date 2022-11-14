@@ -333,7 +333,7 @@ class ReporteINE:
 
     def hacer_portada(self):
         path = os.path.join(self.__path, f"tex/portada.tex")
-        mes_1 = mes_by_ordinal(self.mes)
+        mes_1 = mes_by_ordinal(self.mes, abreviado=False)
         anio_1 = self.anio
         if self.mes == 1:
             anio_2 = anio_1 - 1
