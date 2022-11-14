@@ -348,7 +348,7 @@ if __name__ == "__main__":
         datosGba = Gba[1]
         desc = Gba[2]
         reporte.agregar_subcapitulo(
-            titulo=f"Evolución del IPC del gasto basico {nombre}",
+            titulo=f"Evolución del IPC del gasto básico {nombre}",
             titulo_grafico="IPC, base diciembre del 2010",
             descripcion_grafico="República de Guatemala, serie histórica, adimensional",
             descripcion=desc,
