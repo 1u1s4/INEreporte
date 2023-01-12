@@ -73,7 +73,7 @@ if __name__ == "__main__":
         fuente="FAO",
         tipo_grafico="lineal",
         data=subcap_data[0],
-        opciones_grafico=dict(Q4Etiquetas=True)
+        opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
     subcap_data = datos.petroleo()
     reporte.agregar_subcapitulo(
