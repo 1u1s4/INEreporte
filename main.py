@@ -5,7 +5,7 @@ from funcionesjo import mes_by_ordinal
 
 if __name__ == "__main__":
     t = time()
-    mes = 10
+    mes = 12
     anio = 2022
     mes_ = mes_by_ordinal(mes, abreviado=False).capitalize()
     fecha = f"{mes_} {anio}"
@@ -97,6 +97,7 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
+    """
     subcap_data = datos.tasa_interes()
     reporte.agregar_subcapitulo(
         titulo="Tasa de interés",
@@ -108,6 +109,7 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
+    """
     subcap_data = datos.ipc_usa()
     reporte.agregar_subcapitulo(
         titulo="Índice de precios al consumidor de EE.UU.",
@@ -131,6 +133,7 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
+    """
     subcap_data = datos.inflacion_CA_RD_MEX()
     reporte.agregar_subcapitulo(
         titulo="Inflación en Centro América, República Dominicana y México",
@@ -142,6 +145,7 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico={"precision":2}
     )
+    """
 # capitulo 3
     reporte.agregar_capitulo(
         titulo="Resultados del IPC"
