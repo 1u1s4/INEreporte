@@ -20,7 +20,7 @@ if __name__ == "__main__":
     reporte.agregar_subcapitulo(
         titulo="Cobertura de fuentes",
         titulo_grafico="Histórico de cobertura de fuentes",
-        descripcion_grafico="República de Guatemala, serie histórica, adimensional",
+        descripcion_grafico="República de Guatemala, serie histórica, cantidad de fuentes",
         descripcion=subcap_data[1],
         fuente="INE",
         tipo_grafico="lineal",
@@ -31,7 +31,7 @@ if __name__ == "__main__":
     reporte.agregar_subcapitulo(
         titulo="Cobertura de precios",
         titulo_grafico="Histórico de cobertura de precios",
-        descripcion_grafico="República de Guatemala, serie histórica, adimensional",
+        descripcion_grafico="República de Guatemala, serie histórica, cantidad de precios",
         descripcion=subcap_data[1],
         fuente="INE",
         tipo_grafico="lineal",
@@ -42,7 +42,7 @@ if __name__ == "__main__":
     reporte.agregar_subcapitulo(
         titulo="Imputación de precios",
         titulo_grafico="Histórico de imputación de precios",
-        descripcion_grafico="República de Guatemala, serie histórica, adimensional",
+        descripcion_grafico="República de Guatemala, serie histórica, porcentaje",
         descripcion=subcap_data[1],
         fuente="INE",
         tipo_grafico="lineal",
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     reporte.agregar_subcapitulo(
         titulo="Desagregación de fuentes",
         titulo_grafico="Desagregación de fuentes por tipo",
-        descripcion_grafico=f"República de Guatemala, {fecha}, adimensional",
+        descripcion_grafico=f"República de Guatemala, {fecha}, porcentaje",
         descripcion=subcap_data[1],
         fuente="INE",
         tipo_grafico="barra",
@@ -81,7 +81,7 @@ if __name__ == "__main__":
         titulo_grafico="Precio promedio mensual del barril del petróleo",
         descripcion_grafico="Indicador internacional, serie histórica, en dólares por barril",
         descripcion=subcap_data[1],
-        fuente="FRED",
+        fuente="Federal Reserve Economic Data",
         tipo_grafico="lineal",
         data=subcap_data[0],
         opciones_grafico={"precision":2, "Q4Etiquetas":True}
@@ -110,7 +110,7 @@ if __name__ == "__main__":
     )
     subcap_data = datos.ipc_usa()
     reporte.agregar_subcapitulo(
-        titulo="Índice de precios al consumidor de EE.UU.",
+        titulo="Índice de Precios al Consumidor de EE.UU.",
         titulo_grafico="Variación interanual del IPC de Estados Unidos de América",
         descripcion_grafico="Estados Unidos de América, serie histórica, en porcentaje",
         descripcion=subcap_data[1],
@@ -122,7 +122,7 @@ if __name__ == "__main__":
 
     subcap_data = datos.ipc_mex()
     reporte.agregar_subcapitulo(
-        titulo="Índice de precios al consumidor de México",
+        titulo="Índice de Precios al Consumidor de México",
         titulo_grafico="Variación interanual del IPC de México",
         descripcion_grafico="Estados Unidos Mexicanos, serie histórica, en porcentaje",
         descripcion=subcap_data[1],
@@ -161,7 +161,7 @@ if __name__ == "__main__":
     )
     subcap_data = datos.serie_inflacion(0, 'interanual')
     reporte.agregar_subcapitulo(
-        titulo="Evolución del cambio anual del IPC",
+        titulo="Evolución del cambio anual del IPC (Ritmo Inflacionario)",
         titulo_grafico="Variación interanual del IPC",
         descripcion_grafico="República de Guatemala, serie histórica, en porcentaje",
         descripcion=subcap_data[1],
@@ -172,7 +172,7 @@ if __name__ == "__main__":
     )
     subcap_data = datos.serie_inflacion(0, 'acumulada')
     reporte.agregar_subcapitulo(
-        titulo="Evolución del cambio acumulado del IPC",
+        titulo="Evolución de la variación acumulada del IPC",
         titulo_grafico="Variación acumulada del IPC",
         descripcion_grafico="República de Guatemala, serie histórica, en porcentaje",
         descripcion=subcap_data[1],
@@ -183,7 +183,7 @@ if __name__ == "__main__":
     )
     subcap_data = datos.serie_inflacion(0, 'intermensual')
     reporte.agregar_subcapitulo(
-        titulo="Evolución del cambio mensual del IPC",
+        titulo="Evolución de la variación mensual del IPC",
         titulo_grafico="Variación intermensual del IPC",
         descripcion_grafico="República de Guatemala, serie histórica, en porcentaje",
         descripcion=subcap_data[1],
@@ -253,8 +253,8 @@ if __name__ == "__main__":
         )
         subcap_data = datos.serie_IPC(RegCod)
         reporte.agregar_subcapitulo(
-            titulo="Evolución del IPC",
-            titulo_grafico="IPC, base diciembre del 2010",
+            titulo=f"Evolución del índice a la región {region[RegCod]}",
+            titulo_grafico="Índice de la región, base diciembre del 2010",
             descripcion_grafico=f"Region {region[RegCod]}, serie histórica, adimensional",
             descripcion=subcap_data[1],
             fuente="INE",
@@ -264,7 +264,7 @@ if __name__ == "__main__":
         )
         subcap_data = datos.serie_inflacion(RegCod, 'interanual')
         reporte.agregar_subcapitulo(
-            titulo="Evolución del cambio anual del IPC",
+            titulo="Evolución del cambio anual del IPC (Ritmo Inflacionario)",
             titulo_grafico="Variación interanual del IPC",
             descripcion_grafico=f"Region {region[RegCod]}, serie histórica, en porcentaje",
             descripcion=subcap_data[1],
@@ -275,7 +275,7 @@ if __name__ == "__main__":
         )
         subcap_data = datos.serie_inflacion(RegCod, 'acumulada')
         reporte.agregar_subcapitulo(
-            titulo="Evolución del cambio acumulado del IPC",
+            titulo="Evolución de la variación acumulada del IPC",
             titulo_grafico="Variación acumulada del IPC",
             descripcion_grafico=f"Region {region[RegCod]}, serie histórica, en porcentaje",
             descripcion=subcap_data[1],
@@ -286,7 +286,7 @@ if __name__ == "__main__":
         )
         subcap_data = datos.serie_inflacion(RegCod, 'intermensual')
         reporte.agregar_subcapitulo(
-            titulo="Evolución del cambio mensual del IPC",
+            titulo="Evolución de la variación mensual del IPC",
             titulo_grafico="Variación intermensual del IPC",
             descripcion_grafico=f"Region {region[RegCod]}, serie histórica, en porcentaje",
             descripcion=subcap_data[1],
@@ -328,6 +328,7 @@ if __name__ == "__main__":
             data=subcap_data[0],
             opciones_grafico={"precision":2}
         )
+        """
         subcap_data = datos.serie_poder_adquisitivo(RegCod)
         reporte.agregar_subcapitulo(
             titulo="Valor del dinero",
@@ -339,6 +340,7 @@ if __name__ == "__main__":
             data=subcap_data[0],
             opciones_grafico={"precision":2, "Q4Etiquetas":True}
         )
+        """
 #capitulo 4
     reporte.agregar_capitulo(
         titulo="Anexos",
