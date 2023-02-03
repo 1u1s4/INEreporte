@@ -193,7 +193,7 @@ class ReporteINE:
             sub_capitulos = capitulo["sub_capitulos"]
             for sub_capitulo in sub_capitulos:
                 tipo_grafico = sub_capitulo["tipo_grafico"]
-                if tipo_grafico in ("lineal", "barra"):
+                if tipo_grafico in ("lineal", "barra", "columna"):
                     encabezados = True 
                     if len(sub_capitulo["data"][0]) > 2:
                         encabezados = False
@@ -263,6 +263,13 @@ class ReporteINE:
                         nombre=referencia,
                         **sub_capitulo["opciones_grafico"]
                     )
+                elif tipo_grafico == "columna":
+                    self.f_INE.graficaCol(
+                        data_index=referencia,
+                        ruta_salida=ruta_tex,
+                        nombre=referencia,
+                        **sub_capitulo["opciones_grafico"]
+                    )
                 elif tipo_grafico == "tabla":
                     t_inflacion = False
                     if "Inflación" in sub_capitulo["titulo"]:
@@ -315,7 +322,7 @@ class ReporteINE:
                     f.write("{%\n\\input{" + carpeta + "/descripcion.tex" + "}}%\n")
                     f.write("{%\n\\input{" + carpeta + "/titulo_grafico.tex" + "}}%\n")
                     f.write("{%\n\\input{" + carpeta + "/descripcion_grafico.tex" + "}}%\n")
-                    if sub_capitulo["tipo_grafico"] in ("lineal", "barra"):
+                    if sub_capitulo["tipo_grafico"] in ("lineal", "barra", "columna"):
                         f.write("{%\n\\begin{tikzpicture}[x=1pt,y=1pt]\\input{" + f"graficas/{i}_{j_str}.tex" + "}\\end{tikzpicture}}%\n")
                     elif sub_capitulo["tipo_grafico"] in ("mapa"):
                         f.write("{%\n\\includegraphics[width=52\\cuadri]{" + f"graficas/{i}_{j_str}.pdf" + "}%\n")
