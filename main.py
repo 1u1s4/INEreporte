@@ -45,9 +45,9 @@ if __name__ == "__main__":
         descripcion_grafico="República de Guatemala, serie histórica, porcentaje",
         descripcion=subcap_data[1],
         fuente="INE",
-        tipo_grafico="lineal",
+        tipo_grafico="columna",
         data=subcap_data[0],
-        opciones_grafico=dict(Q4Etiquetas=True)
+        opciones_grafico={}
     )
     subcap_data = datos.desagregacion_fuentes()
     reporte.agregar_subcapitulo(
@@ -177,9 +177,9 @@ if __name__ == "__main__":
         descripcion_grafico="República de Guatemala, serie histórica, en porcentaje",
         descripcion=subcap_data[1],
         fuente="INE",
-        tipo_grafico="lineal",
+        tipo_grafico="columna",
         data=subcap_data[0],
-        opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        opciones_grafico={}
     )
     subcap_data = datos.serie_inflacion(0, 'intermensual')
     reporte.agregar_subcapitulo(
@@ -280,9 +280,9 @@ if __name__ == "__main__":
             descripcion_grafico=f"Region {region[RegCod]}, serie histórica, en porcentaje",
             descripcion=subcap_data[1],
             fuente="INE",
-            tipo_grafico="lineal",
+            tipo_grafico="columna",
             data=subcap_data[0],
-            opciones_grafico={"precision":2, "Q4Etiquetas":True}
+            opciones_grafico={}
         )
         subcap_data = datos.serie_inflacion(RegCod, 'intermensual')
         reporte.agregar_subcapitulo(
