@@ -5,8 +5,8 @@ from funcionesjo import mes_by_ordinal
 
 if __name__ == "__main__":
     t = time()
-    mes = 12
-    anio = 2022
+    mes = 1
+    anio = 2023
     mes_ = mes_by_ordinal(mes, abreviado=False).capitalize()
     fecha = f"{mes_} {anio}"
     datos = datosIPC(anio, mes)
@@ -97,7 +97,6 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
-    """
     subcap_data = datos.tasa_interes()
     reporte.agregar_subcapitulo(
         titulo="Tasa de interés",
@@ -109,7 +108,6 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
-    """
     subcap_data = datos.ipc_usa()
     reporte.agregar_subcapitulo(
         titulo="Índice de precios al consumidor de EE.UU.",
