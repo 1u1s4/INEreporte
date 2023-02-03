@@ -96,3 +96,37 @@ class FuncionesINE:
             ruta_salida + f"/{nombre}.tex",
             g
         )
+
+    def graficaCol(
+        self,
+        data_index: int,
+        ruta_salida: str,
+        nombre: str,
+        precision: int = 2,
+        ancho: float = 0.6,
+        ordenar: bool = True,
+        escala = 'normal') -> None:
+        if self.Qanual:
+            self.__funcionesINE.anual(
+                robjects.r("rgb(0,0,1)"),
+                robjects.r("rgb(0.6156862745098039,0.7333333333333333,1)")
+            )
+        if ordenar:
+            ordenar = robjects.r("TRUE")
+        else:
+            ordenar = robjects.r("FALSE")
+        g = self.__funcionesINE.graficaCol(
+                    self.__datos.rx(data_index)[0],
+                    ancho=ancho,
+                    ordenar=ordenar,
+                    escala=escala
+                )
+        g =  self.__funcionesINE.etiquetasHorizontales(
+                g,
+                precision=precision
+            )
+        g = self.__funcionesINE.rotarEtiX2(g)
+        self.__funcionesINE.exportarLatex(
+            ruta_salida + f"/{nombre}.tex",
+            g
+        )
