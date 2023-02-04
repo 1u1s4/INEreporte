@@ -88,9 +88,10 @@ class FuncionesINE:
                     ordenar=ordenar,
                     escala=escala
                 )
-        g =  self.__funcionesINE.etiquetasBarras(
+        g =  self.__funcionesINE.etiquetasBarras2(
                 g,
-                precision=precision
+                precision=precision,
+                cambiarNegativas=robjects.r("TRUE")
             )
         self.__funcionesINE.exportarLatex(
             ruta_salida + f"/{nombre}.tex",
