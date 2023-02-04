@@ -104,7 +104,7 @@ class FuncionesINE:
         nombre: str,
         precision: int = 2,
         ancho: float = 0.6,
-        ordenar: bool = True,
+        ordenar: bool = False,
         escala = 'normal') -> None:
         if self.Qanual:
             self.__funcionesINE.anual(
