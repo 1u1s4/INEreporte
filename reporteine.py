@@ -420,13 +420,13 @@ class ReporteINE:
             # hacer apendice
             f.write("\\appendix\n")
             f.write("\\INEchaptercarta{Glosario}{}\n")
-            for capitulo in self.__data["capitulos"]:
-                if capitulo['anexo']:
-                    self.escribir_capitulo(capitulo, f)
             f.write("\\input{tex/glosario.tex}\n")
             f.write("\\INEchaptercarta{Principales fórmulas de cálculo}{}\n")
             f.write("\\input{tex/formulas.tex}\n")
             f.write("\\includepdf{plantilla/contraportada.pdf}\n")
+            for capitulo in self.__data["capitulos"]:
+                if capitulo['anexo']:
+                    self.escribir_capitulo(capitulo, f)
             f.write("\\end{document}\n")
             f.close()
             
