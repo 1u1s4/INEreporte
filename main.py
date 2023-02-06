@@ -249,11 +249,11 @@ if __name__ == "__main__":
     }
     for RegCod in range(1, 9):
         reporte.agregar_capitulo(
-            titulo=f"Resultados del IPC para la region {region[RegCod]}"
+            titulo=f"Resultados para la región {region[RegCod]}"
         )
         subcap_data = datos.serie_IPC(RegCod)
         reporte.agregar_subcapitulo(
-            titulo=f"Evolución del índice a la región {region[RegCod]}",
+            titulo=f"Evolución del índice en la región {region[RegCod]}",
             titulo_grafico="Índice de la región, base diciembre del 2010",
             descripcion_grafico=f"Region {region[RegCod]}, serie histórica, adimensional",
             descripcion=subcap_data[1],
@@ -262,9 +262,9 @@ if __name__ == "__main__":
             data=subcap_data[0],
             opciones_grafico={"precision":2, "Q4Etiquetas":True}
         )
-        subcap_data = datos.serie_inflacion(RegCod, 'interanual')
+        subcap_data = datos.serie_inflacion(RegCod, 'interanual', nivel=f'en la región {region[RegCod]}')
         reporte.agregar_subcapitulo(
-            titulo="Evolución del cambio anual del IPC (Ritmo Inflacionario)",
+            titulo=f"Evolución de la variación internanual del índice en la región {region[RegCod]}",
             titulo_grafico="Variación interanual del IPC",
             descripcion_grafico=f"Region {region[RegCod]}, serie histórica, en porcentaje",
             descripcion=subcap_data[1],
@@ -273,9 +273,9 @@ if __name__ == "__main__":
             data=subcap_data[0],
             opciones_grafico={"precision":2, "Q4Etiquetas":True}
         )
-        subcap_data = datos.serie_inflacion(RegCod, 'acumulada')
+        subcap_data = datos.serie_inflacion(RegCod, 'acumulada', nivel=f'en la región {region[RegCod]}')
         reporte.agregar_subcapitulo(
-            titulo="Evolución de la variación acumulada del IPC",
+            titulo=f"Evolución de la variación acumulada del índice en la región {region[RegCod]}",
             titulo_grafico="Variación acumulada del IPC",
             descripcion_grafico=f"Region {region[RegCod]}, serie histórica, en porcentaje",
             descripcion=subcap_data[1],
@@ -284,9 +284,9 @@ if __name__ == "__main__":
             data=subcap_data[0],
             opciones_grafico={}
         )
-        subcap_data = datos.serie_inflacion(RegCod, 'intermensual')
+        subcap_data = datos.serie_inflacion(RegCod, 'intermensual', nivel=f'en la región {region[RegCod]}')
         reporte.agregar_subcapitulo(
-            titulo="Evolución de la variación mensual del IPC",
+            titulo=f"Evolución de la variación mensual del índice en la región {region[RegCod]}",
             titulo_grafico="Variación intermensual del IPC",
             descripcion_grafico=f"Region {region[RegCod]}, serie histórica, en porcentaje",
             descripcion=subcap_data[1],
@@ -352,7 +352,7 @@ if __name__ == "__main__":
         datosGba = Gba[1]
         desc = Gba[2]
         reporte.agregar_subcapitulo(
-            titulo=f"Evolución del IPC del gasto básico {nombre}",
+            titulo=f"Evolución del índice del gasto básico {nombre}",
             titulo_grafico="IPC, base diciembre del 2010",
             descripcion_grafico="República de Guatemala, serie histórica, adimensional",
             descripcion=desc,
