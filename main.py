@@ -227,7 +227,7 @@ if __name__ == "__main__":
     )
     subcap_data = datos.serie_poder_adquisitivo(0)
     reporte.agregar_subcapitulo(
-        titulo="Valor del dinero",
+        titulo="Valor del Quetzal",
         titulo_grafico="Poder adquisitivo del quetzal",
         descripcion_grafico="República de Guatemala, serie histórica, adimensional",
         descripcion=subcap_data[1],
@@ -265,7 +265,7 @@ if __name__ == "__main__":
         subcap_data = datos.serie_inflacion(RegCod, 'interanual', nivel=f'en la región {region[RegCod]}')
         reporte.agregar_subcapitulo(
             titulo=f"Evolución de la variación internanual del índice en la región {region[RegCod]}",
-            titulo_grafico="Variación interanual del IPC",
+            titulo_grafico="Variación interanual del índice",
             descripcion_grafico=f"Region {region[RegCod]}, serie histórica, en porcentaje",
             descripcion=subcap_data[1],
             fuente="INE",
@@ -276,7 +276,7 @@ if __name__ == "__main__":
         subcap_data = datos.serie_inflacion(RegCod, 'acumulada', nivel=f'en la región {region[RegCod]}')
         reporte.agregar_subcapitulo(
             titulo=f"Evolución de la variación acumulada del índice en la región {region[RegCod]}",
-            titulo_grafico="Variación acumulada del IPC",
+            titulo_grafico="Variación acumulada del índice",
             descripcion_grafico=f"Region {region[RegCod]}, serie histórica, en porcentaje",
             descripcion=subcap_data[1],
             fuente="INE",
@@ -287,7 +287,7 @@ if __name__ == "__main__":
         subcap_data = datos.serie_inflacion(RegCod, 'intermensual', nivel=f'en la región {region[RegCod]}')
         reporte.agregar_subcapitulo(
             titulo=f"Evolución de la variación mensual del índice en la región {region[RegCod]}",
-            titulo_grafico="Variación intermensual del IPC",
+            titulo_grafico="Variación intermensual del índice",
             descripcion_grafico=f"Region {region[RegCod]}, serie histórica, en porcentaje",
             descripcion=subcap_data[1],
             fuente="INE",
@@ -331,7 +331,7 @@ if __name__ == "__main__":
         """
         subcap_data = datos.serie_poder_adquisitivo(RegCod)
         reporte.agregar_subcapitulo(
-            titulo="Valor del dinero",
+            titulo="Valor del Quetzal",
             titulo_grafico="Poder adquisitivo del quetzal",
             descripcion_grafico=f"Region {region[RegCod]}, serie histórica, adimensional",
             descripcion=subcap_data[1],
