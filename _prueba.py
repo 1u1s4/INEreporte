@@ -27,6 +27,39 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico=dict(Q4Etiquetas=True)
     )
+    subcap_data = datos.serie_precios(Qcobertura=True)
+    reporte.agregar_subcapitulo(
+        titulo="Cobertura de precios",
+        titulo_grafico="Histórico de cobertura de precios",
+        descripcion_grafico="República de Guatemala, serie histórica, cantidad de precios",
+        descripcion=subcap_data[1],
+        fuente="INE",
+        tipo_grafico="lineal",
+        data=subcap_data[0],
+        opciones_grafico=dict(Q4Etiquetas=True)
+    )
+    subcap_data = datos.serie_precios(Qcobertura=False)
+    reporte.agregar_subcapitulo(
+        titulo="Imputación de precios",
+        titulo_grafico="Histórico de imputación de precios",
+        descripcion_grafico="República de Guatemala, serie histórica, porcentaje",
+        descripcion=subcap_data[1],
+        fuente="INE",
+        tipo_grafico="columna",
+        data=subcap_data[0],
+        opciones_grafico={}
+    )
+    subcap_data = datos.desagregacion_fuentes()
+    reporte.agregar_subcapitulo(
+        titulo="Desagregación de fuentes",
+        titulo_grafico="Desagregación de fuentes por tipo",
+        descripcion_grafico=f"República de Guatemala, {fecha}, porcentaje",
+        descripcion=subcap_data[1],
+        fuente="INE",
+        tipo_grafico="barra",
+        data=subcap_data[0],
+        opciones_grafico={"precision":2}
+    )
 # capitulo 2
     reporte.agregar_capitulo(
         titulo="Variables exógenas"
@@ -75,7 +108,7 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
-    subcap_data = datos.ipc_usa()
+    subcap_data = ((('Dic-2021', 7.096542338), ('Ene-2022', 7.5259344012204465), ('Feb-2022', 7.912024484898206), ('Mar-2022', 8.557586368232784), ('Abr-2022', 8.224139288485999), ('May-2022', 8.516412942713858), ('Jun-2022', 8.995220608588127), ('Jul-2022', 8.482129735766986), ('Ago-2022', 8.24923469014105), ('Sep-2022', 8.222410234342536), ('Oct-2022', 7.76311508008245), ('Nov-2022', 7.117878531114008), ('Dic-2022', 6.420682121616728)), 'El Índice de Precios al Consumidor en los Estados Unidos de América\\footnote{Para mayor información sobre el indice de precios al consumidor de los Estados Unidos, visite \\url{http://www.bls.gov/cpi}.} registró una variación interanual al mes de diciembre 2022 de 6.42%. En diciembre 2021 la variación interanual se ubicó en 7.10%, por lo que este indicador se desaceleró 0.68 puntos porcentuales en el último año.')
     reporte.agregar_subcapitulo(
         titulo="Índice de Precios al Consumidor de EE.UU.",
         titulo_grafico="Variación interanual del IPC de Estados Unidos de América",
@@ -87,30 +120,7 @@ if __name__ == "__main__":
         opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
 
-    subcap_data = datos.ipc_mex()
-    reporte.agregar_subcapitulo(
-        titulo="Índice de Precios al Consumidor de México",
-        titulo_grafico="Variación interanual del IPC de México",
-        descripcion_grafico="Estados Unidos Mexicanos, serie histórica, en porcentaje",
-        descripcion=subcap_data[1],
-        fuente="FRED",
-        tipo_grafico="lineal",
-        data=subcap_data[0],
-        opciones_grafico={"precision":2, "Q4Etiquetas":True}
-    )
-    """
-    subcap_data = datos.inflacion_CA_RD_MEX()
-    reporte.agregar_subcapitulo(
-        titulo="Inflación en Centro América, República Dominicana y México",
-        titulo_grafico="Tasa de variación interanual del IPC de los países Centroamericanos, República Dominicana y México",
-        descripcion_grafico="Centro América, República Dominicana y México, meses seleccionados, en porcentaje",
-        descripcion=subcap_data[1],
-        fuente="INE",
-        tipo_grafico="tabla",
-        data=subcap_data[0],
-        opciones_grafico={"precision":2}
-    )
-    """
+
 
     print(f"Generacion de datos [{time()-t:.2f} s]")
     reporte.crear_reporte()
