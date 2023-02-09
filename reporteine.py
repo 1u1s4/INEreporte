@@ -303,15 +303,13 @@ class ReporteINE:
                         f.write(self.formato_LaTeX(sub_capitulo[dato]))
     
     def hacer_capitulos(self):
-        i = 0
-        for capitulo in self.__data['capitulos']:
+        for i, capitulo in enumerate(self.__data['capitulos']):
             i += 1
-            j = 0
             file_name = capitulo["titulo"].replace(" ", "_")
             path = os.path.join(self.__path, f"tex/{file_name}.tex")
             sub_capitulos = capitulo["sub_capitulos"]
             with open(path, "w", encoding='utf-8') as f:
-                for sub_capitulo in sub_capitulos:
+                for j, sub_capitulo in enumerate(sub_capitulos):
                     j += 1
                     j_str = str(j).rjust(2, "0")
                     carpeta = f"descripciones/{i}_{j_str}"
@@ -327,7 +325,6 @@ class ReporteINE:
                     elif sub_capitulo["tipo_grafico"] in ("tabla"):
                         f.write("{%\n\\input{" + f"graficas/{i}_{j_str}.tex" + "}}%\n")
                     f.write("{%\n\\input{" + carpeta + "/fuente.tex" + "}}%\n\n")
-                f.close()
 
     def escribir_capitulo(self, capitulo, f: TextIOWrapper):
         titulo = capitulo["titulo"]
