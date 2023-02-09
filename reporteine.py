@@ -142,13 +142,14 @@ class ReporteINE:
             datos_aprox.append((x, y))
         return datos_aprox
 
-    def agregar_capitulo(self, titulo: str, resumen: str = "", anexo: bool=False) -> None:
-        capitulo_nuevo = {}
-        capitulo_nuevo["titulo"] = titulo
-        capitulo_nuevo["resumen"] = resumen
-        capitulo_nuevo["anexo"] = anexo
-        capitulo_nuevo["sub_capitulos"] = []
-        self.__data.get('capitulos').append(capitulo_nuevo)
+    def agregar_capitulo(self, titulo: str, resumen: str = "", anexo: bool = False) -> None:
+        capitulo_nuevo = {
+            "titulo": titulo,
+            "resumen": resumen,
+            "anexo": anexo,
+            "sub_capitulos": []
+        }
+        self.__data.get("capitulos").append(capitulo_nuevo)
         self._indice += 1
 
     def agregar_subcapitulo(
