@@ -283,12 +283,10 @@ class ReporteINE:
                         **sub_capitulo["opciones_grafico"])
     
     def hacer_descripciones(self) -> None:
-        i = 0
-        for capitulo in self.__data['capitulos']:
+        for i, capitulo in enumerate(self.__data['capitulos']):
             i += 1
-            j = 0
             sub_capitulos = capitulo["sub_capitulos"]
-            for sub_capitulo in sub_capitulos:
+            for j, sub_capitulo in enumerate(sub_capitulos):
                 j += 1
                 j_str = str(j).rjust(2, "0")
                 path = os.path.join(self.__path, f"descripciones\\{i}_{j_str}")
@@ -303,7 +301,6 @@ class ReporteINE:
                 for dato in informacion:
                     with open(os.path.join(path, dato + ".tex"), "w", encoding="utf-8") as f:
                         f.write(self.formato_LaTeX(sub_capitulo[dato]))
-                        f.close()
     
     def hacer_capitulos(self):
         i = 0
