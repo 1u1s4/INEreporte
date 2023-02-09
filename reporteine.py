@@ -153,25 +153,26 @@ class ReporteINE:
         self._indice += 1
 
     def agregar_subcapitulo(
-        self,
-        titulo: str,
-        titulo_grafico: str,
-        descripcion_grafico: str,
-        descripcion: str,
-        fuente: str,
-        tipo_grafico: str,
-        data: tuple,
-        opciones_grafico: dict
-        ) -> None:
-        sub_cap = {}
-        sub_cap["titulo"] = titulo
-        sub_cap["titulo_grafico"] = titulo_grafico
-        sub_cap["descripcion_grafico"] = descripcion_grafico
-        sub_cap["descripcion"] = descripcion
-        sub_cap["fuente"] = fuente
-        sub_cap["tipo_grafico"] = tipo_grafico
-        sub_cap["opciones_grafico"] = opciones_grafico
-        sub_cap["data"] = data
+            self,
+            titulo: str,
+            titulo_grafico: str,
+            descripcion_grafico: str,
+            descripcion: str,
+            fuente: str,
+            tipo_grafico: str,
+            data: tuple,
+            opciones_grafico: dict
+            ) -> None:
+        sub_cap = {
+            "titulo": titulo,
+            "titulo_grafico": titulo_grafico,
+            "descripcion_grafico": descripcion_grafico,
+            "descripcion": descripcion,
+            "fuente": fuente,
+            "tipo_grafico": tipo_grafico,
+            "opciones_grafico": opciones_grafico,
+            "data": data
+        }
         self.__data.get('capitulos')[self._indice]['sub_capitulos'].append(sub_cap)
     
     def escribir_libros(self) -> None:
