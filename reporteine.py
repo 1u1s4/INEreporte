@@ -133,7 +133,6 @@ class ReporteINE:
         ruta = os.path.join(self.__path, f"tex/presentacion.tex")
         with open(ruta, 'w', encoding='utf-8') as f:
             f.write(texto)
-            f.close
 
     def aproximador(self, datos, precision: int = 2):
         datos_aprox = []
