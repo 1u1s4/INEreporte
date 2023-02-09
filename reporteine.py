@@ -423,7 +423,6 @@ class ReporteINE:
                 if capitulo['anexo']:
                     self.escribir_capitulo(capitulo, f)
             f.write("\\end{document}\n")
-            f.close()
             
     def compilar_reporte(self):
         nombre = self.__data["nombre"].replace(" ", "_")
@@ -485,20 +484,10 @@ class ReporteINE:
                     if type(celda) is str:
                         f.write(f"{celda}")
                     else:
-                        if precision == 1:
-                            f.write(f"{float(celda):.1f}")
-                        elif precision == 2:
-                            f.write(f"{float(celda):.2f}")
-                        elif precision == 3:
-                            f.write(f"{float(celda):.3f}")
-                        elif precision == 4:
-                            f.write(f"{float(celda):.4f}")
-                        else:
-                            f.write(f"{float(celda):.4f}")
+                        f.write(f"{float(celda):.{precision}f}")
                     if j != len(datos[i]):
                         f.write(" & ")
                     else:
                         f.write("\\\\\n")
             f.write("\\hline\n")
             f.write("\\end{tabular}\n")
-            f.close()
