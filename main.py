@@ -10,6 +10,7 @@ if __name__ == "__main__":
     mes_ = mes_by_ordinal(mes, abreviado=False).capitalize()
     fecha = f"{mes_} {anio}"
     datos = datosIPC(anio, mes)
+    print(f"Generacion de datos [{time()-t:.2f} s]")
     reporte = ReporteINE("Prueba_IPC", anio, mes)
 # capitulo 1
     reporte.presentacion(datos.introduccion())
@@ -27,7 +28,7 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico=dict(Q4Etiquetas=True)
     )
-    subcap_data = datos.serie_precios(Qcobertura=True)
+    subcap_data = datos.serie_precios()
     reporte.agregar_subcapitulo(
         titulo="Cobertura de precios",
         titulo_grafico="Histórico de cobertura de precios",
@@ -38,7 +39,7 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico=dict(Q4Etiquetas=True)
     )
-    subcap_data = datos.serie_precios(Qcobertura=False)
+    subcap_data = datos.serie_imputacion()
     reporte.agregar_subcapitulo(
         titulo="Imputación de precios",
         titulo_grafico="Histórico de imputación de precios",
@@ -361,7 +362,7 @@ if __name__ == "__main__":
             data=datosGba,
             opciones_grafico={"precision":2, "Q4Etiquetas":True}
         )
-    print(f"Generacion de datos [{time()-t:.2f} s]")
+    print(f"Manipulacion de datos [{time()-t:.2f} s]")
     reporte.crear_reporte()
     #reporte.compilar_reporte()
     tf = time()
