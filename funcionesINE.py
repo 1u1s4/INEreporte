@@ -5,8 +5,8 @@ import rpy2.robjects as robjects
 
 class FuncionesINE:
     def __init__(self) -> None:
-        #devtools = rpackages.importr('devtools')
-        #devtools.install_github("1u1s4/funcionesINE")
+        devtools = rpackages.importr('devtools')
+        devtools.install_github("1u1s4/funcionesINE")
         self.__funcionesINE = rpackages.importr('funcionesINE')
         self.__datos = list
         self.Qanual = True
