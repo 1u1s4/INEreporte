@@ -9,7 +9,7 @@ if __name__ == "__main__":
     anio = 2022
     mes_ = mes_by_ordinal(mes, abreviado=False).capitalize()
     fecha = f"{mes_} {anio}"
-    datos = datosIPC(anio, mes)
+    datos = datosIPC(anio, mes, True)
     print(f"Generacion de datos [{time()-t:.2f} s]")
     reporte = ReporteINE("Prueba_IPC", anio, mes)
 # capitulo 1
