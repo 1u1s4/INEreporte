@@ -346,9 +346,9 @@ class ReporteINE:
         with open(path, 'w', encoding='utf-8') as f:
             f.write("\\includepdf[pagecommand={\n")
             f.write("\\begin{tikzpicture}[remember picture, overlay]\n")
-            f.write("\\node[nome] at ([yshift=4cm] current page) {\\color{white}{\\mgrande República de Guatemala:}};\n")
-            f.write("\\node[nome] at ([yshift=2.3cm] current page) {\\color{white}{\\mgrande Índice de Precios al Consumidor}};\n")
-            f.write("\\node[nome] at ([yshift=0.6cm] current page) {\\color{white}{\\mgrande "+ f"{mes_1} {anio_1}" + "}};\n")
+            f.write("\\node[nome] at ([yshift=2cm, xshift=1cm] current page) {\\color{white}{\\mgrande República de Guatemala:}};\n")
+            f.write("\\node[nome] at ([yshift=0.3cm, xshift=1cm]] current page) {\\color{white}{\\mgrande Índice de Precios al Consumidor}};\n")
+            f.write("\\node[nome] at ([yshift=-1.4cm, xshift=1cm] current page) {\\color{white}{\\mgrande "+ f"{mes_1} {anio_1}" + "}};\n")
             f.write("\\node at ([yshift=-12cm] current page) {\\color{white}{\\LARGE Guatemala, " + f"{mes_2.lower()} de {anio_2}" + "}};\n")
             f.write("\\end{tikzpicture}}\n")
             f.write("]{plantilla/portada.pdf}\n")
