@@ -5,7 +5,7 @@ from funcionesjo import mes_by_ordinal
 
 if __name__ == "__main__":
     t = time()
-    mes = 1
+    mes = 2
     anio = 2023
     mes_ = mes_by_ordinal(mes, abreviado=False).capitalize()
     fecha = f"{mes_} {anio}"
