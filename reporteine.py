@@ -314,16 +314,22 @@ class ReporteINE:
                     j_str = str(j).rjust(2, "0")
                     carpeta = f"descripciones/{i}_{j_str}"
                     titulo =  sub_capitulo["titulo"]
-                    f.write("\\cajita{%\n" + titulo + "}%\n")
+                    if sub_capitulo["tipo_grafico"] in ("diagrama", "mapa"):
+                        f.write("\\cajota{%\n" + titulo + "}%\n")
+                    else:
+                        f.write("\\cajita{%\n" + titulo + "}%\n")
                     f.write("{%\n\\input{" + carpeta + "/descripcion.tex" + "}}%\n")
                     f.write("{%\n\\input{" + carpeta + "/titulo_grafico.tex" + "}}%\n")
                     f.write("{%\n\\input{" + carpeta + "/descripcion_grafico.tex" + "}}%\n")
                     if sub_capitulo["tipo_grafico"] in ("lineal", "barra", "columna"):
                         f.write("{%\n\\begin{tikzpicture}[x=1pt,y=1pt]\\input{" + f"graficas/{i}_{j_str}.tex" + "}\\end{tikzpicture}}%\n")
-                    elif sub_capitulo["tipo_grafico"] in ("mapa"):
+                    elif sub_capitulo["tipo_grafico"] == "mapa":
                         f.write("{%\n\\includegraphics[width=52\\cuadri]{" + f"graficas/{i}_{j_str}.pdf" + "}%\n")
-                    elif sub_capitulo["tipo_grafico"] in ("tabla"):
+                    elif sub_capitulo["tipo_grafico"] == "tabla":
                         f.write("{%\n\\input{" + f"graficas/{i}_{j_str}.tex" + "}}%\n")
+                    elif sub_capitulo["tipo_grafico"] == "diagrama":
+                        file_name = sub_capitulo["data"][0]
+                        f.write("{%\n\\input{" + file_name + "}}%\n")
                     f.write("{%\n\\input{" + carpeta + "/fuente.tex" + "}}%\n\n")
 
     def escribir_capitulo(self, capitulo, f: TextIOWrapper):
@@ -347,7 +353,7 @@ class ReporteINE:
             f.write("\\includepdf[pagecommand={\n")
             f.write("\\begin{tikzpicture}[remember picture, overlay]\n")
             f.write("\\node[nome] at ([yshift=2cm, xshift=1cm] current page) {\\color{white}{\\mgrande República de Guatemala:}};\n")
-            f.write("\\node[nome] at ([yshift=0.3cm, xshift=1cm]] current page) {\\color{white}{\\mgrande Índice de Precios al Consumidor}};\n")
+            f.write("\\node[nome] at ([yshift=0.3cm, xshift=1cm] current page) {\\color{white}{\\mgrande Índice de Precios al Consumidor}};\n")
             f.write("\\node[nome] at ([yshift=-1.4cm, xshift=1cm] current page) {\\color{white}{\\mgrande "+ f"{mes_1} {anio_1}" + "}};\n")
             f.write("\\node at ([yshift=-12cm] current page) {\\color{white}{\\LARGE Guatemala, " + f"{mes_2.lower()} de {anio_2}" + "}};\n")
             f.write("\\end{tikzpicture}}\n")
