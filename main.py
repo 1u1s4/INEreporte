@@ -206,7 +206,7 @@ if __name__ == "__main__":
     )
     subcap_data = datos.incidencias_gba(0, True)
     reporte.agregar_subcapitulo(
-        titulo="Bienes con mayor impacto en el cambio mensual",
+        titulo="Gastos básicos con mayor impacto positivo en la variación mensual",
         titulo_grafico="Gastos básicos con mayor incidencia positiva",
         descripcion_grafico=f"República de Guatemala, {fecha}, en porcentaje",
         descripcion=subcap_data[1],
@@ -217,7 +217,7 @@ if __name__ == "__main__":
     )
     subcap_data = datos.incidencias_gba(0, False)
     reporte.agregar_subcapitulo(
-        titulo="Bienes con mayor impacto en el cambio mensual",
+        titulo="Gastos básicos con mayor impacto negativo en la variación mensual",
         titulo_grafico="Gastos básicos con mayor incidencia negativa",
         descripcion_grafico=f"República de Guatemala, {fecha}, en porcentaje",
         descripcion=subcap_data[1],
@@ -309,7 +309,7 @@ if __name__ == "__main__":
         )
         subcap_data = datos.incidencias_gba(RegCod, True)
         reporte.agregar_subcapitulo(
-            titulo="Bienes con mayor impacto en el cambio mensual",
+            titulo="Gastos básicos con mayor impacto positivo en la variación mensual",
             titulo_grafico="Gastos básicos con mayor incidencia positiva",
             descripcion_grafico=f"Region {region[RegCod]}, {fecha}, en porcentaje",
             descripcion=subcap_data[1],
@@ -320,7 +320,7 @@ if __name__ == "__main__":
         )
         subcap_data = datos.incidencias_gba(RegCod, False)
         reporte.agregar_subcapitulo(
-            titulo="Bienes con mayor impacto en el cambio mensual",
+            titulo="Gastos básicos con mayor impacto negativo en la variación mensual",
             titulo_grafico="Gastos básicos con mayor incidencia negativa",
             descripcion_grafico=f"Region {region[RegCod]}, {fecha}, en porcentaje",
             descripcion=subcap_data[1],
