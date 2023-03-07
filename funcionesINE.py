@@ -125,7 +125,7 @@ class FuncionesINE:
                 g,
                 precision=precision
             )
-        g = self.__funcionesINE.rotarEtiX2(g)
+        g = self.__funcionesINE.rotarEtiX(g)
         self.__funcionesINE.exportarLatex(
             ruta_salida + f"/{nombre}.tex",
             g
