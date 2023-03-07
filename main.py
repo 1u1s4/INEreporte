@@ -9,7 +9,7 @@ if __name__ == "__main__":
     anio = 2023
     mes_ = mes_by_ordinal(mes, abreviado=False).capitalize()
     fecha = f"{mes_} {anio}"
-    datos = datosIPC(anio, mes)
+    datos = datosIPC(anio, mes, dbBackup=True)
     print(f"Generacion de datos [{time()-t:.2f} s]")
     reporte = ReporteINE("Índice de Precios al Consumidor", anio, mes)
 # capitulo 1
