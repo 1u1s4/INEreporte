@@ -11,7 +11,7 @@ if __name__ == "__main__":
     fecha = f"{mes_} {anio}"
     datos = datosIPC(anio, mes)
     print(f"Generacion de datos [{time()-t:.2f} s]")
-    reporte = ReporteINE("Prueba_IPC", anio, mes)
+    reporte = ReporteINE("Índice de Precios al Consumidor", anio, mes)
 # capitulo 1
     reporte.presentacion(datos.introduccion())
     reporte.agregar_capitulo(
@@ -265,7 +265,7 @@ if __name__ == "__main__":
         )
         subcap_data = datos.serie_inflacion(RegCod, 'interanual', nivel=f'en la región {region[RegCod]}')
         reporte.agregar_subcapitulo(
-            titulo=f"Evolución de la variación internanual del índice en la región {region[RegCod]}",
+            titulo=f"Evolución de la variación interanual del índice en la región {region[RegCod]}",
             titulo_grafico="Variación interanual del índice",
             descripcion_grafico=f"Region {region[RegCod]}, serie histórica, en porcentaje",
             descripcion=subcap_data[1],
