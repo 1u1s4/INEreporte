@@ -1,12 +1,12 @@
 import os
-os.environ["R_HOME"] = r"C:\Program Files\R\R-4.2.1" # change as needed
+os.environ["R_HOME"] = r"C:\Users\laalvarado\AppData\Local\Programs\R\R-4.2.2" # change as needed
 import rpy2.robjects.packages as rpackages
 import rpy2.robjects as robjects
 
 class FuncionesINE:
     def __init__(self) -> None:
-        #devtools = rpackages.importr('devtools')
-        #devtools.install_github("1u1s4/funcionesINE")
+        devtools = rpackages.importr('devtools')
+        devtools.install_github("1u1s4/funcionesINE")
         self.__funcionesINE = rpackages.importr('funcionesINE')
         self.__datos = list
         self.Qanual = True
