@@ -5,8 +5,8 @@ import rpy2.robjects as robjects
 
 class FuncionesINE:
     def __init__(self) -> None:
-        devtools = rpackages.importr('devtools')
-        devtools.install_github("1u1s4/funcionesINE")
+        # devtools = rpackages.importr('devtools')
+        # devtools.install_github("1u1s4/funcionesINE")
         self.__funcionesINE = rpackages.importr('funcionesINE')
         self.__datos = list
         self.Qanual = True
@@ -37,6 +37,7 @@ class FuncionesINE:
         escala: str = "normal",
         rotar: bool = True,
         final = None,
+        etiquetaCadaSeis: bool = False,
         Q4Etiquetas: bool = False) -> None:
         if self.Qanual:
             self.__funcionesINE.anual(
@@ -45,10 +46,8 @@ class FuncionesINE:
             )
         if Q4Etiquetas:
             self.__funcionesINE.cuatroEtiquetas()
-        if rotar:
-            rotar = robjects.r("TRUE")
-        else:
-            rotar = robjects.r("FALSE")
+        rotar = robjects.r("TRUE") if rotar else robjects.r("FALSE")
+        etiquetaCadaSeis = robjects.r("TRUE") if etiquetaCadaSeis else robjects.r("FALSE")
         if final is None:
             final = robjects.r("NA")
         self.__funcionesINE.exportarLatex(
@@ -60,7 +59,8 @@ class FuncionesINE:
                 precision=precision,
                 escala=escala,
                 rotar=rotar,
-                final=final
+                final=final,
+                etiquetaCadaSeis=etiquetaCadaSeis
             )
         )
 
