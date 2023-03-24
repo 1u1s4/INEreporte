@@ -433,7 +433,12 @@ class ReporteINE:
     def compilar_reporte(self):
         nombre = self.__data["nombre"].replace(" ", "_")
         path = os.path.join(self.__path, f"{nombre}.tex")
-        subprocess.call(["xelatex", "-synctex=1", "-interaction=nonstopmode", path])
+        subprocess.run(
+            f"cd {self.__path} && xelatex -synctex=1 -interaction=nonstopmode {path}",
+            capture_output=True,
+            text=True,
+            shell=True
+        )
 
     def crear_reporte(self):
         self.escribir_libros()
