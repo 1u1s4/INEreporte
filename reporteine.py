@@ -8,7 +8,7 @@ from xlsxchef import xlsxChef
 from datetime import datetime
 from funcionesINE import FuncionesINE
 from funcionesjo import mes_by_ordinal
-
+import pandas as pd
 """
 data := {
     'nombre':str,
@@ -502,3 +502,59 @@ class ReporteINE:
                         f.write("\\\\\n")
             f.write("\\hline\n")
             f.write("\\end{tabular}\n")
+
+    def export_to_longtable(df, filename, caption, column_format='c'*len(df.columns), header=True, decimals=2):
+        """
+        Exporta un dataframe a un longtable de LaTeX en un archivo.
+        
+        Parameters:
+        df (pandas.DataFrame): DataFrame a exportar.
+        filename (str): Nombre del archivo a guardar.
+        caption (str): Leyenda de la tabla.
+        column_format (str): Cadena que describe el formato de las columnas.
+        header (bool): Si True, muestra el encabezado de la tabla.
+        decimals (int): Cantidad de decimales para los números. Si el valor no es numérico, se muestra tal cual.
+        """
+        with open(filename, 'w', encoding="utf-8") as f:
+            f.write('\\begin{longtable}{' + column_format + '}\n')
+            f.write('\\caption{' + caption + '}\\label{tab:' + filename[:-4] + '}\\\\\n')
+            f.write('\\toprule\n')
+            
+            # Escribir el encabezado
+            if header:
+                f.write(' & '.join([col.replace('_', '\\_') for col in df.columns]))
+                f.write('\\\\\\midrule\n')
+            
+            f.write('\\endfirsthead\n')
+            f.write('\\multicolumn{' + str(len(df.columns)) + '}{c}{{\\bfseries \\tablename\\ \\thetable{} -- '
+                    'Continuación de la página anterior}}\\\\\n')
+            f.write('\\toprule\n')
+            if header:
+                f.write(' & '.join([col.replace('_', '\\_') for col in df.columns]))
+                f.write('\\\\\\midrule\n')
+            f.write('\\endhead\n')
+            f.write('\\midrule\n')
+            f.write('\\multicolumn{' + str(len(df.columns)) + '}{r}{{Continúa en la siguiente página}}\\\\\n')
+            f.write('\\endfoot\n')
+            f.write('\\bottomrule\n')
+            f.write('\\endlastfoot\n')
+            
+            # Escribir los datos
+            import re
+            for _, row in df.iterrows():
+                values = []
+                for value in row:
+                    if pd.isna(value):
+                        values.append('')
+                    elif isinstance(value, (int, float)):
+                        valor = round(value, decimals)
+                        if re.match(r"^[-]0\.0*$", str(valor)):
+                            valor = int(valor)
+                        valor = '{:.{}f}'.format(valor, decimals)
+                        values.append(valor)
+                    else:
+                        values.append(str(value))
+                f.write(' & '.join(values))
+                f.write('\\\\\n')
+            
+            f.write('\\end{longtable}\n')
