@@ -1,7 +1,9 @@
-from reporteine import ReporteINE
 from time import time
+
 from datosipc import datosIPC
+
 from funcionesjo import mes_by_ordinal
+from reporteine import ReporteINE
 
 if __name__ == "__main__":
     t = time()

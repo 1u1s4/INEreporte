@@ -1,7 +1,9 @@
 import os
+
 os.environ["R_HOME"] = r"C:\Users\laalvarado\AppData\Local\Programs\R\R-4.2.2" # change as needed
-import rpy2.robjects.packages as rpackages
 import rpy2.robjects as robjects
+import rpy2.robjects.packages as rpackages
+
 
 class FuncionesINE:
     def __init__(self) -> None:

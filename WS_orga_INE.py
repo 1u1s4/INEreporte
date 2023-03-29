@@ -1,6 +1,8 @@
+import os
+
 import requests
 from bs4 import BeautifulSoup
-import os
+
 
 def conexionQ() -> bool:
     try:
