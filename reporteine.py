@@ -286,7 +286,14 @@ class ReporteINE:
                         ruta_salida=os.path.join(self.__path, "graficas"),
                         nombre=referencia,
                         tabla_inflacion=t_inflacion,
-                        **sub_capitulo["opciones_grafico"])
+                        **sub_capitulo["opciones_grafico"]
+                    )
+                elif tipo_grafico == "tabla_larga":
+                    self.export_to_longtable(
+                        df=sub_capitulo["data"],
+                        filename=referencia,
+                        ruta_salida=ruta_tex
+                    )
     
     def hacer_descripciones(self) -> None:
         for i, capitulo in enumerate(self.__data['capitulos']):
@@ -320,7 +327,7 @@ class ReporteINE:
                     j_str = str(j).rjust(2, "0")
                     carpeta = f"descripciones/{i}_{j_str}"
                     titulo =  sub_capitulo["titulo"]
-                    if sub_capitulo["tipo_grafico"] in ("diagrama", "mapa"):
+                    if sub_capitulo["tipo_grafico"] in ("diagrama", "mapa", "tabla_larga"):
                         f.write("\\cajota{%\n" + titulo + "}%\n")
                     else:
                         f.write("\\cajita{%\n" + titulo + "}%\n")
@@ -331,7 +338,7 @@ class ReporteINE:
                         f.write("{%\n\\begin{tikzpicture}[x=1pt,y=1pt]\\input{" + f"graficas/{i}_{j_str}.tex" + "}\\end{tikzpicture}}%\n")
                     elif sub_capitulo["tipo_grafico"] == "mapa":
                         f.write("{%\n\\includegraphics[width=52\\cuadri]{" + f"graficas/{i}_{j_str}.pdf" + "}%\n")
-                    elif sub_capitulo["tipo_grafico"] == "tabla":
+                    elif sub_capitulo["tipo_grafico"] in ("tabla", "tabla_larga"):
                         f.write("{%\n\\input{" + f"graficas/{i}_{j_str}.tex" + "}}%\n")
                     elif sub_capitulo["tipo_grafico"] == "diagrama":
                         file_name = sub_capitulo["data"][0]
@@ -513,6 +520,7 @@ class ReporteINE:
             self,
             df: pd.DataFrame,
             filename: str,
+            ruta_salida: str,
             header: bool=True,
             decimals: int=2):
         """
@@ -526,7 +534,7 @@ class ReporteINE:
         header (bool): Si True, muestra el encabezado de la tabla.
         decimals (int): Cantidad de decimales para los números. Si el valor no es numérico, se muestra tal cual.
         """
-        with open(filename, 'w', encoding="utf-8") as f:
+        with open(f"{ruta_salida}/{filename}.tex", 'w', encoding="utf-8") as f:
             f.write('\\begin{longtable}{' + 'c'*len(df.columns) + '}\n')
             f.write('\\toprule\n')
             
