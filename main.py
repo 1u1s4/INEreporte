@@ -388,7 +388,7 @@ if __name__ == "__main__":
         )
     print(f"Manipulacion de datos [{time()-t:.2f} s]")
     reporte.crear_reporte()
-    print(f"Crear reporte [{time()-t:.2f} s]")
+    print(f"Crear reporte [{(time()-t)//60:.2f} min]")
     reporte.compilar_reporte()
     reporte.compilar_reporte()
     tf = time()
