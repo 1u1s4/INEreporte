@@ -7,7 +7,7 @@ from reporteine import ReporteINE
 
 if __name__ == "__main__":
     t = time()
-    mes = 2
+    mes = 3
     anio = 2023
     mes_ = mes_by_ordinal(mes, abreviado=False).capitalize()
     fecha = f"{mes_} {anio}"
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         fuente="INE",
         tipo_grafico="columna",
         data=subcap_data[0],
-        opciones_grafico={}
+        opciones_grafico={"precision":1}
     )
     subcap_data = datos.desagregacion_fuentes()
     reporte.agregar_subcapitulo(
@@ -61,7 +61,7 @@ if __name__ == "__main__":
         fuente="INE",
         tipo_grafico="barra",
         data=subcap_data[0],
-        opciones_grafico={"precision":2}
+        opciones_grafico={"precision":1}
     )
 # capitulo 2
     reporte.agregar_capitulo(
@@ -76,7 +76,7 @@ if __name__ == "__main__":
         fuente="FAO",
         tipo_grafico="lineal",
         data=subcap_data[0],
-        opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        opciones_grafico={"precision":1, "Q4Etiquetas":True}
     )
     subcap_data = datos.petroleo()
     reporte.agregar_subcapitulo(
@@ -87,7 +87,7 @@ if __name__ == "__main__":
         fuente="Federal Reserve Economic Data",
         tipo_grafico="lineal",
         data=subcap_data[0],
-        opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        opciones_grafico={"precision":1, "Q4Etiquetas":True}
     )
     subcap_data = datos.cambio_quetzal()
     reporte.agregar_subcapitulo(
@@ -98,7 +98,7 @@ if __name__ == "__main__":
         fuente="Banco de Guatemala",
         tipo_grafico="lineal",
         data=subcap_data[0],
-        opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        opciones_grafico={"precision":1, "Q4Etiquetas":True}
     )
     subcap_data = datos.tasa_interes()
     reporte.agregar_subcapitulo(
@@ -109,7 +109,7 @@ if __name__ == "__main__":
         fuente="Banco de Guatemala",
         tipo_grafico="lineal",
         data=subcap_data[0],
-        opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        opciones_grafico={"precision":1, "Q4Etiquetas":True}
     )
     subcap_data = datos.ipc_usa()
     reporte.agregar_subcapitulo(
@@ -120,7 +120,7 @@ if __name__ == "__main__":
         fuente="FRED",
         tipo_grafico="lineal",
         data=subcap_data[0],
-        opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        opciones_grafico={"precision":1, "Q4Etiquetas":True}
     )
 
     subcap_data = datos.ipc_mex()
@@ -132,7 +132,7 @@ if __name__ == "__main__":
         fuente="FRED",
         tipo_grafico="lineal",
         data=subcap_data[0],
-        opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        opciones_grafico={"precision":1, "Q4Etiquetas":True}
     )
     """
     subcap_data = datos.inflacion_CA_RD_MEX()
@@ -160,7 +160,7 @@ if __name__ == "__main__":
         fuente="INE",
         tipo_grafico="lineal",
         data=subcap_data[0],
-        opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        opciones_grafico={"precision":1, "Q4Etiquetas":True}
     )
     subcap_data = datos.serie_inflacion(0, 'interanual')
     reporte.agregar_subcapitulo(
@@ -193,7 +193,7 @@ if __name__ == "__main__":
         fuente="INE",
         tipo_grafico="lineal",
         data=subcap_data[0],
-        opciones_grafico={"precision":2, "Q4Etiquetas":True}
+        opciones_grafico={"precision":1, "Q4Etiquetas":True}
     )
     subcap_data = datos.incidencias_divisiones(0)
     reporte.agregar_subcapitulo(
@@ -239,6 +239,28 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
+    subcap_data = datos.serie_historica("mensual")
+    reporte.agregar_subcapitulo(
+        titulo="Evolución de la variación mensual del IPC",
+        titulo_grafico="Variación intermensual del IPC",
+        descripcion_grafico="República de Guatemala, serie histórica, en porcentaje",
+        descripcion=subcap_data[1],
+        fuente="INE",
+        tipo_grafico="lineal",
+        data=subcap_data[0],
+        opciones_grafico=dict(Q4Etiquetas=True, etiquetaCadaSeis=True)
+    )
+    subcap_data = datos.serie_historica("anual")
+    reporte.agregar_subcapitulo(
+        titulo="Evolución del cambio anual del IPC (Ritmo Inflacionario)",
+        titulo_grafico="Variación interanual del IPC",
+        descripcion_grafico="República de Guatemala, serie histórica, en porcentaje",
+        descripcion=subcap_data[1],
+        fuente="INE",
+        tipo_grafico="lineal",
+        data=subcap_data[0],
+        opciones_grafico=dict(Q4Etiquetas=True, etiquetaCadaSeis=True)
+    )
 # capitulos regionales
     region = {
         1: 'I',
@@ -263,7 +285,7 @@ if __name__ == "__main__":
             fuente="INE",
             tipo_grafico="lineal",
             data=subcap_data[0],
-            opciones_grafico={"precision":2, "Q4Etiquetas":True}
+            opciones_grafico={"precision":1, "Q4Etiquetas":True}
         )
         subcap_data = datos.serie_inflacion(RegCod, 'interanual', nivel=f'en la región {region[RegCod]}')
         reporte.agregar_subcapitulo(
@@ -296,7 +318,7 @@ if __name__ == "__main__":
             fuente="INE",
             tipo_grafico="lineal",
             data=subcap_data[0],
-            opciones_grafico={"precision":2, "Q4Etiquetas":True}
+            opciones_grafico={"precision":1, "Q4Etiquetas":True}
         )
         subcap_data = datos.incidencias_divisiones(RegCod)
         reporte.agregar_subcapitulo(
@@ -362,10 +384,12 @@ if __name__ == "__main__":
             fuente="INE",
             tipo_grafico="lineal",
             data=datosGba,
-            opciones_grafico={"precision":2, "Q4Etiquetas":True}
+            opciones_grafico={"precision":1, "Q4Etiquetas":True}
         )
     print(f"Manipulacion de datos [{time()-t:.2f} s]")
     reporte.crear_reporte()
-    #reporte.compilar_reporte()
+    print(f"Crear reporte [{time()-t:.2f} s]")
+    reporte.compilar_reporte()
+    reporte.compilar_reporte()
     tf = time()
     print(f"[{(tf-t)//60:.2f} min]")
