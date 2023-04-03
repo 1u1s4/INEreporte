@@ -1,3 +1,4 @@
+# Archivos auxiliares de LaTeX
 *.aux
 *.log
 *.out
@@ -16,31 +17,46 @@
 *.lof
 *.lof
 *.gz
-Plantilla/ResultadosEncovi/
 *.fls
 *.ind
 *.ilg
 *.fdb_latexmk
+
+# Archivos y carpetas de R
 .Rproj.user
 .Rhistory
+
+# Carpetas de utilidades, archivos temporales y otros
 Utilidades
+Temp
+Dictionary
 __pycache__
+Plantilla/ResultadosEncovi/
+
+# Archivos y carpetas de Visual Studio Code
+.vscode
+
+# Archivos específicos del proyecto
 IPC C.A. REP. DOMINICANA Y MÉXICO.xlsx
 descriptoripc.py
 datosipc.py
 cambio.xml
 FFPI.xls
-Temp
 tasa_interes.xls
 prueba.py
 sqline.py
 regiones.py
 setup.py
-Dictionary
-.vscode
-*.xlsx
-.DS_Store
-main2.py
 query_fuentes.txt
+main2.py
+.DS_Store
+
+# Carpetas de bases de datos y reportes
 db_b/
 0reportes/
+
+# Ignorar carpetas con formato %d-%m-%Y_%H_%M_%S
+[0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9]_[0-9][0-9]_[0-9][0-9]_[0-9][0-9]/
+
+# Ignorar archivos de Microsoft Excel
+*.xlsx
