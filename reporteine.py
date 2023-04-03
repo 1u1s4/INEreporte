@@ -132,6 +132,9 @@ class ReporteINE:
                 "Plantilla/organizacion.tex",
                 os.path.join(self.__path, "tex/organizacion.tex")) 
 
+    def get_data(self) -> dict:
+        return self.__data
+
     def presentacion(self, texto):
         ruta = os.path.join(self.__path, f"tex/presentacion.tex")
         with open(ruta, 'w', encoding='utf-8') as f:
@@ -506,7 +509,12 @@ class ReporteINE:
             f.write("\\hline\n")
             f.write("\\end{tabular}\n")
 
-    def export_to_longtable(df, filename, caption, column_format, header=True, decimals=2):
+    def export_to_longtable(
+            self,
+            df: pd.DataFrame,
+            filename: str,
+            header: bool=True,
+            decimals: int=2):
         """
         Exporta un dataframe a un longtable de LaTeX en un archivo.
         
@@ -518,10 +526,8 @@ class ReporteINE:
         header (bool): Si True, muestra el encabezado de la tabla.
         decimals (int): Cantidad de decimales para los números. Si el valor no es numérico, se muestra tal cual.
         """
-        column_format='c'*len(df.columns)
         with open(filename, 'w', encoding="utf-8") as f:
-            f.write('\\begin{longtable}{' + column_format + '}\n')
-            f.write('\\caption{' + caption + '}\\label{tab:' + filename[:-4] + '}\\\\\n')
+            f.write('\\begin{longtable}{' + 'c'*len(df.columns) + '}\n')
             f.write('\\toprule\n')
             
             # Escribir el encabezado
