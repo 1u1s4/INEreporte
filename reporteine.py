@@ -288,12 +288,14 @@ class ReporteINE:
                         tabla_inflacion=t_inflacion,
                         **sub_capitulo["opciones_grafico"]
                     )
+                """ 
                 elif tipo_grafico == "tabla_larga":
                     self.export_to_longtable(
                         df=sub_capitulo["data"],
                         filename=referencia,
                         ruta_salida=ruta_tex
                     )
+                """
     
     def hacer_descripciones(self) -> None:
         for i, capitulo in enumerate(self.__data['capitulos']):
@@ -516,6 +518,7 @@ class ReporteINE:
             f.write("\\hline\n")
             f.write("\\end{tabular}\n")
 
+    '''
     def export_to_longtable(
             self,
             df: pd.DataFrame,
@@ -576,3 +579,4 @@ class ReporteINE:
                 f.write('\\\\\n')
             
             f.write('\\end{longtable}\n')
+        '''
