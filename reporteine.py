@@ -304,7 +304,7 @@ class ReporteINE:
             for j, sub_capitulo in enumerate(sub_capitulos):
                 j += 1
                 j_str = str(j).rjust(2, "0")
-                path = os.path.join(self.__path, f"descripciones/{i}_{j_str}")
+                path = os.path.join(self.__path, f"descripciones\\{i}_{j_str}")
                 os.mkdir(path)
                 informacion = (
                     "descripcion",

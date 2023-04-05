@@ -1,11 +1,10 @@
-# xlsx_chef.py
 import xlsxwriter
 
 class xlsxChef:
     def __init__(self, tipo: str, path: str, nombre: str = 'XLSXprueba', NoCapitulo: int = 0) -> None:
         self.__tipo = tipo
         nombre = f"{nombre.title()}_{tipo}.xlsx".replace(" ", "")
-        self.__workbook = xlsxwriter.Workbook(f"{path}\\libros\\{nombre}")
+        self.__workbook = xlsxwriter.Workbook(f"{path}/libros/{nombre}")
         self.__NoCapitulo = NoCapitulo
 
     def escribir_hoja(self, datos:tuple, ordinal: int, encabezadosXY: bool = True) -> None:
