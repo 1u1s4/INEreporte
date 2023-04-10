@@ -50,7 +50,7 @@ if __name__ == "__main__":
         fuente="INE",
         tipo_grafico="columna",
         data=subcap_data[0],
-        opciones_grafico={"precision":1}
+        opciones_grafico={"precision":2}
     )
     subcap_data = datos.desagregacion_fuentes()
     reporte.agregar_subcapitulo(
@@ -61,7 +61,7 @@ if __name__ == "__main__":
         fuente="INE",
         tipo_grafico="barra",
         data=subcap_data[0],
-        opciones_grafico={"precision":1}
+        opciones_grafico={"precision":2}
     )
 # capitulo 2
     reporte.agregar_capitulo(
@@ -160,7 +160,7 @@ if __name__ == "__main__":
         fuente="INE",
         tipo_grafico="lineal",
         data=subcap_data[0],
-        opciones_grafico={"precision":1, "Q4Etiquetas":True}
+        opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
     subcap_data = datos.serie_inflacion(0, 'interanual')
     reporte.agregar_subcapitulo(
@@ -285,7 +285,7 @@ if __name__ == "__main__":
             fuente="INE",
             tipo_grafico="lineal",
             data=subcap_data[0],
-            opciones_grafico={"precision":1, "Q4Etiquetas":True}
+            opciones_grafico={"precision":2, "Q4Etiquetas":True}
         )
         subcap_data = datos.serie_inflacion(RegCod, 'interanual', nivel=f'en la región {region[RegCod]}')
         reporte.agregar_subcapitulo(
@@ -372,7 +372,7 @@ if __name__ == "__main__":
         anexo=True
     )
     datos_gba = datos.series_Gba(0)
-    for Gba in datos_gba[0:10]:
+    for Gba in datos_gba:
         nombre = Gba[0]
         datosGba = Gba[1]
         desc = Gba[2]
@@ -384,7 +384,7 @@ if __name__ == "__main__":
             fuente="INE",
             tipo_grafico="lineal",
             data=datosGba,
-            opciones_grafico={"precision":1, "Q4Etiquetas":True}
+            opciones_grafico={"precision":2, "Q4Etiquetas":True}
         )
     print(f"Manipulacion de datos [{time()-t:.2f} s]")
     reporte.crear_reporte()
