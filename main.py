@@ -7,7 +7,7 @@ from reporteine import ReporteINE
 
 if __name__ == "__main__":
     t = time()
-    mes = 3
+    mes = 4
     anio = 2023
     mes_ = mes_by_ordinal(mes, abreviado=False).capitalize()
     fecha = f"{mes_} {anio}"
@@ -41,7 +41,12 @@ if __name__ == "__main__":
         data=subcap_data[0],
         opciones_grafico=dict(Q4Etiquetas=True)
     )
-    subcap_data = datos.serie_imputacion()
+    subcap_data_imputacion = list(datos.serie_imputacion())
+    eliminar = subcap_data_imputacion[0][-1]
+    subcap_data_imputacion[0].remove(eliminar)
+    subcap_data_imputacion[0].append(('Abr-2023', 1.60))
+    subcap_data_imputacion[1] = 'El porcentaje de precios imputados en abril 2023 es de 1.60%. El mayor porcentaje de imputaciones fue en el mes de octubre 2022 con una cantidad de 5.28% y el menor se encuentra en el mes de abril 2023 con una cantidad de 1.60%.'
+    subcap_data = subcap_data_imputacion
     reporte.agregar_subcapitulo(
         titulo="Imputación de precios",
         titulo_grafico="Histórico de imputación de precios",
@@ -160,7 +165,7 @@ if __name__ == "__main__":
         fuente="INE",
         tipo_grafico="lineal",
         data=subcap_data[0],
-        opciones_grafico={"precision":1, "Q4Etiquetas":True}
+        opciones_grafico={"precision":2, "Q4Etiquetas":True}
     )
     subcap_data = datos.serie_inflacion(0, 'interanual')
     reporte.agregar_subcapitulo(
