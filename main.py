@@ -290,7 +290,7 @@ if __name__ == "__main__":
             fuente="INE",
             tipo_grafico="lineal",
             data=subcap_data[0],
-            opciones_grafico={"precision":1, "Q4Etiquetas":True}
+            opciones_grafico={"precision":2, "Q4Etiquetas":True}
         )
         subcap_data = datos.serie_inflacion(RegCod, 'interanual', nivel=f'en la región {region[RegCod]}')
         reporte.agregar_subcapitulo(
@@ -389,7 +389,7 @@ if __name__ == "__main__":
             fuente="INE",
             tipo_grafico="lineal",
             data=datosGba,
-            opciones_grafico={"precision":1, "Q4Etiquetas":True}
+            opciones_grafico={"precision":2, "Q4Etiquetas":True}
         )
     print(f"Manipulacion de datos [{time()-t:.2f} s]")
     reporte.crear_reporte()
