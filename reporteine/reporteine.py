@@ -2,6 +2,7 @@ import os
 import pathlib
 import shutil
 import subprocess
+import pkg_resources
 from datetime import datetime
 from io import TextIOWrapper
 
@@ -88,8 +89,9 @@ class ReporteINE:
             "OpenSans-CondBold.ttf",
             "OpenSans-CondLightItalic.ttf")
         for fuente in FUENTES:
+            fuente_path = pkg_resources.resource_filename(__name__, f"Fuentes/{fuente}")
             shutil.copyfile(
-                f"Fuentes/{fuente}",
+                fuente_path,
                 os.path.join(self.__path, f"plantilla/{fuente}"))
         ARCHIVOS = (
             "Carta3.tex",
@@ -101,8 +103,9 @@ class ReporteINE:
             "topeven3.pdf",
             "topodd3.pdf")
         for archivo in ARCHIVOS:
+            archivo_path = pkg_resources.resource_filename(__name__, f"Plantilla/{archivo}")
             shutil.copyfile(
-                f"Plantilla/{archivo}",
+                archivo_path,
                 os.path.join(self.__path, f"plantilla/{archivo}"))
         TEXS = (
             "participantes.tex",
@@ -114,23 +117,25 @@ class ReporteINE:
             "dgrm_ipc_04.tex"
         )
         for tex in TEXS:
+            tex_path = pkg_resources.resource_filename(__name__, f"Plantilla/{tex}")
             shutil.copyfile(
-                f"Plantilla/{tex}",
+                tex_path,
                 os.path.join(self.__path, f"tex/{tex}"))
         # cargar modulo de R 
         self.f_INE = FuncionesINE()
         # hacer junta directiva
+        organizacion_tex_path = pkg_resources.resource_filename(__name__, "Plantilla/organizacion.tex")
         if WS_orga_INE.conexionQ():
             try:
                 WS_orga_INE.junta_directiva(ruta=os.path.join(self.__path, "tex"))
             except:
                 shutil.copyfile(
-                    "Plantilla/organizacion.tex",
+                    organizacion_tex_path,
                     os.path.join(self.__path, "tex/organizacion.tex")) 
         else:
             shutil.copyfile(
-                "Plantilla/organizacion.tex",
-                os.path.join(self.__path, "tex/organizacion.tex")) 
+                organizacion_tex_path,
+                os.path.join(self.__path, "tex/organizacion.tex"))
 
     def get_data(self) -> dict:
         return self.__data

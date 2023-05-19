@@ -1,12 +1,12 @@
 import os
 
-os.environ["R_HOME"] = r"C:\Program Files\R\R-4.2.2" # change as needed
 import rpy2.robjects as robjects
 import rpy2.robjects.packages as rpackages
 
 
 class FuncionesINE:
-    def __init__(self) -> None:
+    def __init__(self, r_home: str = r"C:\Program Files\R\R-4.2.2") -> None:
+        os.environ["R_HOME"] = r_home
         #devtools = rpackages.importr('devtools')
         #devtools.install_github("1u1s4/funcionesINE", ref="luis-dev", upgrade="never")
         self.__funcionesINE = rpackages.importr('funcionesINE')
