@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='reporteine',
-    version='0.1.3',
+    version='0.1.5',
     author='Luis Alfredo Alvarado Rodríguez',
     description='Creador de reportes estilo INE.',
     long_description='',
@@ -10,7 +10,7 @@ setup(
     keywords='development, setup, setuptools',
     python_requires='>=3.9',
     packages=find_packages(),
-    py_modules=['funcionesINE', 'funcionesjo', 'reporteine', 'WS_orga_INE', 'xlsxchef'],
+    py_modules=['funcionesINE', 'reporteine', 'WS_orga_INE', 'xlsxchef'],
     install_requires=[
         'geopandas',
         'matplotlib',
@@ -45,7 +45,7 @@ setup(
         'XlsxWriter==3.0.3'
     ],
     package_data={
-        'reporteine': ['Fuentes/*', 'Plantilla/*', 'plantillas_direcciones/*'],
+        'reporteine': ['Fuentes/*', 'Plantilla/*', 'Direcciones/DCE/*', 'Direcciones/DIEC/*', 'Direcciones/DPIR/*'],
     },
     include_package_data=True,
 )

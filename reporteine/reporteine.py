@@ -87,7 +87,8 @@ class ReporteINE:
         FUENTES = (
             "OpenSans-CondLight.ttf",
             "OpenSans-CondBold.ttf",
-            "OpenSans-CondLightItalic.ttf")
+            "OpenSans-CondLightItalic.ttf"
+        )
         for fuente in FUENTES:
             fuente_path = pkg_resources.resource_filename(__name__, f"Fuentes/{fuente}")
             shutil.copyfile(
@@ -101,7 +102,8 @@ class ReporteINE:
             "parte.pdf",
             "portada.pdf",
             "topeven3.pdf",
-            "topodd3.pdf")
+            "topodd3.pdf"
+        )
         for archivo in ARCHIVOS:
             archivo_path = pkg_resources.resource_filename(__name__, f"Plantilla/{archivo}")
             shutil.copyfile(

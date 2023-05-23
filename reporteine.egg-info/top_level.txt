@@ -1,5 +1,4 @@
 WS_orga_INE
 funcionesINE
-funcionesjo
 reporteine
 xlsxchef
