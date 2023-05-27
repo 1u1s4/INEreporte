@@ -8,8 +8,8 @@ from io import TextIOWrapper
 
 import pandas as pd
 
-import WS_orga_INE
-from funcionesINE import FuncionesINE
+from .WS_orga_INE import conexionQ, junta_directiva
+from .funcionesINE import FuncionesINE
 from funcionesjo import mes_by_ordinal
 from xlsxchef import xlsxChef
 
@@ -127,9 +127,9 @@ class ReporteINE:
         self.f_INE = FuncionesINE()
         # hacer junta directiva
         organizacion_tex_path = pkg_resources.resource_filename(__name__, "Plantilla/organizacion.tex")
-        if WS_orga_INE.conexionQ():
+        if conexionQ():
             try:
-                WS_orga_INE.junta_directiva(ruta=os.path.join(self.__path, "tex"))
+                junta_directiva(ruta=os.path.join(self.__path, "tex"))
             except:
                 shutil.copyfile(
                     organizacion_tex_path,
