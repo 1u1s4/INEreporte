@@ -11,7 +11,7 @@ import pandas as pd
 from .WS_orga_INE import conexionQ, junta_directiva
 from .funcionesINE import FuncionesINE
 from funcionesjo import mes_by_ordinal
-from xlsxchef import xlsxChef
+from .xlsxchef import xlsxChef
 
 """
 data := {
