@@ -2,13 +2,13 @@ from setuptools import setup, find_packages
 
 setup(
     name='reporteine',
-    version='0.1.7',
+    version='0.1.8',
     author='Luis Alfredo Alvarado Rodríguez',
     description='Creador de reportes estilo INE.',
     long_description='',
     url='https://github.com/1u1s4/INE_LaTeX',
     keywords='development, setup, setuptools',
-    python_requires='>=3.9',
+    python_requires='>=3',
     packages=find_packages(),
     py_modules=['funcionesINE', 'reporteine', 'WS_orga_INE', 'xlsxchef'],
     install_requires=[
