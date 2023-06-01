@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='reporteine',
-    version='0.1.8',
+    version='0.1.9',
     author='Luis Alfredo Alvarado Rodríguez',
     description='Creador de reportes estilo INE.',
     long_description='',
@@ -29,7 +29,6 @@ setup(
         'packaging==21.3',
         'pandas==1.5.1',
         'pycparser==2.21',
-        'pyodbc==4.0.34',
         'pyparsing==3.0.9',
         'python-dateutil==2.8.2',
         'pytz==2022.6',
