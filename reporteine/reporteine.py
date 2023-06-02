@@ -59,7 +59,7 @@ class ReporteINE:
     hacer_graficas()
         
     """
-    def __init__(self,nombre: str, anio: int, mes: int) -> None:
+    def __init__(self,nombre: str, anio: int, mes: int, r_home: str = r"C:\Program Files\R\R-4.2.2") -> None:
         self.__data = {}
         self.__data['nombre'] = nombre
         self.__data['capitulos'] = []
@@ -124,7 +124,7 @@ class ReporteINE:
                 tex_path,
                 os.path.join(self.__path, f"tex/{tex}"))
         # cargar modulo de R 
-        self.f_INE = FuncionesINE()
+        self.f_INE = FuncionesINE(r_home)
         # hacer junta directiva
         organizacion_tex_path = pkg_resources.resource_filename(__name__, "Plantilla/organizacion.tex")
         if conexionQ():

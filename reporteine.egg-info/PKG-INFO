@@ -1,8 +1,0 @@
-Metadata-Version: 2.1
-Name: reporteine
-Version: 0.1.5
-Summary: Creador de reportes estilo INE.
-Home-page: https://github.com/1u1s4/INE_LaTeX
-Author: Luis Alfredo Alvarado Rodríguez
-Keywords: development,setup,setuptools
-Requires-Python: >=3.9
