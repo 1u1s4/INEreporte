@@ -71,9 +71,6 @@ class ReporteINE:
         # arbol de carpetas
         os.mkdir(self.__path)
         DIRECTORIOS = (
-            "libros",
-            "csv",
-            "csv_cocinado",
             "graficas",
             "descripciones",
             "plantilla",
