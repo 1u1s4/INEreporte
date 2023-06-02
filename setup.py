@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='reporteine',
-    version='0.2',
+    version='0.2.1',
     author='Luis Alfredo Alvarado Rodríguez',
     description='Creador de reportes estilo INE.',
     long_description='',
@@ -13,7 +13,9 @@ setup(
     py_modules=['funcionesINE', 'reporteine', 'WS_orga_INE'],
     install_requires=[
         'pandas',
-        'rpy2'
+        'rpy2',
+        'requests',
+        'bs4'
     ],
     package_data={
         'reporteine': ['Fuentes/*', 'Plantilla/*', 'Direcciones/DCE/*', 'Direcciones/DIEC/*', 'Direcciones/DPIR/*'],
