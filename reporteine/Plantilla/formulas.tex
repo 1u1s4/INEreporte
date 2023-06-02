@@ -1,0 +1,34 @@
+{\setlength{\parindent}{0cm} 
+\newcommand{\IPC}[1]{\text{IPC}_{#1}}
+\textbf{Índice de Precios al Consumidor}\\
+El Índice de Precios al Consumidor del mes de estudio $\IPC{t}$ se obtiene mediante la fórmula siguiente:
+\begin{align*}
+	\IPC{t} = \left(\sum_{i=1}^{n} w_i \frac{\IPC{t,i}}{\IPC{t-1,i}} \right)
+\end{align*}
+donde $w_i$ es el peso relativo del bien $i$ respecto al total del gasto reportado por la ENIGFAM, $\IPC{t,i}$ es el precio promedio del bien $i$ en mes de estudio, $\IPC{t-1,i}$, es el Índice de Precios al Consumidor del mes anterior, y $n$ es el número de bienes y servicios que componen la canasta de consumo. En la canasta actual, $n$ es igual a 441.\\
+
+\textbf{Variación Intermensual}\\
+Se obtiene relacionando el Índice de Precios al Consumidor del mes de estudio $\IPC{t}$ con el correspondiente al mes anterior $\IPC{t-1}$, mediante la fórmula siguiente:
+\begin{align*}
+	\text{Variación intermensual} = \left( \frac{\IPC{t}}{\IPC{t-1}} \right) \times 100
+\end{align*}
+
+\textbf{Variación interanual}\\
+Se obtiene relacionando el Índice de Precios al Consumidor del mes de estudio $\IPC{t}$ con el del mismo mes del año anterior $\IPC{t-12}$, mediante la fórmula siguiente:
+\begin{align*}
+	\text{Variación intermensual} = \left( \frac{\IPC{t}}{\IPC{t-12}} \right) \times 100
+\end{align*}
+
+\textbf{Incidencia o impacto}\\
+La incidencia o impacto del gasto básico, división de gasto o región $x$, en el mes actual, se obtiene mediante la fórmula:
+\begin{align*}
+	\Delta_{t}^{x} = w_x \left( \frac{I_t^x - I_{t-1}^x}{\IPC{t-1}} \right)
+\end{align*}
+donde $I_t^x$ es el número índice del gasto básico, división de gasto o región $x$ en el periodo $t$, $w_x$ es la ponderación del gasto básico, división de gasto o región $x$ dentro de la canasta familiar de consumo. $\IPC{t-1}$ es el Índice de Precios al Consumidor del mes anterior.\\
+
+\textbf{Poder adquisitivo de la moneda}\\
+El poder adquisitivo de la moneda en el mes de estudio respecto del mes base, se obtiene mediante la fórmula:
+\begin{align*}
+	\text{PA}_t = \frac{1}{\IPC{t}} \times 100
+\end{align*}
+}

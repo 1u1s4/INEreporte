@@ -16,7 +16,6 @@
 *.idx
 *.lof
 *.lof
-*.gz
 *.fls
 *.ind
 *.ilg
@@ -48,7 +47,6 @@ tasa_interes.xls
 prueba.py
 sqline.py
 regiones.py
-setup.py
 query_fuentes.txt
 main2.py
 .DS_Store
@@ -64,3 +62,5 @@ main2.py
 prueba.tex
 
 __MACOSX/
+.venv.rar
+prueba.ipynb
