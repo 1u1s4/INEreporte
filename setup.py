@@ -15,7 +15,9 @@ setup(
         'pandas',
         'rpy2',
         'requests',
-        'bs4'
+        'bs4',
+        'xlrd==2.0.1',
+        'openpyxl'
     ],
     package_data={
         'reporteine': ['Fuentes/*', 'Plantilla/*', 'Direcciones/DCE/*', 'Direcciones/DIEC/*', 'Direcciones/DPIR/*'],
