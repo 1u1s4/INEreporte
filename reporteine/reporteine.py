@@ -261,8 +261,8 @@ class ReporteINE:
 
     def escribir_capitulo(self, capitulo, f: TextIOWrapper):
         titulo = capitulo["titulo"]
-        titulo = self.quitar_tildes(titulo)
         file_name = titulo.replace(" ", "_") + ".tex"
+        file_name = self.quitar_tildes(file_name)
         resumen = self.formato_LaTeX(capitulo["resumen"])
         f.write("\\INEchaptercarta{" + titulo + "}{" + resumen + "}\n")
         f.write("\\input{tex/" + file_name + "}\n")
