@@ -2,35 +2,20 @@ import os
 
 import rpy2.robjects as robjects
 import rpy2.robjects.packages as rpackages
-
+import pandas as pd
+from rpy2.robjects import pandas2ri
+pandas2ri.activate()
 
 class FuncionesINE:
-    def __init__(self, r_home: str = r"C:\Program Files\R\R-4.2.2") -> None:
-        os.environ["R_HOME"] = r_home
-        #devtools = rpackages.importr('devtools')
-        #devtools.install_github("1u1s4/funcionesINE", ref="luis-dev", upgrade="never")
+    def __init__(self, r_home: str = None) -> None:
+        if r_home:
+            os.environ["R_HOME"] = r_home
         self.__funcionesINE = rpackages.importr('funcionesINE')
-        self.__datos = list
         self.Qanual = True
-
-    def cargaMasiva(self, csv_path: str) -> None:
-        self.__datos = self.__funcionesINE.cargaMasiva(csv_path, codificacion='UTF8')
-
-    def escribirCSV(self, ruta_libro: str, ruta_salida: str) -> None:
-        self.__funcionesINE.escribirCSV(
-            lista=self.__funcionesINE.leerLibro(ruta=ruta_libro),
-            ruta=ruta_salida
-            )
-
-    def escribirCSVcocinado(self, ruta_libro: str, ruta_salida: str) -> None:
-        self.__funcionesINE.escribirCSV(
-            lista=self.__funcionesINE.leerLibroNormal(ruta=ruta_libro),
-            ruta=ruta_salida
-            )
 
     def graficaLinea(
         self,
-        data_index: int,
+        data: pd.DataFrame,
         ruta_salida: str,
         nombre: str,
         inicio: int = -1,
@@ -41,6 +26,7 @@ class FuncionesINE:
         final = None,
         etiquetaCadaSeis: bool = False,
         Q4Etiquetas: bool = False) -> None:
+        r_data = pandas2ri.py2rpy(data)  # Convierte el DataFrame de pandas a un objeto R
         if self.Qanual:
             self.__funcionesINE.anual(
                 robjects.r("rgb(0,0,1)"),
@@ -55,7 +41,7 @@ class FuncionesINE:
         self.__funcionesINE.exportarLatex(
             ruta_salida + f"/{nombre}.tex",
             self.__funcionesINE.graficaLinea(
-                self.__datos.rx(data_index)[0],
+                r_data,
                 inicio=inicio,
                 ancho=ancho,
                 precision=precision,
@@ -68,13 +54,14 @@ class FuncionesINE:
 
     def graficaBar(
         self,
-        data_index: int,
+        data: pd.DataFrame,
         ruta_salida: str,
         nombre: str,
         precision: int = 2,
         ancho: float = 0.6,
         ordenar: bool = True,
         escala = 'normal') -> None:
+        r_data = pandas2ri.py2rpy(data)  # Convierte el DataFrame de pandas a un objeto R
         if self.Qanual:
             self.__funcionesINE.anual(
                 robjects.r("rgb(0,0,1)"),
@@ -85,7 +72,7 @@ class FuncionesINE:
         else:
             ordenar = robjects.r("FALSE")
         g = self.__funcionesINE.graficaBar(
-                    self.__datos.rx(data_index)[0],
+                    r_data,
                     ancho=ancho,
                     ordenar=ordenar,
                     escala=escala
@@ -101,13 +88,14 @@ class FuncionesINE:
 
     def graficaCol(
         self,
-        data_index: int,
+        data: pd.DataFrame,
         ruta_salida: str,
         nombre: str,
         precision: int = 2,
         ancho: float = 0.6,
         ordenar: bool = False,
         escala = 'normal') -> None:
+        r_data = pandas2ri.py2rpy(data)  # Convierte el DataFrame de pandas a un objeto R
         if self.Qanual:
             self.__funcionesINE.anual(
                 robjects.r("rgb(0,0,1)"),
@@ -118,7 +106,7 @@ class FuncionesINE:
         else:
             ordenar = robjects.r("FALSE")
         g = self.__funcionesINE.graficaCol(
-                    self.__datos.rx(data_index)[0],
+                    r_data,
                     ancho=ancho,
                     ordenar=ordenar,
                     escala=escala

@@ -3,15 +3,13 @@ import pathlib
 import shutil
 import subprocess
 import pkg_resources
+import pandas as pd
 from datetime import datetime
 from io import TextIOWrapper
-
-import pandas as pd
 
 from .WS_orga_INE import conexionQ, junta_directiva
 from .funcionesINE import FuncionesINE
 from funcionesjo import mes_by_ordinal
-from .xlsxchef import xlsxChef
 
 """
 data := {
@@ -59,13 +57,20 @@ class ReporteINE:
     hacer_graficas()
         
     """
-    def __init__(self,nombre: str, anio: int, mes: int, r_home: str = r"C:\Program Files\R\R-4.2.2") -> None:
+    def __init__(
+        self,
+        nombre: str,
+        anio: int,
+        mes: int,
+        direccion: str = 'DIEC',
+        r_home: str = None) -> None:
         self.__data = {}
         self.__data['nombre'] = nombre
         self.__data['capitulos'] = []
         self._indice = -1
         self.anio = anio
         self.mes = mes
+        self.direccion = direccion
         # hacer directorio para guardar documentos
         marca_temporal = datetime.strftime(datetime.today(), "%d-%m-%Y_%H_%M_%S")
         parent_dir = pathlib.Path().resolve()
@@ -73,9 +78,6 @@ class ReporteINE:
         # arbol de carpetas
         os.mkdir(self.__path)
         DIRECTORIOS = (
-            "libros",
-            "csv",
-            "csv_cocinado",
             "graficas",
             "descripciones",
             "plantilla",
@@ -94,8 +96,12 @@ class ReporteINE:
             shutil.copyfile(
                 fuente_path,
                 os.path.join(self.__path, f"plantilla/{fuente}"))
+        # copiar carta3.tex
+        shutil.copyfile(
+            pkg_resources.resource_filename(__name__, f"Plantilla/Carta3.tex"),
+            os.path.join(self.__path, f"plantilla/Carta3.tex")
+        )
         ARCHIVOS = (
-            "Carta3.tex",
             "contraportada.pdf",
             "fondo-capitulo.pdf",
             "fondo-capitulo-no-descripcion.pdf",
@@ -105,7 +111,7 @@ class ReporteINE:
             "topodd3.pdf"
         )
         for archivo in ARCHIVOS:
-            archivo_path = pkg_resources.resource_filename(__name__, f"Plantilla/{archivo}")
+            archivo_path = pkg_resources.resource_filename(__name__, f"Direcciones/{direccion}/{archivo}")
             shutil.copyfile(
                 archivo_path,
                 os.path.join(self.__path, f"plantilla/{archivo}"))
@@ -187,77 +193,11 @@ class ReporteINE:
             "data": data
         }
         self.__data.get('capitulos')[self._indice]['sub_capitulos'].append(sub_cap)
-    
-    def escribir_libros(self) -> None:
-        for i, capitulo in enumerate(self.__data['capitulos']):
-            i += 1
-            nombre_doc = capitulo["titulo"]
-            csv_chef = xlsxChef(
-                tipo="csv",
-                path=self.__path,
-                nombre=nombre_doc,
-                NoCapitulo=i
-            )
-            cocinado_chef = xlsxChef(
-                tipo="cocinado",
-                path=self.__path,
-                nombre=nombre_doc,
-                NoCapitulo=i
-            )
-            sub_capitulos = capitulo["sub_capitulos"]
-            for sub_capitulo in sub_capitulos:
-                tipo_grafico = sub_capitulo["tipo_grafico"]
-                if tipo_grafico in ("lineal", "barra", "columna"):
-                    encabezados = True 
-                    if len(sub_capitulo["data"][0]) > 2:
-                        encabezados = False
-                    k = sub_capitulos.index(sub_capitulo) + 1
-                    try:
-                        prec = sub_capitulo["opciones_grafico"]["precision"]
-                    except KeyError:
-                        prec = 2
-                    csv_chef.escribir_hoja(
-                        # realizar aproximacion de datos
-                        datos=self.aproximador(sub_capitulo["data"], prec),
-                        ordinal=k,
-                        encabezadosXY=encabezados
-                    )
-                    datos_cocinado = (
-                        sub_capitulo["titulo"],
-                        sub_capitulo["titulo_grafico"],
-                        sub_capitulo["descripcion_grafico"],
-                        sub_capitulo["descripcion"]
-                    )
-                    cocinado_chef.escribir_hoja(
-                        datos=datos_cocinado,
-                        ordinal=k
-                    )
-            cocinado_chef.cerrar_libro()
-            csv_chef.cerrar_libro()
-    
-    def generar_csv(self):
-        ruta = self.__path.replace("\\", "/")
-        i = 0
-        for capitulo in self.__data['capitulos']:
-            i += 1
-            nombre = capitulo['titulo'].title().replace(" ", "")
-            libro_cocinado = f"{nombre}_cocinado.xlsx"
-            libro_csv = f"{nombre}_csv.xlsx"
-            csv_path = os.path.join(self.__path, "csv")
-            os.mkdir(os.path.join(csv_path, str(i)))
-            self.f_INE.escribirCSVcocinado(
-                ruta_libro=f'{ruta}/libros/{libro_cocinado}',
-                ruta_salida=f"{ruta}/csv_cocinado"
-            )
-            self.f_INE.escribirCSV(
-                ruta_libro=f'{ruta}/libros/{libro_csv}',
-                ruta_salida=f"{ruta}/csv/{i}")
-    
+            
     def hacer_graficas(self):
         ruta_tex = self.__path.replace("\\", "/") + "/graficas"
         for i, capitulo in enumerate(self.__data['capitulos']):
-            csv_path = os.path.join(self.__path, f"csv\\{i + 1}").replace("\\", "/")
-            self.f_INE.cargaMasiva(csv_path)
+
             sub_capitulos = capitulo["sub_capitulos"]
             for indice, sub_capitulo in enumerate(sub_capitulos):
                 indice_natural = str(indice + 1).rjust(2, "0")
@@ -265,21 +205,21 @@ class ReporteINE:
                 tipo_grafico = sub_capitulo["tipo_grafico"]
                 if tipo_grafico == "lineal":
                     self.f_INE.graficaLinea(
-                        data_index=referencia,
+                        data=pd.DataFrame(sub_capitulo['data'], columns=['x', 'y']),
                         ruta_salida=ruta_tex,
                         nombre=referencia,
                         **sub_capitulo["opciones_grafico"]
                     )
                 elif tipo_grafico == "barra":
                     self.f_INE.graficaBar(
-                        data_index=referencia,
+                        data=pd.DataFrame(sub_capitulo['data'], columns=['x', 'y']),
                         ruta_salida=ruta_tex,
                         nombre=referencia,
                         **sub_capitulo["opciones_grafico"]
                     )
                 elif tipo_grafico == "columna":
                     self.f_INE.graficaCol(
-                        data_index=referencia,
+                        data=pd.DataFrame(sub_capitulo['data'], columns=['x', 'y']),
                         ruta_salida=ruta_tex,
                         nombre=referencia,
                         **sub_capitulo["opciones_grafico"]
@@ -463,8 +403,6 @@ class ReporteINE:
         )
 
     def crear_reporte(self):
-        self.escribir_libros()
-        self.generar_csv()
         self.hacer_graficas()
         self.hacer_descripciones()
         self.hacer_capitulos()
