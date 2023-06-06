@@ -11,52 +11,7 @@ from .WS_orga_INE import conexionQ, junta_directiva
 from .funcionesINE import FuncionesINE
 from funcionesjo import mes_by_ordinal
 
-"""
-data := {
-    'nombre':str,
-    'mes':int,
-    'anio':int,
-    'presentacion': str,
-    'plantillas': list[files]
-    'capitulos':[
-        {
-            'titulo': str,
-            'resumen': str,
-            'anexo': bool,
-            'sub_capitulos':[
-                {
-                    'titulo': str,
-                    'titulo_grafico': str,
-                    'descripcion_grafico': str,
-                    'descripcion': str,
-                    'fuente': str,
-                    'tipo_grafico': str,
-                    'data': list[tuple[str, int]],
-                    'opciones_grafica':dict
-                }
-            ]
-        }
-    ]
-}
-"""
 class ReporteINE:
-    """
-    Clase para la creacion de reportes estilo INE.
-
-    Attributes
-    ----------
-    nombre : str
-        nombre del reporte, sera el titulo principal del documento.
-    fecha_inicio : str
-        
-    fecha_final : str
-        
-
-    Methods
-    -------
-    hacer_graficas()
-        
-    """
     def __init__(
         self,
         nombre: str,
