@@ -57,13 +57,20 @@ class ReporteINE:
     hacer_graficas()
         
     """
-    def __init__(self,nombre: str, anio: int, mes: int, r_home: str = None) -> None:
+    def __init__(
+        self,
+        nombre: str,
+        anio: int,
+        mes: int,
+        direccion: str = 'DIEC',
+        r_home: str = None) -> None:
         self.__data = {}
         self.__data['nombre'] = nombre
         self.__data['capitulos'] = []
         self._indice = -1
         self.anio = anio
         self.mes = mes
+        self.direccion = direccion
         # hacer directorio para guardar documentos
         marca_temporal = datetime.strftime(datetime.today(), "%d-%m-%Y_%H_%M_%S")
         parent_dir = pathlib.Path().resolve()
@@ -89,8 +96,12 @@ class ReporteINE:
             shutil.copyfile(
                 fuente_path,
                 os.path.join(self.__path, f"plantilla/{fuente}"))
+        # copiar carta3.tex
+        shutil.copyfile(
+            pkg_resources.resource_filename(__name__, f"Plantilla/Carta3.tex"),
+            os.path.join(self.__path, f"plantilla/Carta3.tex")
+        )
         ARCHIVOS = (
-            "Carta3.tex",
             "contraportada.pdf",
             "fondo-capitulo.pdf",
             "fondo-capitulo-no-descripcion.pdf",
@@ -100,7 +111,7 @@ class ReporteINE:
             "topodd3.pdf"
         )
         for archivo in ARCHIVOS:
-            archivo_path = pkg_resources.resource_filename(__name__, f"Plantilla/{archivo}")
+            archivo_path = pkg_resources.resource_filename(__name__, f"Direcciones/{direccion}/{archivo}")
             shutil.copyfile(
                 archivo_path,
                 os.path.join(self.__path, f"plantilla/{archivo}"))
