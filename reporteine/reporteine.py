@@ -2,6 +2,7 @@ import os
 import pathlib
 import shutil
 import subprocess
+import unicodedata
 import pkg_resources
 import pandas as pd
 from datetime import datetime
@@ -14,15 +15,18 @@ from funcionesjo import mes_by_ordinal
 class ReporteINE:
     def __init__(
         self,
-        nombre: str,
+        nombre_reporte: str,
         anio: int,
         mes: int,
+        periodo: str,
         direccion: str = 'DIEC',
         r_home: str = None) -> None:
         self.__data = {}
-        self.__data['nombre'] = nombre
+        self.__data['nombre'] = nombre_reporte
         self.__data['capitulos'] = []
         self._indice = -1
+        self.nombre_reporte = nombre_reporte
+        self.periodo = periodo
         self.anio = anio
         self.mes = mes
         self.direccion = direccion
@@ -99,6 +103,11 @@ class ReporteINE:
             shutil.copyfile(
                 organizacion_tex_path,
                 os.path.join(self.__path, "tex/organizacion.tex"))
+
+    def quitar_tildes(self, s: str) -> str:
+        """Quita tildes de una cadena de texto"""
+        return ''.join(c for c in unicodedata.normalize('NFD', s)
+                    if unicodedata.category(c) != 'Mn')
 
     def get_data(self) -> dict:
         return self.__data
@@ -223,6 +232,7 @@ class ReporteINE:
         for i, capitulo in enumerate(self.__data['capitulos']):
             i += 1
             file_name = capitulo["titulo"].replace(" ", "_")
+            file_name = self.quitar_tildes(file_name)
             path = os.path.join(self.__path, f"tex/{file_name}.tex")
             sub_capitulos = capitulo["sub_capitulos"]
             with open(path, "w", encoding='utf-8') as f:
@@ -251,6 +261,7 @@ class ReporteINE:
 
     def escribir_capitulo(self, capitulo, f: TextIOWrapper):
         titulo = capitulo["titulo"]
+        titulo = self.quitar_tildes(titulo)
         file_name = titulo.replace(" ", "_") + ".tex"
         resumen = self.formato_LaTeX(capitulo["resumen"])
         f.write("\\INEchaptercarta{" + titulo + "}{" + resumen + "}\n")
@@ -258,26 +269,20 @@ class ReporteINE:
 
     def hacer_portada(self):
         path = os.path.join(self.__path, f"tex/portada.tex")
-        mes_1 = mes_by_ordinal(self.mes, abreviado=False)
-        anio_1 = self.anio
-        if self.mes == 1:
-            anio_2 = anio_1 - 1
-            mes_2 = mes_by_ordinal(12, abreviado=False)
-        else:
-            mes_2 = mes_by_ordinal(self.mes - 1, abreviado=False)
-            anio_2 = anio_1
         with open(path, 'w', encoding='utf-8') as f:
+            mes = mes_by_ordinal(self.mes, abreviado=False)
             f.write("\\includepdf[pagecommand={\n")
             f.write("\\begin{tikzpicture}[remember picture, overlay]\n")
             f.write("\\node[nome] at ([yshift=2cm, xshift=1cm] current page) {\\color{white}{\\mgrande República de Guatemala:}};\n")
-            f.write("\\node[nome] at ([yshift=0.3cm, xshift=1cm] current page) {\\color{white}{\\mgrande Índice de Precios al Consumidor}};\n")
-            f.write("\\node[nome] at ([yshift=-1.4cm, xshift=1cm] current page) {\\color{white}{\\mgrande "+ f"{mes_1} {anio_1}" + "}};\n")
-            f.write("\\node at ([yshift=-12cm] current page) {\\color{white}{\\LARGE Guatemala, " + f"{mes_2.lower()} de {anio_2}" + "}};\n")
+            f.write("\\node[nome] at ([yshift=0.3cm, xshift=1cm] current page) {\\color{white}{\\mgrande " + self.nombre_reporte + "}};\n")
+            f.write("\\node[nome] at ([yshift=-1.4cm, xshift=1cm] current page) {\\color{white}{\\mgrande " + self.periodo + "}};\n")
+            f.write("\\node at ([yshift=-12cm] current page) {\\color{white}{\\LARGE Guatemala, " + f"{mes.lower()} de {self.anio}" + "}};\n")
             f.write("\\end{tikzpicture}}\n")
             f.write("]{plantilla/portada.pdf}\n")
 
     def hacer_cuerpo(self):
         nombre = self.__data["nombre"].replace(" ", "_")
+        nombre = self.quitar_tildes(nombre)
         path = os.path.join(self.__path, f"{nombre}.tex")
         with open(path, "w", encoding='utf-8') as f:
             f.write("\\input{plantilla/Carta3.tex}\n")
@@ -349,6 +354,7 @@ class ReporteINE:
             
     def compilar_reporte(self):
         nombre = self.__data["nombre"].replace(" ", "_")
+        nombre = self.quitar_tildes(nombre)
         path = os.path.join(self.__path, f"{nombre}.tex")
         subprocess.run(
             f"cd {self.__path} && xelatex -synctex=1 -interaction=nonstopmode {path}",
