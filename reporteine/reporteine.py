@@ -143,7 +143,7 @@ class ReporteINE:
             descripcion: str,
             fuente: str,
             tipo_grafico: str,
-            data: tuple,
+            data: tuple | str,
             opciones_grafico: dict
             ) -> None:
         sub_cap = {
@@ -199,6 +199,13 @@ class ReporteINE:
                         tabla_inflacion=t_inflacion,
                         **sub_capitulo["opciones_grafico"]
                     )
+                elif tipo_grafico == "diagrama_tikz":
+                    ruta_diagrama = sub_capitulo["data"]
+                    nombre_destino = f"{referencia}.tex"
+                    shutil.copyfile(
+                        ruta_diagrama,
+                        os.path.join(self.__path, "graficas", nombre_destino)
+                    )
                 """ 
                 elif tipo_grafico == "tabla_larga":
                     self.export_to_longtable(
@@ -241,22 +248,22 @@ class ReporteINE:
                     j_str = str(j).rjust(2, "0")
                     carpeta = f"descripciones/{i}_{j_str}"
                     titulo =  sub_capitulo["titulo"]
-                    if sub_capitulo["tipo_grafico"] in ("diagrama", "mapa", "tabla_larga"):
+                    if sub_capitulo["tipo_grafico"] in ("diagrama_tikz", "mapa", "tabla_larga"):
                         f.write("\\cajota{%\n" + titulo + "}%\n")
                     else:
                         f.write("\\cajita{%\n" + titulo + "}%\n")
+
                     f.write("{%\n\\input{" + carpeta + "/descripcion.tex" + "}}%\n")
                     f.write("{%\n\\input{" + carpeta + "/titulo_grafico.tex" + "}}%\n")
                     f.write("{%\n\\input{" + carpeta + "/descripcion_grafico.tex" + "}}%\n")
+
                     if sub_capitulo["tipo_grafico"] in ("lineal", "barra", "columna"):
                         f.write("{%\n\\begin{tikzpicture}[x=1pt,y=1pt]\\input{" + f"graficas/{i}_{j_str}.tex" + "}\\end{tikzpicture}}%\n")
                     elif sub_capitulo["tipo_grafico"] == "mapa":
                         f.write("{%\n\\includegraphics[width=52\\cuadri]{" + f"graficas/{i}_{j_str}.pdf" + "}%\n")
-                    elif sub_capitulo["tipo_grafico"] in ("tabla", "tabla_larga"):
+                    elif sub_capitulo["tipo_grafico"] in ("tabla", "tabla_larga", "diagrama_tikz"):
                         f.write("{%\n\\input{" + f"graficas/{i}_{j_str}.tex" + "}}%\n")
-                    elif sub_capitulo["tipo_grafico"] == "diagrama":
-                        file_name = sub_capitulo["data"][0]
-                        f.write("{%\n\\input{" + file_name + "}}%\n")
+
                     f.write("{%\n\\input{" + carpeta + "/fuente.tex" + "}}%\n\n")
 
     def escribir_capitulo(self, capitulo, f: TextIOWrapper):
