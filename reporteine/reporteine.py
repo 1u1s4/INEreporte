@@ -77,11 +77,7 @@ class ReporteINE:
         TEXS = (
             "participantes.tex",
             "glosario.tex",
-            "formulas.tex",
-            "dgrm_ipc_01.tex",
-            "dgrm_ipc_02.tex",
-            "dgrm_ipc_03.tex",
-            "dgrm_ipc_04.tex"
+            "formulas.tex"
         )
         for tex in TEXS:
             tex_path = pkg_resources.resource_filename(__name__, f"Plantilla/{tex}")
