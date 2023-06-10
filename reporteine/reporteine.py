@@ -31,8 +31,8 @@ class ReporteINE:
         self.mes = mes
         self.direccion = direccion
         # hacer directorio para guardar documentos
-        nombre_archivo = self.quitar_tildes(nombre_reporte).replace(" ", "_").lower()
-        marca_temporal = datetime.strftime(datetime.today(), "nombre_archivo_%d-%m-%Y_%H_%M_%S")
+        marca_temporal = datetime.strftime(datetime.today(), "%d-%m-%Y_%H_%M_%S")
+        nombre_archivo = self.quitar_tildes(nombre_reporte).replace(" ", "_").lower() + "_" + marca_temporal
         parent_dir = pathlib.Path().resolve()
         self.__path = os.path.join(parent_dir, marca_temporal)
         # arbol de carpetas
