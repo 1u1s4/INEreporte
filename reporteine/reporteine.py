@@ -34,7 +34,7 @@ class ReporteINE:
         marca_temporal = datetime.strftime(datetime.today(), "%d-%m-%Y_%H_%M_%S")
         nombre_archivo = self.quitar_tildes(nombre_reporte).replace(" ", "_").lower() + "_" + marca_temporal
         parent_dir = pathlib.Path().resolve()
-        self.__path = os.path.join(parent_dir, marca_temporal)
+        self.__path = os.path.join(parent_dir, nombre_archivo)
         # arbol de carpetas
         os.mkdir(self.__path)
         DIRECTORIOS = (
