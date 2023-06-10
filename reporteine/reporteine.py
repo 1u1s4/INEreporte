@@ -252,9 +252,12 @@ class ReporteINE:
                     else:
                         f.write("\\cajita{%\n" + titulo + "}%\n")
 
-                    f.write("{%\n\\input{" + carpeta + "/descripcion.tex" + "}}%\n")
-                    f.write("{%\n\\input{" + carpeta + "/titulo_grafico.tex" + "}}%\n")
-                    f.write("{%\n\\input{" + carpeta + "/descripcion_grafico.tex" + "}}%\n")
+                    informacion = ("descripcion", "titulo_grafico", "descripcion_grafico")
+                    for dato in informacion:
+                        if sub_capitulo[dato] != "":
+                            f.write("{%\n\\input{" + carpeta + "/" + dato + ".tex" + "}}%\n")
+                        else:
+                            f.write("{%\n}%\n")
 
                     if sub_capitulo["tipo_grafico"] in ("lineal", "barra", "columna"):
                         f.write("{%\n\\begin{tikzpicture}[x=1pt,y=1pt]\\input{" + f"graficas/{i}_{j_str}.tex" + "}\\end{tikzpicture}}%\n")
