@@ -75,10 +75,11 @@ class ReporteINE:
             shutil.copyfile(
                 archivo_path,
                 os.path.join(self.__path, f"plantilla/{archivo}"))
+        # banderas para saber si se ha creado el archivo
+        self.__formulas = False
         TEXS = (
             "participantes.tex",
-            "glosario.tex",
-            "formulas.tex"
+            "glosario.tex"
         )
         for tex in TEXS:
             tex_path = pkg_resources.resource_filename(__name__, f"Plantilla/{tex}")
@@ -100,6 +101,12 @@ class ReporteINE:
             shutil.copyfile(
                 organizacion_tex_path,
                 os.path.join(self.__path, "tex/organizacion.tex"))
+
+    def set_formulas(self, ruta: str) -> None:
+        shutil.copyfile(
+            ruta,
+            os.path.join(self.__path, f"tex/formulas.tex"))
+        self.__formulas = True
 
     def quitar_tildes(self, s: str) -> str:
         """Quita tildes de una cadena de texto"""
@@ -350,8 +357,9 @@ class ReporteINE:
             f.write("\\appendix\n")
             f.write("\\INEchaptercarta{Glosario}{}\n")
             f.write("\\input{tex/glosario.tex}\n")
-            f.write("\\INEchaptercarta{Principales fórmulas de cálculo}{}\n")
-            f.write("\\input{tex/formulas.tex}\n")
+            if self.__formulas:
+                f.write("\\INEchaptercarta{Principales fórmulas de cálculo}{}\n")
+                f.write("\\input{tex/formulas.tex}\n")
             for capitulo in self.__data["capitulos"]:
                 if capitulo['anexo']:
                     self.escribir_capitulo(capitulo, f)
