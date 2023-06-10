@@ -228,7 +228,6 @@ class ReporteINE:
                     "descripcion",
                     "titulo",
                     "titulo_grafico",
-                    "descripcion",
                     "descripcion_grafico",
                     "fuente")
                 for dato in informacion:
