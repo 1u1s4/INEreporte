@@ -7,7 +7,7 @@ from rpy2.robjects import pandas2ri
 import rpy2.rinterface_lib.callbacks
 import logging
 
-# Aquí configuramos un manejador de registro para ignorar los mensajes de R.
+# Configuramos un manejador de registro para ignorar los mensajes de R.
 rpy2.rinterface_lib.callbacks.logger.setLevel(logging.ERROR)
 
 pandas2ri.activate()
@@ -32,7 +32,8 @@ class FuncionesINE:
         final = None,
         etiquetaCadaSeis: bool = False,
         Q4Etiquetas: bool = False) -> None:
-        r_data = pandas2ri.py2rpy(data)  # Convierte el DataFrame de pandas a un objeto R
+        # Convierte el DataFrame de pandas a un objeto R
+        r_data = pandas2ri.py2rpy(data)
         if self.Qanual:
             self.__funcionesINE.anual(
                 robjects.r("rgb(0,0,1)"),
@@ -67,7 +68,8 @@ class FuncionesINE:
         ancho: float = 0.6,
         ordenar: bool = True,
         escala = 'normal') -> None:
-        r_data = pandas2ri.py2rpy(data)  # Convierte el DataFrame de pandas a un objeto R
+        # Convierte el DataFrame de pandas a un objeto R
+        r_data = pandas2ri.py2rpy(data)
         if self.Qanual:
             self.__funcionesINE.anual(
                 robjects.r("rgb(0,0,1)"),
@@ -77,19 +79,19 @@ class FuncionesINE:
             ordenar = robjects.r("TRUE")
         else:
             ordenar = robjects.r("FALSE")
-        g = self.__funcionesINE.graficaBar(
+        grafica = self.__funcionesINE.graficaBar(
                     r_data,
                     ancho=ancho,
                     ordenar=ordenar,
                     escala=escala
                 )
-        g =  self.__funcionesINE.etiquetasBarras(
-                g,
+        grafica =  self.__funcionesINE.etiquetasBarras(
+                grafica,
                 precision=precision
             )
         self.__funcionesINE.exportarLatex(
             ruta_salida + f"/{nombre}.tex",
-            g
+            grafica
         )
 
     def graficaCol(
@@ -101,7 +103,8 @@ class FuncionesINE:
         ancho: float = 0.6,
         ordenar: bool = False,
         escala = 'normal') -> None:
-        r_data = pandas2ri.py2rpy(data)  # Convierte el DataFrame de pandas a un objeto R
+        # Convierte el DataFrame de pandas a un objeto R
+        r_data = pandas2ri.py2rpy(data)
         if self.Qanual:
             self.__funcionesINE.anual(
                 robjects.r("rgb(0,0,1)"),
@@ -111,20 +114,20 @@ class FuncionesINE:
             ordenar = robjects.r("TRUE")
         else:
             ordenar = robjects.r("FALSE")
-        g = self.__funcionesINE.graficaCol(
+        grafica = self.__funcionesINE.graficaCol(
                     r_data,
                     ancho=ancho,
                     ordenar=ordenar,
                     escala=escala
                 )
-        g =  self.__funcionesINE.etiquetasHorizontales(
-                g,
+        grafica =  self.__funcionesINE.etiquetasHorizontales(
+                grafica,
                 precision=precision
             )
-        g = self.__funcionesINE.rotarEtiX(g)
+        grafica = self.__funcionesINE.rotarEtiX(grafica)
         self.__funcionesINE.exportarLatex(
             ruta_salida + f"/{nombre}.tex",
-            g
+            grafica
         )
 
     def tabla_LaTeX(
@@ -134,46 +137,46 @@ class FuncionesINE:
         nombre,
         precision: int = 2,
         tabla_inflacion: bool = False):
-        with open(os.path.join(ruta_salida, f"{nombre}.tex"), "w", encoding="utf-8") as f:
-            f.write("\\setlength{\\arrayrulewidth}{1.5pt}\n")
-            f.write("\\definecolor{Fcolor}{HTML}{e5e5fa}\n")
-            f.write("\\definecolor{Lcolor}{HTML}{4d80ff}\n")
+        with open(os.path.join(ruta_salida, f"{nombre}.tex"), "w", encoding="utf-8") as file:
+            file.write("\\setlength{\\arrayrulewidth}{1.5pt}\n")
+            file.write("\\definecolor{Fcolor}{HTML}{e5e5fa}\n")
+            file.write("\\definecolor{Lcolor}{HTML}{4d80ff}\n")
             # si es tabla de inflacion lleva esa cosa sobre los meses de "Inflacion interanual a"
             if tabla_inflacion:
-                f.write("\\setlength{\\aboverulesep}{-1pt}\n")
-                f.write("\\setlength{\\belowrulesep}{0pt}\n")
+                file.write("\\setlength{\\aboverulesep}{-1pt}\n")
+                file.write("\\setlength{\\belowrulesep}{0pt}\n")
             alinacion = len(datos[0])*"c"
-            f.write("\\begin{tabular}{" + alinacion + "}\n")
-            f.write("\\arrayrulecolor{Lcolor} \hline\n")
+            file.write("\\begin{tabular}{" + alinacion + "}\n")
+            file.write("\\arrayrulecolor{Lcolor} \hline\n")
             # si es tabla de inflacion lleva esa cosa sobre los meses de "Inflacion interanual a"
             if tabla_inflacion:
-                f.write("\\rowcolor{Fcolor} & \\multicolumn{2}{c}{\\textbf{Inflacion interanual a}}\\\\\n")
-                f.write("\\cmidrule[0.9pt]{2-3}\n")
-            f.write("\\rowcolor{Fcolor} ")
+                file.write("\\rowcolor{Fcolor} & \\multicolumn{2}{c}{\\textbf{Inflacion interanual a}}\\\\\n")
+                file.write("\\cmidrule[0.9pt]{2-3}\n")
+            file.write("\\rowcolor{Fcolor} ")
             i = 0
             for encabezado in datos[0]:
                 i += 1
-                f.write("\\textbf{" + encabezado + "}")
+                file.write("\\textbf{" + encabezado + "}")
                 if i != len(datos[0]):
-                    f.write(" & ")
+                    file.write(" & ")
                 else:
-                    f.write("\\\\\n")
-            f.write("\\hline\n")
-            f.write("\\rowcolor{white} ")
+                    file.write("\\\\\n")
+            file.write("\\hline\n")
+            file.write("\\rowcolor{white} ")
             for i in range(1, len(datos)):
                 j = 0
                 for celda in datos[i]:
                     j += 1
                     if type(celda) is str:
-                        f.write(f"{celda}")
+                        file.write(f"{celda}")
                     else:
-                        f.write(f"{float(celda):.{precision}f}")
+                        file.write(f"{float(celda):.{precision}f}")
                     if j != len(datos[i]):
-                        f.write(" & ")
+                        file.write(" & ")
                     else:
-                        f.write("\\\\\n")
-            f.write("\\hline\n")
-            f.write("\\end{tabular}\n")
+                        file.write("\\\\\n")
+            file.write("\\hline\n")
+            file.write("\\end{tabular}\n")
 
     '''
     def export_to_longtable(
