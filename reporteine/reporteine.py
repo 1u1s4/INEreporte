@@ -314,7 +314,7 @@ class ReporteINE:
             f.write("\\end{tabular}\\\\\n")
             f.write("\\noindent\\begin{tabular}{p{0.9cm}p{6.8cm}}\n")
             f.write("& Está permitida la reproducción parcial o total de los contenidos de este documento con la mención de la fuente. \\\\[0.5cm]\n")
-            f.write("& Este documento fue elaborado empleando Python, {\\Sans R}, QGIS y {\\Logos \\XeLaTeX}.\\\\\n")
+            f.write("& Este documento fue elaborado empleando Python, {\\Sans R}, {\\Logos \\XeLaTeX} y Docker.\\\\\n")
             f.write("\\end{tabular}\n")
             f.write("\\clearpage\n")
             f.write("\\clearpage\n")
