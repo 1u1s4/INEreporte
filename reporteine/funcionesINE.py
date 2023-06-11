@@ -4,6 +4,12 @@ import rpy2.robjects as robjects
 import rpy2.robjects.packages as rpackages
 import pandas as pd
 from rpy2.robjects import pandas2ri
+import rpy2.rinterface_lib.callbacks
+import logging
+
+# Aquí configuramos un manejador de registro para ignorar los mensajes de R.
+rpy2.rinterface_lib.callbacks.logger.setLevel(logging.ERROR)
+
 pandas2ri.activate()
 
 class FuncionesINE:
