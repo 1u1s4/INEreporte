@@ -2,7 +2,6 @@ import os
 import pathlib
 import shutil
 import subprocess
-import unicodedata
 import pkg_resources
 import pandas as pd
 from datetime import datetime
@@ -10,6 +9,7 @@ from io import TextIOWrapper
 
 from .WS_orga_INE import conexionQ, junta_directiva
 from .funcionesINE import FuncionesINE
+from .utils import quitar_tildes, formato_LaTeX
 from funcionesjo import mes_by_ordinal
 
 class ReporteINE:
@@ -32,7 +32,7 @@ class ReporteINE:
         self.direccion = direccion
         # hacer directorio para guardar documentos
         marca_temporal = datetime.strftime(datetime.today(), "%d-%m-%Y_%H_%M_%S")
-        nombre_archivo = self.quitar_tildes(nombre_reporte).replace(" ", "_").lower() + "_" + marca_temporal
+        nombre_archivo = quitar_tildes(nombre_reporte).replace(" ", "_").lower() + "_" + marca_temporal
         parent_dir = pathlib.Path().resolve()
         self.__path = os.path.join(parent_dir, nombre_archivo)
         # arbol de carpetas
@@ -75,8 +75,6 @@ class ReporteINE:
             shutil.copyfile(
                 archivo_path,
                 os.path.join(self.__path, f"plantilla/{archivo}"))
-        # banderas para saber si se ha creado el archivo
-        self.__formulas = False
         TEXS = (
             "participantes.tex",
             "glosario.tex"
@@ -86,6 +84,8 @@ class ReporteINE:
             shutil.copyfile(
                 tex_path,
                 os.path.join(self.__path, f"tex/{tex}"))
+        # banderas para saber si se ha creado el archivo
+        self.__formulas = False
         # cargar modulo de R 
         self.f_INE = FuncionesINE(r_home)
         # hacer junta directiva
@@ -103,15 +103,17 @@ class ReporteINE:
                 os.path.join(self.__path, "tex/organizacion.tex"))
 
     def set_formulas(self, ruta: str) -> None:
+        """Copia archivo de formulas a la carpeta del reporte"""
         shutil.copyfile(
             ruta,
             os.path.join(self.__path, f"tex/formulas.tex"))
         self.__formulas = True
-
-    def quitar_tildes(self, s: str) -> str:
-        """Quita tildes de una cadena de texto"""
-        return ''.join(c for c in unicodedata.normalize('NFD', s)
-                    if unicodedata.category(c) != 'Mn')
+    
+    def set_portada(self, ruta: str) -> None:
+        """Copia archivo de portada a la carpeta del reporte"""
+        shutil.copyfile(
+            ruta,
+            os.path.join(self.__path, f"plantilla/portada.pdf"))
 
     def get_data(self) -> dict:
         return self.__data
@@ -120,14 +122,6 @@ class ReporteINE:
         ruta = os.path.join(self.__path, f"tex/presentacion.tex")
         with open(ruta, 'w', encoding='utf-8') as f:
             f.write(texto)
-
-    def aproximador(self, datos, precision: int = 2):
-        datos_aprox = []
-        for dato in datos:
-            x = dato[0]
-            y = round(dato[1], precision)
-            datos_aprox.append((x, y))
-        return datos_aprox
 
     def agregar_capitulo(self, titulo: str, resumen: str = "", anexo: bool = False) -> None:
         capitulo_nuevo = {
@@ -196,7 +190,7 @@ class ReporteINE:
                     t_inflacion = False
                     if "Inflación" in sub_capitulo["titulo"]:
                          t_inflacion = True
-                    self.tabla_LaTeX(
+                    self.f_INE.tabla_LaTeX(
                         datos=sub_capitulo["data"],
                         ruta_salida=os.path.join(self.__path, "graficas"),
                         nombre=referencia,
@@ -236,13 +230,13 @@ class ReporteINE:
                     "fuente")
                 for dato in informacion:
                     with open(os.path.join(path, dato + ".tex"), "w", encoding="utf-8") as f:
-                        f.write(self.formato_LaTeX(sub_capitulo[dato]))
+                        f.write(formato_LaTeX(sub_capitulo[dato]))
     
     def hacer_capitulos(self):
         for i, capitulo in enumerate(self.__data['capitulos']):
             i += 1
             file_name = capitulo["titulo"].replace(" ", "_")
-            file_name = self.quitar_tildes(file_name)
+            file_name = quitar_tildes(file_name)
             path = os.path.join(self.__path, f"tex/{file_name}.tex")
             sub_capitulos = capitulo["sub_capitulos"]
             with open(path, "w", encoding='utf-8') as f:
@@ -275,8 +269,8 @@ class ReporteINE:
     def escribir_capitulo(self, capitulo, f: TextIOWrapper):
         titulo = capitulo["titulo"]
         file_name = titulo.replace(" ", "_") + ".tex"
-        file_name = self.quitar_tildes(file_name)
-        resumen = self.formato_LaTeX(capitulo["resumen"])
+        file_name = quitar_tildes(file_name)
+        resumen = formato_LaTeX(capitulo["resumen"])
         f.write("\\INEchaptercarta{" + titulo + "}{" + resumen + "}\n")
         f.write("\\input{tex/" + file_name + "}\n")
 
@@ -295,12 +289,12 @@ class ReporteINE:
 
     def hacer_cuerpo(self):
         nombre = self.__data["nombre"].replace(" ", "_")
-        nombre = self.quitar_tildes(nombre)
+        nombre = quitar_tildes(nombre)
         path = os.path.join(self.__path, f"{nombre}.tex")
         with open(path, "w", encoding='utf-8') as f:
             f.write("\\input{plantilla/Carta3.tex}\n")
             f.write("\\renewcommand{\\partes}{No por favor}\n")
-            f.write("\\renewcommand{\\titulodoc}{" + self.formato_LaTeX(self.__data["nombre"]) + "}\n")
+            f.write("\\renewcommand{\\titulodoc}{" + formato_LaTeX(self.__data["nombre"]) + "}\n")
             f.write("\\newcommand{\\ra}[1]{\\renewcommand{\\arraystretch}{#1}}\n")
             f.write("\\usepackage{xcolor}\n")
             f.write("\\newcommand{\\mgrande}{\\fontsize{40}{48} \\selectfont}\n")
@@ -368,7 +362,7 @@ class ReporteINE:
             
     def compilar_reporte(self):
         nombre = self.__data["nombre"].replace(" ", "_")
-        nombre = self.quitar_tildes(nombre)
+        nombre = quitar_tildes(nombre)
         path = os.path.join(self.__path, f"{nombre}.tex")
         subprocess.run(
             f"cd {self.__path} && xelatex -synctex=1 -interaction=nonstopmode {path}",
@@ -383,120 +377,3 @@ class ReporteINE:
         self.hacer_capitulos()
         self.hacer_portada()
         self.hacer_cuerpo()
-
-    def formato_LaTeX(self, cadena: str) -> str:
-        CARACTERES_ESPECIALES = ('#', '$', '%', '&', '~', '_', '^')
-        for caracter in CARACTERES_ESPECIALES:
-           cadena = cadena.replace(caracter, "{\\" + caracter + "}")
-        return cadena
-
-    def tabla_LaTeX(
-        self,
-        datos,
-        ruta_salida,
-        nombre,
-        precision: int = 2,
-        tabla_inflacion: bool = False):
-        with open(os.path.join(ruta_salida, f"{nombre}.tex"), "w", encoding="utf-8") as f:
-            f.write("\\setlength{\\arrayrulewidth}{1.5pt}\n")
-            f.write("\\definecolor{Fcolor}{HTML}{e5e5fa}\n")
-            f.write("\\definecolor{Lcolor}{HTML}{4d80ff}\n")
-            # si es tabla de inflacion lleva esa cosa sobre los meses de "Inflacion interanual a"
-            if tabla_inflacion:
-                f.write("\\setlength{\\aboverulesep}{-1pt}\n")
-                f.write("\\setlength{\\belowrulesep}{0pt}\n")
-            alinacion = len(datos[0])*"c"
-            f.write("\\begin{tabular}{" + alinacion + "}\n")
-            f.write("\\arrayrulecolor{Lcolor} \hline\n")
-            # si es tabla de inflacion lleva esa cosa sobre los meses de "Inflacion interanual a"
-            if tabla_inflacion:
-                f.write("\\rowcolor{Fcolor} & \\multicolumn{2}{c}{\\textbf{Inflacion interanual a}}\\\\\n")
-                f.write("\\cmidrule[0.9pt]{2-3}\n")
-            f.write("\\rowcolor{Fcolor} ")
-            i = 0
-            for encabezado in datos[0]:
-                i += 1
-                f.write("\\textbf{" + encabezado + "}")
-                if i != len(datos[0]):
-                    f.write(" & ")
-                else:
-                    f.write("\\\\\n")
-            f.write("\\hline\n")
-            f.write("\\rowcolor{white} ")
-            for i in range(1, len(datos)):
-                j = 0
-                for celda in datos[i]:
-                    j += 1
-                    if type(celda) is str:
-                        f.write(f"{celda}")
-                    else:
-                        f.write(f"{float(celda):.{precision}f}")
-                    if j != len(datos[i]):
-                        f.write(" & ")
-                    else:
-                        f.write("\\\\\n")
-            f.write("\\hline\n")
-            f.write("\\end{tabular}\n")
-
-    '''
-    def export_to_longtable(
-            self,
-            df: pd.DataFrame,
-            filename: str,
-            ruta_salida: str,
-            header: bool=True,
-            decimals: int=2):
-        """
-        Exporta un dataframe a un longtable de LaTeX en un archivo.
-        
-        Parameters:
-        df (pandas.DataFrame): DataFrame a exportar.
-        filename (str): Nombre del archivo a guardar.
-        caption (str): Leyenda de la tabla.
-        column_format (str): Cadena que describe el formato de las columnas.
-        header (bool): Si True, muestra el encabezado de la tabla.
-        decimals (int): Cantidad de decimales para los números. Si el valor no es numérico, se muestra tal cual.
-        """
-        with open(f"{ruta_salida}/{filename}.tex", 'w', encoding="utf-8") as f:
-            f.write('\\begin{longtable}{' + 'c'*len(df.columns) + '}\n')
-            f.write('\\toprule\n')
-            
-            # Escribir el encabezado
-            if header:
-                f.write(' & '.join([col.replace('_', '\\_') for col in df.columns]))
-                f.write('\\\\\\midrule\n')
-            
-            f.write('\\endfirsthead\n')
-            f.write('\\multicolumn{' + str(len(df.columns)) + '}{c}{{\\bfseries \\tablename\\ \\thetable{} -- '
-                    'Continuación de la página anterior}}\\\\\n')
-            f.write('\\toprule\n')
-            if header:
-                f.write(' & '.join([col.replace('_', '\\_') for col in df.columns]))
-                f.write('\\\\\\midrule\n')
-            f.write('\\endhead\n')
-            f.write('\\midrule\n')
-            f.write('\\multicolumn{' + str(len(df.columns)) + '}{r}{{Continúa en la siguiente página}}\\\\\n')
-            f.write('\\endfoot\n')
-            f.write('\\bottomrule\n')
-            f.write('\\endlastfoot\n')
-            
-            # Escribir los datos
-            import re
-            for _, row in df.iterrows():
-                values = []
-                for value in row:
-                    if pd.isna(value):
-                        values.append('')
-                    elif isinstance(value, (int, float)):
-                        valor = round(value, decimals)
-                        if re.match(r"^[-]0\.0*$", str(valor)):
-                            valor = int(valor)
-                        valor = '{:.{}f}'.format(valor, decimals)
-                        values.append(valor)
-                    else:
-                        values.append(str(value))
-                f.write(' & '.join(values))
-                f.write('\\\\\n')
-            
-            f.write('\\end{longtable}\n')
-        '''
