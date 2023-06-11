@@ -9,7 +9,7 @@ from io import TextIOWrapper
 
 from .WS_orga_INE import conexionQ, junta_directiva
 from .funcionesINE import FuncionesINE
-from .utils import quitar_tildes, formato_LaTeX
+from .utils import quitar_tildes, formato_LaTeX, nombre_carpeta
 from funcionesjo import mes_by_ordinal
 
 class ReporteINE:
@@ -31,10 +31,8 @@ class ReporteINE:
         self.mes = mes
         self.direccion = direccion
         # hacer directorio para guardar documentos
-        marca_temporal = datetime.strftime(datetime.today(), "%d-%m-%Y_%H_%M")
-        nombre_archivo = quitar_tildes(nombre_reporte).replace(" ", "_").lower() + "_" + marca_temporal
         parent_dir = pathlib.Path().resolve()
-        self.__path = os.path.join(parent_dir, nombre_archivo)
+        self.__path = os.path.join(parent_dir, nombre_carpeta(nombre_reporte))
         # arbol de carpetas
         os.mkdir(self.__path)
         DIRECTORIOS = (
