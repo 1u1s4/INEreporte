@@ -375,3 +375,7 @@ class ReporteINE:
         self.hacer_capitulos()
         self.hacer_portada()
         self.hacer_cuerpo()
+        # se ejecuta dos veces para que se actualicen los numeros de pagina
+        # ademas de que se generan los indices y la tabla de contenidos
+        self.compilar_reporte()
+        self.compilar_reporte()
