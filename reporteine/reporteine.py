@@ -11,6 +11,7 @@ from .WS_orga_INE import conexionQ, junta_directiva
 from .funcionesINE import FuncionesINE
 from .utils import quitar_tildes, formato_LaTeX, nombre_carpeta
 from funcionesjo import mes_by_ordinal
+from colorimapgt import mapa
 
 class ReporteINE:
     def __init__(
@@ -155,7 +156,7 @@ class ReporteINE:
         self.__data.get('capitulos')[self._indice]['sub_capitulos'].append(sub_cap)
             
     def hacer_graficas(self):
-        ruta_tex = self.__path.replace("\\", "/") + "/graficas"
+        ruta_salida = self.__path.replace("\\", "/") + "/graficas"
         for i, capitulo in enumerate(self.__data['capitulos']):
 
             sub_capitulos = capitulo["sub_capitulos"]
@@ -166,21 +167,21 @@ class ReporteINE:
                 if tipo_grafico == "lineal":
                     self.f_INE.graficaLinea(
                         data=pd.DataFrame(sub_capitulo['data'], columns=['x', 'y']),
-                        ruta_salida=ruta_tex,
+                        ruta_salida=ruta_salida,
                         nombre=referencia,
                         **sub_capitulo["opciones_grafico"]
                     )
                 elif tipo_grafico == "barra":
                     self.f_INE.graficaBar(
                         data=pd.DataFrame(sub_capitulo['data'], columns=['x', 'y']),
-                        ruta_salida=ruta_tex,
+                        ruta_salida=ruta_salida,
                         nombre=referencia,
                         **sub_capitulo["opciones_grafico"]
                     )
                 elif tipo_grafico == "columna":
                     self.f_INE.graficaCol(
                         data=pd.DataFrame(sub_capitulo['data'], columns=['x', 'y']),
-                        ruta_salida=ruta_tex,
+                        ruta_salida=ruta_salida,
                         nombre=referencia,
                         **sub_capitulo["opciones_grafico"]
                     )
@@ -202,7 +203,23 @@ class ReporteINE:
                         ruta_diagrama,
                         os.path.join(self.__path, "graficas", nombre_destino)
                     )
-                """ 
+                elif tipo_grafico == "mapa_colorimetrico":
+                    """
+                    data tiene que ser un dataframe con las columnas:
+                    - region: 'Región I', 'Región II', 'Región III', 'Región IV', 'Región V', 'Región VI', 'Región VII', 'Región VIII'
+                    - valores: los valores correspondientes a cada región
+                    """
+                    data_pandas = pd.DataFrame(sub_capitulo["data"], columns=["region", "valores"])
+                    mapa_color = mapa.Mapa(
+                        data=data_pandas,
+                        nombre_archivo=f"{referencia}.tex",
+                        output_dir=ruta_salida,
+                        **sub_capitulo["opciones_grafico"]
+                    )
+                    mapa_color.hacer_mapa()
+                    mapa_color.compilar()
+                    mapa_color.limpiar()
+                """
                 elif tipo_grafico == "tabla_larga":
                     self.export_to_longtable(
                         df=sub_capitulo["data"],
@@ -243,7 +260,7 @@ class ReporteINE:
                     j_str = str(j).rjust(2, "0")
                     carpeta = f"descripciones/{i}_{j_str}"
                     titulo =  sub_capitulo["titulo"]
-                    if sub_capitulo["tipo_grafico"] in ("diagrama_tikz", "mapa", "tabla_larga"):
+                    if sub_capitulo["tipo_grafico"] in ("diagrama_tikz", "mapa_colorimetrico", "tabla_larga"):
                         f.write("\\cajota{%\n" + titulo + "}%\n")
                     else:
                         f.write("\\cajita{%\n" + titulo + "}%\n")
@@ -257,8 +274,8 @@ class ReporteINE:
 
                     if sub_capitulo["tipo_grafico"] in ("lineal", "barra", "columna"):
                         f.write("{%\n\\begin{tikzpicture}[x=1pt,y=1pt]\\input{" + f"graficas/{i}_{j_str}.tex" + "}\\end{tikzpicture}}%\n")
-                    elif sub_capitulo["tipo_grafico"] == "mapa":
-                        f.write("{%\n\\includegraphics[width=52\\cuadri]{" + f"graficas/{i}_{j_str}.pdf" + "}%\n")
+                    elif sub_capitulo["tipo_grafico"] == "mapa_colorimetrico":
+                        f.write("{%\n\\includegraphics[scale=1]{" + f"graficas/{i}_{j_str}.pdf" + "}%\n")
                     elif sub_capitulo["tipo_grafico"] in ("tabla", "tabla_larga", "diagrama_tikz"):
                         f.write("{%\n\\input{" + f"graficas/{i}_{j_str}.tex" + "}}%\n")
 
