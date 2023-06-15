@@ -211,7 +211,7 @@ class ReporteINE:
                     """
                     data_pandas = pd.DataFrame(sub_capitulo["data"], columns=["region", "valor"])
                     mapa_color = mapa.Mapa(
-                        data=data_pandas,
+                        datos=data_pandas,
                         nombre_archivo=f"{referencia}.tex",
                         output_dir=ruta_salida,
                         **sub_capitulo["opciones_grafico"]
