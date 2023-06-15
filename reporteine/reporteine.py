@@ -209,7 +209,7 @@ class ReporteINE:
                     - region: 'Región I', 'Región II', 'Región III', 'Región IV', 'Región V', 'Región VI', 'Región VII', 'Región VIII'
                     - valores: los valores correspondientes a cada región
                     """
-                    data_pandas = pd.DataFrame(sub_capitulo["data"], columns=["region", "valores"])
+                    data_pandas = pd.DataFrame(sub_capitulo["data"], columns=["region", "valor"])
                     mapa_color = mapa.Mapa(
                         data=data_pandas,
                         nombre_archivo=f"{referencia}.tex",
