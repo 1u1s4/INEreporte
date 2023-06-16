@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='reporteine',
-    version='0.3.17',
+    version='0.3.18',
     author='Luis Alfredo Alvarado Rodríguez',
     description='Creador de reportes estilo INE.',
     long_description='',

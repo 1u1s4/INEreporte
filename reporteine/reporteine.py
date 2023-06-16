@@ -275,7 +275,7 @@ class ReporteINE:
                     if sub_capitulo["tipo_grafico"] in ("lineal", "barra", "columna"):
                         f.write("{%\n\\begin{tikzpicture}[x=1pt,y=1pt]\\input{" + f"graficas/{i}_{j_str}.tex" + "}\\end{tikzpicture}}%\n")
                     elif sub_capitulo["tipo_grafico"] == "mapa_colorimetrico":
-                        f.write("{%\n\\includegraphics[scale=1]{" + f"graficas/{i}_{j_str}.pdf" + "}%\n")
+                        f.write("{%\n\\includegraphics[scale=1]{" + f"graficas/{i}_{j_str}.pdf" + "}}%\n")
                     elif sub_capitulo["tipo_grafico"] in ("tabla", "tabla_larga", "diagrama_tikz"):
                         f.write("{%\n\\input{" + f"graficas/{i}_{j_str}.tex" + "}}%\n")
 
