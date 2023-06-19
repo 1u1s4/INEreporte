@@ -218,7 +218,7 @@ class ReporteINE:
                     )
                     mapa_color.hacer_mapa()
                     mapa_color.compilar()
-                    mapa_color.limpiar()
+                    #mapa_color.limpiar()
                 """
                 elif tipo_grafico == "tabla_larga":
                     self.export_to_longtable(
