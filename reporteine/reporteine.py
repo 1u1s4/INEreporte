@@ -209,16 +209,15 @@ class ReporteINE:
                     - region: 'Región I', 'Región II', 'Región III', 'Región IV', 'Región V', 'Región VI', 'Región VII', 'Región VIII'
                     - valores: los valores correspondientes a cada región
                     """
-                    data_pandas = pd.DataFrame(sub_capitulo["data"], columns=["region", "valor"])
                     mapa_color = mapa.Mapa(
-                        datos=data_pandas,
                         nombre_archivo=f"{referencia}",
                         output_dir=ruta_salida,
                         **sub_capitulo["opciones_grafico"]
                     )
+                    mapa_color.agregar_datos([dato[1] for dato in sub_capitulo["data"]])
                     mapa_color.hacer_mapa()
                     mapa_color.compilar()
-                    #mapa_color.limpiar()
+                    mapa_color.limpiar()
                 """
                 elif tipo_grafico == "tabla_larga":
                     self.export_to_longtable(
