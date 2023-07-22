@@ -1,1 +1,2 @@
-__version__ = "0.3.14"
+from .reporte import Reporte
+__version__ = "0.4.0"
