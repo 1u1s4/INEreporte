@@ -13,7 +13,7 @@ from .utils import quitar_tildes, formato_LaTeX, nombre_carpeta
 from funcionesjo import mes_by_ordinal
 from colorimapgt import mapa
 
-class ReporteINE:
+class Reporte:
     def __init__(
         self,
         nombre_reporte: str,
