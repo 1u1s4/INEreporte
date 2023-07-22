@@ -1,16 +1,16 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='reporteine',
-    version='0.3.20',
+    name='INEreporte',
+    version='0.4',
     author='Luis Alfredo Alvarado Rodríguez',
     description='Creador de reportes estilo INE.',
     long_description='',
-    url='https://github.com/1u1s4/INE_LaTeX',
+    url='https://github.com/1u1s4/INEreporte',
     keywords='development, setup, setuptools',
-    python_requires='>=3.9',
+    python_requires='>=3.7',
     packages=find_packages(),
-    py_modules=['funcionesINE', 'reporteine', 'WS_orga_INE', 'utils'],
+    py_modules=['Reporte'],
     install_requires=[
         'pandas',
         'rpy2',
