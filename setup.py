@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='INEreporte',
-    version='0.5',
+    version='0.5.1',
     author='Luis Alfredo Alvarado Rodríguez',
     description='Creador de reportes estilo INE.',
     long_description='',
@@ -18,7 +18,9 @@ setup(
         'bs4',
         'xlrd==2.0.1',
         'openpyxl',
-        'html5lib'
+        'html5lib',
+        'utilsjo @ git+https://github.com/1u1s4/utilsjo.git',
+        'utilsjo @ git+https://github.com/1u1s4/colorimapgt.git'
     ],
     package_data={
         'reporteine': ['Fuentes/*', 'Plantilla/*', 'Direcciones/DCE/*', 'Direcciones/DIEC/*', 'Direcciones/DPIR/*'],
