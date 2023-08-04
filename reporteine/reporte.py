@@ -10,7 +10,7 @@ from io import TextIOWrapper
 from .WS_orga_INE import conexionQ, junta_directiva
 from .funcionesINE import FuncionesINE
 from .utils import quitar_tildes, formato_LaTeX, nombre_carpeta
-from funcionesjo import mes_by_ordinal
+from utilsjo import mes_by_ordinal
 from colorimapgt import mapa
 
 class Reporte:
