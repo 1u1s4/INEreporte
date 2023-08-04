@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='INEreporte',
-    version='0.4',
+    version='0.5',
     author='Luis Alfredo Alvarado Rodríguez',
     description='Creador de reportes estilo INE.',
     long_description='',
