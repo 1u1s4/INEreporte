@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='INEreporte',
-    version='0.5.2',
+    version='0.5.3',
     author='Luis Alfredo Alvarado Rodríguez',
     description='Creador de reportes estilo INE.',
     long_description='',
@@ -23,7 +23,7 @@ setup(
         'colorimapgt @ git+https://github.com/1u1s4/colorimapgt.git'
     ],
     package_data={
-        'reporteine': ['Fuentes/*', 'Plantilla/*', 'Direcciones/DCE/*', 'Direcciones/DIEC/*', 'Direcciones/DPIR/*'],
+        'INEreporte': ['Fuentes/*', 'Plantilla/*', 'Direcciones/DCE/*', 'Direcciones/DIEC/*', 'Direcciones/DPIR/*'],
     },
     include_package_data=True,
 )
