@@ -105,14 +105,23 @@ class Reporte:
         """Copia archivo de formulas a la carpeta del reporte"""
         shutil.copyfile(
             ruta,
-            os.path.join(self.__path, f"tex/formulas.tex"))
+            os.path.join(self.__path, f"tex/formulas.tex")
+        )
         self.__formulas = True
     
     def set_portada(self, ruta: str) -> None:
         """Copia archivo de portada a la carpeta del reporte"""
         shutil.copyfile(
             ruta,
-            os.path.join(self.__path, f"plantilla/portada.pdf"))
+            os.path.join(self.__path, f"plantilla/portada.pdf")
+        )
+
+    def set_participantes(self, ruta: str) -> None:
+        """Copia archivo de participantes a la carpeta del reporte"""
+        shutil.copyfile(
+            ruta,
+            os.path.join(self.__path, f"plantilla/participantes.tex")
+        )
 
     def get_data(self) -> dict:
         return self.__data
