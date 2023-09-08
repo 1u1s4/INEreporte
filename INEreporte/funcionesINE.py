@@ -150,7 +150,7 @@ class FuncionesINE:
             file.write("\\arrayrulecolor{Lcolor} \hline\n")
             # si es tabla de inflacion lleva esa cosa sobre los meses de "Inflacion interanual a"
             if tabla_inflacion:
-                file.write("\\rowcolor{Fcolor} & \\multicolumn{2}{c}{\\textbf{Inflación interanual a}}\\\\\n")
+                file.write("\\rowcolor{Fcolor} & \\multicolumn{2}{c}{\\textbf{Ritmo inflacionario a}}\\\\\n")
                 file.write("\\cmidrule[0.9pt]{2-3}\n")
             file.write("\\rowcolor{Fcolor} ")
             i = 0
