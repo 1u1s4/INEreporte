@@ -197,7 +197,7 @@ class Reporte:
                 elif tipo_grafico == "tabla":
                     t_inflacion = False
                     if "Inflación" in sub_capitulo["titulo"]:
-                         t_inflacion = True
+                        t_inflacion = True
                     self.f_INE.tabla_LaTeX(
                         datos=sub_capitulo["data"],
                         ruta_salida=os.path.join(self.__path, "graficas"),
@@ -303,10 +303,10 @@ class Reporte:
             mes = mes_by_ordinal(self.mes, abreviado=False)
             f.write("\\includepdf[pagecommand={\n")
             f.write("\\begin{tikzpicture}[remember picture, overlay]\n")
-            f.write("\\node[nome] at ([yshift=2cm, xshift=1cm] current page) {\\color{white}{\\mgrande República de Guatemala:}};\n")
-            f.write("\\node[nome] at ([yshift=0.3cm, xshift=1cm] current page) {\\color{white}{\\mgrande " + self.nombre_reporte + "}};\n")
-            f.write("\\node[nome] at ([yshift=-1.4cm, xshift=1cm] current page) {\\color{white}{\\mgrande " + self.periodo + "}};\n")
-            f.write("\\node at ([yshift=-12cm] current page) {\\color{white}{\\LARGE Guatemala, " + f"{mes.lower()} de {self.anio}" + "}};\n")
+            #f.write("\\node[nome] at ([yshift=2cm, xshift=1cm] current page) {\\color{white}{\\mgrande República de Guatemala:}};\n")
+            #f.write("\\node[nome] at ([yshift=0.3cm, xshift=1cm] current page) {\\color{white}{\\mgrande " + self.nombre_reporte + "}};\n")
+            #f.write("\\node[nome] at ([yshift=-1.4cm, xshift=1cm] current page) {\\color{white}{\\mgrande " + self.periodo + "}};\n")
+            #f.write("\\node at ([yshift=-12cm] current page) {\\color{white}{\\LARGE Guatemala, " + f"{mes.lower()} de {self.anio}" + "}};\n")
             f.write("\\end{tikzpicture}}\n")
             f.write("]{plantilla/portada.pdf}\n")
 
