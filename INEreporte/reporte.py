@@ -387,6 +387,7 @@ class Reporte:
         nombre = self.__data["nombre"].replace(" ", "_")
         nombre = quitar_tildes(nombre)
         path = os.path.join(self.__path, f"{nombre}.tex")
+        # xelatex -synctex=1 -interaction=nonstopmode Indice_de_Precios_al_Consumidor.tex
         subprocess.run(
             f"cd {self.__path} && xelatex -synctex=1 -interaction=nonstopmode {path}",
             capture_output=True,
